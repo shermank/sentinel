@@ -1,0 +1,385 @@
+// Prisma Schema for Eternal Sentinel
+// Digital Dead Man's Switch / Digital Legacy Service
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// Authentication Models (NextAuth.js v5)
+// ============================================
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?   // For email/password auth (hashed)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  accounts      Account[]
+  sessions      Session[]
+
+  // Eternal Sentinel specific
+  vault         Vault?
+  trustees      Trustee[]
+  pollingConfig PollingConfig?
+  checkIns      CheckIn[]
+  subscription  Subscription?
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ============================================
+// Vault Models
+// ============================================
+
+model Vault {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Encrypted master key (encrypted with user's derived key)
+  // The user's password is used to derive a key that encrypts this master key
+  encryptedMasterKey String @db.Text
+  masterKeySalt      String // Salt used for key derivation
+  masterKeyNonce     String // Nonce used for encryption
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Vault items
+  items     VaultItem[]
+
+  @@map("vaults")
+}
+
+model VaultItem {
+  id        String        @id @default(cuid())
+  vaultId   String
+  vault     Vault         @relation(fields: [vaultId], references: [id], onDelete: Cascade)
+
+  type      VaultItemType
+  name      String        // Encrypted item name
+
+  // All content is encrypted client-side
+  encryptedData String    @db.Text
+  nonce         String    // Nonce used for this item's encryption
+
+  // Metadata (not encrypted - for display purposes)
+  metadata  Json?         // { fileSize, mimeType, etc. }
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([vaultId])
+  @@map("vault_items")
+}
+
+enum VaultItemType {
+  PASSWORD    // Login credentials
+  DOCUMENT    // Files/documents
+  MESSAGE     // Text messages/notes
+  SECRET      // Generic secrets
+}
+
+// ============================================
+// Trustee Models
+// ============================================
+
+model Trustee {
+  id        String        @id @default(cuid())
+  userId    String
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name      String
+  email     String
+  phone     String?       // For SMS notifications
+
+  // Relationship description
+  relationship String?    // e.g., "Spouse", "Lawyer", "Friend"
+
+  // Trustee status
+  status    TrusteeStatus @default(PENDING)
+
+  // For trustee verification
+  verificationToken String?   @unique
+  verifiedAt        DateTime?
+
+  // Access control
+  accessGrantedAt   DateTime?
+  accessExpiresAt   DateTime?
+  accessToken       String?   @unique // Token for vault access
+
+  // Encrypted key share for this trustee (optional: for key splitting)
+  encryptedKeyShare String?   @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Access logs
+  accessLogs TrusteeAccessLog[]
+
+  @@unique([userId, email])
+  @@index([userId])
+  @@map("trustees")
+}
+
+enum TrusteeStatus {
+  PENDING     // Invitation sent, not yet accepted
+  VERIFIED    // Trustee has verified their email
+  ACTIVE      // Active trustee
+  REVOKED     // Access revoked by user
+}
+
+model TrusteeAccessLog {
+  id        String   @id @default(cuid())
+  trusteeId String
+  trustee   Trustee  @relation(fields: [trusteeId], references: [id], onDelete: Cascade)
+
+  action    String   // "VIEW", "DOWNLOAD", "VERIFY"
+  ipAddress String?
+  userAgent String?
+
+  createdAt DateTime @default(now())
+
+  @@index([trusteeId])
+  @@map("trustee_access_logs")
+}
+
+// ============================================
+// Polling & Check-in Models
+// ============================================
+
+model PollingConfig {
+  id        String          @id @default(cuid())
+  userId    String          @unique
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Polling interval
+  interval  PollingInterval @default(MONTHLY)
+
+  // Notification methods
+  emailEnabled Boolean @default(true)
+  smsEnabled   Boolean @default(false)
+  pushEnabled  Boolean @default(false)
+
+  // Grace periods (in days)
+  gracePeriod1 Int @default(7)  // After 1st missed check-in
+  gracePeriod2 Int @default(14) // After 2nd missed check-in
+  gracePeriod3 Int @default(7)  // Final grace before trigger
+
+  // Missed check-ins before escalation
+  missedCheckInsBeforeTrigger Int @default(3)
+
+  // Current state
+  currentMissedCheckIns Int      @default(0)
+  lastCheckInAt         DateTime?
+  nextCheckInDue        DateTime?
+
+  // Status
+  status    PollingStatus @default(ACTIVE)
+
+  // Death protocol triggered
+  triggeredAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("polling_configs")
+}
+
+enum PollingInterval {
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
+}
+
+enum PollingStatus {
+  ACTIVE      // Normal operation
+  PAUSED      // Temporarily paused
+  GRACE_1     // First grace period
+  GRACE_2     // Second grace period
+  GRACE_3     // Final grace period
+  TRIGGERED   // Death protocol triggered
+}
+
+model CheckIn {
+  id        String      @id @default(cuid())
+  userId    String
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Unique token for this check-in request
+  token     String      @unique
+
+  // Check-in status
+  status    CheckInStatus @default(PENDING)
+
+  // When the check-in was requested/sent
+  sentAt    DateTime    @default(now())
+  sentVia   String[]    // ["EMAIL", "SMS"]
+
+  // When the user responded
+  respondedAt DateTime?
+
+  // Expiration
+  expiresAt DateTime
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([token])
+  @@map("check_ins")
+}
+
+enum CheckInStatus {
+  PENDING   // Sent, awaiting response
+  CONFIRMED // User confirmed they're alive
+  MISSED    // Expired without response
+  CANCELLED // Cancelled (e.g., user triggered manual check-in)
+}
+
+// ============================================
+// Subscription Models
+// ============================================
+
+model Subscription {
+  id        String             @id @default(cuid())
+  userId    String             @unique
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Stripe IDs
+  stripeCustomerId     String?  @unique
+  stripeSubscriptionId String?  @unique
+  stripePriceId        String?
+
+  // Subscription details
+  plan      SubscriptionPlan   @default(FREE)
+  status    SubscriptionStatus @default(ACTIVE)
+
+  // Billing period
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
+
+  // Cancellation
+  cancelAtPeriodEnd Boolean @default(false)
+  cancelledAt       DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("subscriptions")
+}
+
+enum SubscriptionPlan {
+  FREE      // 1 trustee, monthly polling only
+  PREMIUM   // Unlimited trustees, all features
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELLED
+  INCOMPLETE
+}
+
+// ============================================
+// Audit & System Models
+// ============================================
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+
+  action    String   // e.g., "VAULT_ACCESS", "TRUSTEE_ADDED", "CHECK_IN_SENT"
+  resource  String?  // e.g., "vault", "trustee"
+  resourceId String?
+
+  details   Json?
+  ipAddress String?
+  userAgent String?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@map("audit_logs")
+}
+
+model SystemJob {
+  id        String    @id @default(cuid())
+
+  type      String    // Job type identifier
+  payload   Json?     // Job data
+
+  status    JobStatus @default(PENDING)
+  attempts  Int       @default(0)
+  maxAttempts Int     @default(3)
+
+  lastError String?   @db.Text
+
+  scheduledFor DateTime?
+  startedAt    DateTime?
+  completedAt  DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([type])
+  @@index([status])
+  @@map("system_jobs")
+}
+
+enum JobStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
