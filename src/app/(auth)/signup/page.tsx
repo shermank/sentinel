@@ -38,11 +38,7 @@ export default function SignupPage() {
       const result = await signUpWithCredentials({ name, email, password });
 
       if (result.success) {
-        toast({
-          title: "Account created",
-          description: "Please sign in with your credentials",
-        });
-        router.push("/login");
+        router.push("/verify-email?pending=true");
       } else {
         toast({
           title: "Error",

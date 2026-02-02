@@ -304,3 +304,62 @@ The Eternal Sentinel Team
     `.trim(),
   };
 }
+
+export function verificationEmail(
+  userName: string,
+  verificationUrl: string
+): SendEmailParams {
+  return {
+    to: "",
+    subject: "Verify your Eternal Sentinel account",
+    html: `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { background: #1a1a2e; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+            .content { background: #f8f9fa; padding: 30px; border-radius: 0 0 8px 8px; }
+            .button { display: inline-block; background: #4f46e5; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: bold; }
+            .footer { text-align: center; margin-top: 20px; color: #666; font-size: 12px; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <h1>Eternal Sentinel</h1>
+            </div>
+            <div class="content">
+              <h2>Hello ${userName},</h2>
+              <p>Thank you for creating an Eternal Sentinel account. Please verify your email address to complete your registration and start securing your digital legacy.</p>
+              <p style="text-align: center; margin: 30px 0;">
+                <a href="${verificationUrl}" class="button">Verify Email Address</a>
+              </p>
+              <p><strong>This link will expire in 24 hours.</strong></p>
+              <p>If you didn't create an account with Eternal Sentinel, you can safely ignore this email.</p>
+              <p>Best regards,<br>The Eternal Sentinel Team</p>
+            </div>
+            <div class="footer">
+              <p>If the button doesn't work, copy and paste this link into your browser:<br>${verificationUrl}</p>
+            </div>
+          </div>
+        </body>
+      </html>
+    `,
+    text: `
+Hello ${userName},
+
+Thank you for creating an Eternal Sentinel account. Please verify your email address to complete your registration and start securing your digital legacy.
+
+Verify your email: ${verificationUrl}
+
+This link will expire in 24 hours.
+
+If you didn't create an account with Eternal Sentinel, you can safely ignore this email.
+
+Best regards,
+The Eternal Sentinel Team
+    `.trim(),
+  };
+}
