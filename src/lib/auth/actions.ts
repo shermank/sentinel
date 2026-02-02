@@ -4,6 +4,8 @@ import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/db";
 import { z } from "zod";
 import { signIn } from ".";
+import { generateUrlSafeToken } from "@/lib/crypto/server";
+import { sendEmail, verificationEmail } from "@/lib/email";
 
 const signUpSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -28,6 +30,7 @@ export type SignInInput = z.infer<typeof signInSchema>;
 export interface AuthResult {
   success: boolean;
   error?: string;
+  message?: string;
 }
 
 /**
@@ -81,7 +84,32 @@ export async function signUpWithCredentials(
       },
     });
 
-    return { success: true };
+    // Generate email verification token
+    const verificationToken = generateUrlSafeToken();
+    const expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+
+    await prisma.verificationToken.create({
+      data: {
+        identifier: validatedInput.email,
+        token: verificationToken,
+        expires,
+      },
+    });
+
+    // Send verification email
+    const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+    const verificationUrl = `${APP_URL}/verify-email?token=${verificationToken}`;
+    const emailContent = verificationEmail(validatedInput.name, verificationUrl);
+
+    await sendEmail({
+      ...emailContent,
+      to: validatedInput.email,
+    });
+
+    return {
+      success: true,
+      message: "Please check your email to verify your account before signing in.",
+    };
   } catch (error) {
     if (error instanceof z.ZodError) {
       return { success: false, error: error.errors[0].message };
