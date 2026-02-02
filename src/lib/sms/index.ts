@@ -1,9 +1,11 @@
 import twilio from "twilio";
 
-// Initialize Twilio client
+// Initialize Twilio client (only if valid credentials provided)
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client =
-  process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN
-    ? twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
+  accountSid?.startsWith("AC") && authToken
+    ? twilio(accountSid, authToken)
     : null;
 
 const FROM_PHONE = process.env.TWILIO_PHONE_NUMBER;
