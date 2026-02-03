@@ -177,15 +177,14 @@ export async function DELETE(
       );
     }
 
-    // Soft delete - revoke access
-    await prisma.trustee.update({
+    // Delete access logs first (foreign key constraint)
+    await prisma.trusteeAccessLog.deleteMany({
+      where: { trusteeId: id },
+    });
+
+    // Hard delete the trustee
+    await prisma.trustee.delete({
       where: { id },
-      data: {
-        status: "REVOKED",
-        accessToken: null,
-        accessGrantedAt: null,
-        accessExpiresAt: null,
-      },
     });
 
     // Log the action
@@ -195,7 +194,7 @@ export async function DELETE(
         action: "TRUSTEE_REMOVED",
         resource: "trustee",
         resourceId: id,
-        details: { email: existingTrustee.email },
+        details: { email: existingTrustee.email, name: existingTrustee.name },
       },
     });
 

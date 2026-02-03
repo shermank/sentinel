@@ -1,23 +1,5 @@
 import type { User, Vault, VaultItem, Trustee, PollingConfig, Subscription } from "@prisma/client";
 
-// Extend NextAuth types
-declare module "next-auth" {
-  interface Session {
-    user: {
-      id: string;
-      name?: string | null;
-      email?: string | null;
-      image?: string | null;
-    };
-  }
-}
-
-declare module "@auth/core/jwt" {
-  interface JWT {
-    id: string;
-  }
-}
-
 // API Response types
 export interface ApiResponse<T = unknown> {
   success: boolean;
