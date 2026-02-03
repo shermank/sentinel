@@ -1,10 +1,10 @@
-import { Queue, Worker, Job } from "bullmq";
+import { Queue, Worker, Job, ConnectionOptions } from "bullmq";
 import IORedis from "ioredis";
 
 // Redis connection
 const connection = new IORedis(process.env.REDIS_URL || "redis://localhost:6379", {
   maxRetriesPerRequest: null,
-});
+}) as unknown as ConnectionOptions;
 
 // Queue names
 export const QUEUE_NAMES = {

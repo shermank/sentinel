@@ -3,7 +3,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { z } from "zod";
 import type { ApiResponse } from "@/types";
-import type { VaultItem } from "@prisma/client";
+import type { VaultItem, Prisma } from "@prisma/client";
 
 const updateItemSchema = z.object({
   name: z.string().min(1).optional(),
@@ -107,7 +107,7 @@ export async function PUT(
         ...(validatedData.name && { name: validatedData.name }),
         ...(validatedData.encryptedData && { encryptedData: validatedData.encryptedData }),
         ...(validatedData.nonce && { nonce: validatedData.nonce }),
-        ...(validatedData.metadata && { metadata: validatedData.metadata }),
+        ...(validatedData.metadata && { metadata: validatedData.metadata as Prisma.InputJsonValue }),
       },
     });
 

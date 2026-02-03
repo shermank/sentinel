@@ -3,7 +3,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { z } from "zod";
 import type { ApiResponse, VaultItemInput } from "@/types";
-import type { VaultItem } from "@prisma/client";
+import type { VaultItem, Prisma } from "@prisma/client";
 
 const createItemSchema = z.object({
   type: z.enum(["PASSWORD", "DOCUMENT", "MESSAGE", "SECRET"]),
@@ -90,7 +90,7 @@ export async function POST(
         name: validatedData.name,
         encryptedData: validatedData.encryptedData,
         nonce: validatedData.nonce,
-        metadata: validatedData.metadata || {},
+        metadata: (validatedData.metadata || {}) as Prisma.InputJsonValue,
       },
     });
 

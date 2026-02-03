@@ -161,7 +161,7 @@ export async function PUT(
         action: "POLLING_CONFIG_UPDATED",
         resource: "polling_config",
         resourceId: pollingConfig.id,
-        details: validatedData,
+        details: { ...validatedData },
       },
     });
 
