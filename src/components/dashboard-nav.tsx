@@ -5,13 +5,14 @@ import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Shield, LayoutDashboard, Lock, Users, Settings, LogOut, Bell } from "lucide-react";
+import { Shield, LayoutDashboard, Lock, Users, Settings, LogOut, Bell, ShieldCheck } from "lucide-react";
 
 interface DashboardNavProps {
   user: {
     name?: string | null;
     email?: string | null;
     image?: string | null;
+    role?: string;
   };
 }
 
@@ -20,6 +21,10 @@ const navItems = [
   { href: "/vault", label: "Vault", icon: Lock },
   { href: "/trustees", label: "Trustees", icon: Users },
   { href: "/settings", label: "Settings", icon: Settings },
+];
+
+const adminNavItems = [
+  { href: "/admin", label: "Admin", icon: ShieldCheck },
 ];
 
 export function DashboardNav({ user }: DashboardNavProps) {
@@ -36,6 +41,21 @@ export function DashboardNav({ user }: DashboardNavProps) {
             </Link>
             <nav className="hidden md:flex items-center space-x-1">
               {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                    pathname === item.href
+                      ? "bg-indigo-50 text-indigo-700"
+                      : "text-slate-600 hover:bg-slate-100"
+                  )}
+                >
+                  <item.icon className="h-4 w-4 mr-2" />
+                  {item.label}
+                </Link>
+              ))}
+              {user.role === "ADMIN" && adminNavItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
