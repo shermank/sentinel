@@ -48,6 +48,9 @@ prisma/migrations/**/migration_lock.toml
 logs
 *.log
 
+# Redis
+dump.rdb
+
 # Terraform
 infra/.terraform/
 infra/*.tfstate
