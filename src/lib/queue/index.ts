@@ -16,11 +16,13 @@ export const QUEUE_NAMES = {
 } as const;
 
 // Create queues
-export const checkInQueue = new Queue(QUEUE_NAMES.CHECK_IN, { connection });
-export const escalationQueue = new Queue(QUEUE_NAMES.ESCALATION, { connection });
-export const deathProtocolQueue = new Queue(QUEUE_NAMES.DEATH_PROTOCOL, { connection });
-export const emailQueue = new Queue(QUEUE_NAMES.EMAIL, { connection });
-export const smsQueue = new Queue(QUEUE_NAMES.SMS, { connection });
+// Cast connection to avoid ioredis version mismatch between top-level and bullmq's bundled version
+const conn = connection as unknown as import("bullmq").ConnectionOptions;
+export const checkInQueue = new Queue(QUEUE_NAMES.CHECK_IN, { connection: conn });
+export const escalationQueue = new Queue(QUEUE_NAMES.ESCALATION, { connection: conn });
+export const deathProtocolQueue = new Queue(QUEUE_NAMES.DEATH_PROTOCOL, { connection: conn });
+export const emailQueue = new Queue(QUEUE_NAMES.EMAIL, { connection: conn });
+export const smsQueue = new Queue(QUEUE_NAMES.SMS, { connection: conn });
 
 // Job types
 export interface CheckInJobData {
@@ -127,5 +129,5 @@ export async function sendSms(data: SmsJobData): Promise<Job<SmsJobData>> {
   });
 }
 
-// Export connection for workers
-export { connection };
+// Export connection for workers (cast to avoid ioredis version mismatch)
+export { conn as connection };

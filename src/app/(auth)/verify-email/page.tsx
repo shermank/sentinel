@@ -9,29 +9,6 @@ import { Shield, Loader2, CheckCircle, XCircle, Mail } from "lucide-react";
 
 type VerificationStatus = "loading" | "pending" | "success" | "error";
 
-export default function VerifyEmailPage() {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <div className="flex items-center justify-center space-x-2 mb-4">
-              <Shield className="h-8 w-8 text-indigo-600" />
-              <span className="text-xl font-bold">Eternal Sentinel</span>
-            </div>
-            <CardTitle>Loading...</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col items-center py-8">
-            <Loader2 className="h-12 w-12 animate-spin text-indigo-600" />
-          </CardContent>
-        </Card>
-      </div>
-    }>
-      <VerifyEmailContent />
-    </Suspense>
-  );
-}
-
 function VerifyEmailContent() {
   const [status, setStatus] = useState<VerificationStatus>("loading");
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -200,10 +177,33 @@ function VerifyEmailContent() {
   };
 
   return (
+    <Card className="w-full max-w-md">
+      {renderContent()}
+    </Card>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        {renderContent()}
-      </Card>
+      <Suspense fallback={
+        <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
+          <Card className="w-full max-w-md">
+            <CardHeader className="text-center">
+              <div className="flex items-center justify-center space-x-2 mb-4">
+                <Shield className="h-8 w-8 text-indigo-600" />
+                <span className="text-xl font-bold">Eternal Sentinel</span>
+              </div>
+              <CardTitle>Loading...</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col items-center py-8">
+              <Loader2 className="h-12 w-12 animate-spin text-indigo-600" />
+            </CardContent>
+          </Card>
+        </div>
+      }>
+        <VerifyEmailContent />
+      </Suspense>
     </div>
   );
 }

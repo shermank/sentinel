@@ -47,3 +47,10 @@ prisma/migrations/**/migration_lock.toml
 # Logs
 logs
 *.log
+
+# Terraform
+infra/.terraform/
+infra/*.tfstate
+infra/*.tfstate.backup
+infra/*.tfvars
+infra/.terraform.lock.hcl
