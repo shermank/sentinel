@@ -1,10 +1,7 @@
 import Stripe from "stripe";
 import { prisma } from "@/lib/db";
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-02-24.acacia",
-  typescript: true,
-});
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
@@ -100,8 +97,8 @@ export async function handleSubscriptionCreated(
       stripePriceId: subscription.items.data[0].price.id,
       plan: "PREMIUM",
       status: "ACTIVE",
-      currentPeriodStart: new Date(subscription.current_period_start * 1000),
-      currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+      currentPeriodStart: new Date(subscription.items.data[0].current_period_start * 1000),
+      currentPeriodEnd: new Date(subscription.items.data[0].current_period_end * 1000),
     },
   });
 
@@ -129,8 +126,8 @@ export async function handleSubscriptionUpdated(
     where: { userId },
     data: {
       status,
-      currentPeriodStart: new Date(subscription.current_period_start * 1000),
-      currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+      currentPeriodStart: new Date(subscription.items.data[0].current_period_start * 1000),
+      currentPeriodEnd: new Date(subscription.items.data[0].current_period_end * 1000),
       cancelAtPeriodEnd: subscription.cancel_at_period_end,
     },
   });

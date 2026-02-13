@@ -3,13 +3,13 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { z } from "zod";
 import type { ApiResponse } from "@/types";
-import type { VaultItem, Prisma } from "@prisma/client";
+import type { VaultItem, Prisma } from "@/generated/prisma/client";
 
 const updateItemSchema = z.object({
   name: z.string().min(1).optional(),
   encryptedData: z.string().min(1).optional(),
   nonce: z.string().min(1).optional(),
-  metadata: z.record(z.unknown()).optional(),
+  metadata: z.record(z.string(), z.unknown()).optional(),
 });
 
 interface RouteParams {
@@ -125,7 +125,7 @@ export async function PUT(
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { success: false, error: error.errors[0].message },
+        { success: false, error: error.issues[0].message },
         { status: 400 }
       );
     }
