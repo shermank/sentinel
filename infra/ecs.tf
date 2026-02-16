@@ -83,7 +83,7 @@ resource "aws_cloudwatch_log_group" "migrate" {
 # ---------- Shared secret environment variables ----------
 
 locals {
-  app_url = var.domain_name != "" ? "https://${var.domain_name}" : "http://${aws_lb.main.dns_name}"
+  app_url = var.domain_name != "" ? "https://${var.domain_name}" : "https://${aws_lb.main.dns_name}"
 
   secret_env_vars = [
     "DATABASE_URL", "REDIS_URL", "AUTH_SECRET", "AUTH_GOOGLE_ID",
