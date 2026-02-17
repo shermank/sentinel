@@ -43,10 +43,10 @@ export default async function AdminPage() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <Shield className="h-8 w-8 text-indigo-600" />
+          <Shield className="h-8 w-8 text-indigo-400" />
           <div>
             <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-            <p className="text-slate-600">Manage users and validate check-ins</p>
+            <p className="text-slate-400">Manage users and validate check-ins</p>
           </div>
         </div>
       </div>
@@ -55,11 +55,11 @@ export default async function AdminPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Total Users</CardTitle>
-            <Users className="h-4 w-4 text-slate-500" />
+            <Users className="h-4 w-4 text-slate-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.totalUsers}</div>
-            <p className="text-xs text-slate-500">Registered accounts</p>
+            <p className="text-xs text-slate-400">Registered accounts</p>
           </CardContent>
         </Card>
 
@@ -69,8 +69,8 @@ export default async function AdminPage() {
             <CheckCircle className="h-4 w-4 text-green-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-green-600">{stats.activeUsers}</div>
-            <p className="text-xs text-slate-500">Checking in regularly</p>
+            <div className="text-2xl font-bold text-green-400">{stats.activeUsers}</div>
+            <p className="text-xs text-slate-400">Checking in regularly</p>
           </CardContent>
         </Card>
 
@@ -80,8 +80,8 @@ export default async function AdminPage() {
             <AlertTriangle className="h-4 w-4 text-yellow-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-yellow-600">{stats.atRiskUsers}</div>
-            <p className="text-xs text-slate-500">In grace period</p>
+            <div className="text-2xl font-bold text-yellow-400">{stats.atRiskUsers}</div>
+            <p className="text-xs text-slate-400">In grace period</p>
           </CardContent>
         </Card>
 
@@ -91,8 +91,8 @@ export default async function AdminPage() {
             <AlertTriangle className="h-4 w-4 text-red-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-red-600">{stats.triggeredUsers}</div>
-            <p className="text-xs text-slate-500">Death protocol active</p>
+            <div className="text-2xl font-bold text-red-400">{stats.triggeredUsers}</div>
+            <p className="text-xs text-slate-400">Death protocol active</p>
           </CardContent>
         </Card>
       </div>

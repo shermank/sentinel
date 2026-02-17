@@ -84,18 +84,18 @@ function CheckInContent() {
           {status === "loading" && (
             <div className="py-8">
               <Loader2 className="h-12 w-12 animate-spin text-indigo-600 mx-auto" />
-              <p className="mt-4 text-slate-500">Verifying...</p>
+              <p className="mt-4 text-slate-400">Verifying...</p>
             </div>
           )}
 
           {status === "pending" && (
             <div className="py-8 space-y-6">
-              <div className="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto">
-                <Clock className="h-10 w-10 text-indigo-600" />
+              <div className="w-20 h-20 bg-indigo-900 rounded-full flex items-center justify-center mx-auto">
+                <Clock className="h-10 w-10 text-indigo-400" />
               </div>
               <div>
                 <h3 className="text-lg font-semibold">Check-in Required</h3>
-                <p className="text-slate-500">Click below to confirm you&apos;re doing well</p>
+                <p className="text-slate-400">Click below to confirm you&apos;re doing well</p>
               </div>
               <Button size="lg" onClick={handleConfirm} disabled={confirming} className="w-full">
                 {confirming && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
@@ -106,31 +106,31 @@ function CheckInContent() {
 
           {status === "confirmed" && (
             <div className="py-8 space-y-4">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-                <CheckCircle className="h-10 w-10 text-green-600" />
+              <div className="w-20 h-20 bg-green-900 rounded-full flex items-center justify-center mx-auto">
+                <CheckCircle className="h-10 w-10 text-green-400" />
               </div>
-              <h3 className="text-lg font-semibold text-green-600">Confirmed!</h3>
-              <p className="text-slate-500">{message}</p>
+              <h3 className="text-lg font-semibold text-green-400">Confirmed!</h3>
+              <p className="text-slate-400">{message}</p>
             </div>
           )}
 
           {status === "expired" && (
             <div className="py-8 space-y-4">
-              <div className="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mx-auto">
-                <Clock className="h-10 w-10 text-yellow-600" />
+              <div className="w-20 h-20 bg-yellow-900 rounded-full flex items-center justify-center mx-auto">
+                <Clock className="h-10 w-10 text-yellow-400" />
               </div>
-              <h3 className="text-lg font-semibold text-yellow-600">Expired</h3>
-              <p className="text-slate-500">{message}</p>
+              <h3 className="text-lg font-semibold text-yellow-400">Expired</h3>
+              <p className="text-slate-400">{message}</p>
             </div>
           )}
 
           {status === "error" && (
             <div className="py-8 space-y-4">
-              <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto">
-                <XCircle className="h-10 w-10 text-red-600" />
+              <div className="w-20 h-20 bg-red-900 rounded-full flex items-center justify-center mx-auto">
+                <XCircle className="h-10 w-10 text-red-400" />
               </div>
-              <h3 className="text-lg font-semibold text-red-600">Error</h3>
-              <p className="text-slate-500">{message}</p>
+              <h3 className="text-lg font-semibold text-red-400">Error</h3>
+              <p className="text-slate-400">{message}</p>
             </div>
           )}
         </CardContent>

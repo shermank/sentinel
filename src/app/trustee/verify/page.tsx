@@ -12,11 +12,11 @@ export default function TrusteeVerifyPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
-        <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
+        <div className="w-full max-w-md bg-slate-800 rounded-lg shadow-lg p-8">
           <div className="text-center">
-            <Shield className="h-12 w-12 text-indigo-600 mx-auto mb-4" />
-            <h1 className="text-xl font-bold">Eternal Sentinel</h1>
-            <p className="text-gray-500 mt-2">Loading...</p>
+            <Shield className="h-12 w-12 text-indigo-400 mx-auto mb-4" />
+            <h1 className="text-xl font-bold text-white">Eternal Sentinel</h1>
+            <p className="text-slate-400 mt-2">Loading...</p>
             <Loader2 className="h-8 w-8 animate-spin text-indigo-600 mx-auto mt-4" />
           </div>
         </div>
@@ -70,7 +70,7 @@ function TrusteeVerifyContent() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg overflow-hidden">
+      <div className="w-full max-w-md bg-slate-800 rounded-lg shadow-lg overflow-hidden">
         <div className="bg-indigo-600 text-white p-6 text-center">
           <Shield className="h-12 w-12 mx-auto mb-2" />
           <h1 className="text-2xl font-bold">Eternal Sentinel</h1>
@@ -81,16 +81,16 @@ function TrusteeVerifyContent() {
           {status === "loading" && (
             <div className="text-center">
               <Loader2 className="h-12 w-12 animate-spin text-indigo-600 mx-auto" />
-              <p className="mt-4 text-gray-600">Verifying your email...</p>
+              <p className="mt-4 text-slate-400">Verifying your email...</p>
             </div>
           )}
 
           {status === "success" && (
             <div className="text-center">
               <CheckCircle className="h-16 w-16 text-green-500 mx-auto" />
-              <h2 className="mt-4 text-xl font-semibold text-gray-900">Verified!</h2>
-              <p className="mt-2 text-gray-600">{message}</p>
-              <p className="mt-4 text-sm text-gray-500">
+              <h2 className="mt-4 text-xl font-semibold text-white">Verified!</h2>
+              <p className="mt-2 text-slate-400">{message}</p>
+              <p className="mt-4 text-sm text-slate-400">
                 You are now registered as a trusted contact for <strong>{userName}</strong>.
                 If they become unreachable, you may be granted access to their digital vault.
               </p>
@@ -100,9 +100,9 @@ function TrusteeVerifyContent() {
           {status === "error" && (
             <div className="text-center">
               <XCircle className="h-16 w-16 text-red-500 mx-auto" />
-              <h2 className="mt-4 text-xl font-semibold text-gray-900">Verification Failed</h2>
-              <p className="mt-2 text-gray-600">{message}</p>
-              <p className="mt-4 text-sm text-gray-500">
+              <h2 className="mt-4 text-xl font-semibold text-white">Verification Failed</h2>
+              <p className="mt-2 text-slate-400">{message}</p>
+              <p className="mt-4 text-sm text-slate-400">
                 The verification link may have expired or already been used.
                 Please contact the person who added you as a trustee.
               </p>
@@ -110,8 +110,8 @@ function TrusteeVerifyContent() {
           )}
         </div>
 
-        <div className="bg-gray-50 px-8 py-4 text-center">
-          <Link href="/" className="text-indigo-600 hover:text-indigo-800 text-sm">
+        <div className="bg-slate-900 px-8 py-4 text-center">
+          <Link href="/" className="text-indigo-400 hover:text-indigo-300 text-sm">
             Learn more about Eternal Sentinel
           </Link>
         </div>
