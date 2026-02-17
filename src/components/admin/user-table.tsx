@@ -92,13 +92,13 @@ export function AdminUserTable() {
 
   const getStatusBadge = (status: string) => {
     const statusConfig: Record<string, { color: string; icon: React.ReactNode }> = {
-      ACTIVE: { color: "bg-green-100 text-green-800", icon: <CheckCircle className="h-3 w-3" /> },
-      GRACE_1: { color: "bg-yellow-100 text-yellow-800", icon: <AlertTriangle className="h-3 w-3" /> },
-      GRACE_2: { color: "bg-orange-100 text-orange-800", icon: <AlertTriangle className="h-3 w-3" /> },
-      GRACE_3: { color: "bg-red-100 text-red-800", icon: <AlertTriangle className="h-3 w-3" /> },
-      TRIGGERED: { color: "bg-red-100 text-red-800", icon: <AlertTriangle className="h-3 w-3" /> },
-      PAUSED: { color: "bg-gray-100 text-gray-800", icon: <Clock className="h-3 w-3" /> },
-      NOT_CONFIGURED: { color: "bg-gray-100 text-gray-600", icon: null },
+      ACTIVE: { color: "bg-green-900/50 text-green-300", icon: <CheckCircle className="h-3 w-3" /> },
+      GRACE_1: { color: "bg-yellow-900/50 text-yellow-300", icon: <AlertTriangle className="h-3 w-3" /> },
+      GRACE_2: { color: "bg-orange-900/50 text-orange-300", icon: <AlertTriangle className="h-3 w-3" /> },
+      GRACE_3: { color: "bg-red-900/50 text-red-300", icon: <AlertTriangle className="h-3 w-3" /> },
+      TRIGGERED: { color: "bg-red-900/50 text-red-300", icon: <AlertTriangle className="h-3 w-3" /> },
+      PAUSED: { color: "bg-gray-800 text-gray-300", icon: <Clock className="h-3 w-3" /> },
+      NOT_CONFIGURED: { color: "bg-gray-800 text-gray-400", icon: null },
     };
 
     const config = statusConfig[status] || statusConfig.NOT_CONFIGURED;
@@ -121,7 +121,7 @@ export function AdminUserTable() {
 
   if (users.length === 0) {
     return (
-      <div className="text-center py-12 text-slate-500">
+      <div className="text-center py-12 text-slate-400">
         No users found
       </div>
     );
@@ -140,12 +140,12 @@ export function AdminUserTable() {
         <table className="w-full">
           <thead>
             <tr className="border-b text-left">
-              <th className="pb-3 font-medium text-slate-600">User</th>
-              <th className="pb-3 font-medium text-slate-600">Status</th>
-              <th className="pb-3 font-medium text-slate-600">Last Check-in</th>
-              <th className="pb-3 font-medium text-slate-600">Next Due</th>
-              <th className="pb-3 font-medium text-slate-600">Missed</th>
-              <th className="pb-3 font-medium text-slate-600 text-right">Actions</th>
+              <th className="pb-3 font-medium text-slate-400">User</th>
+              <th className="pb-3 font-medium text-slate-400">Status</th>
+              <th className="pb-3 font-medium text-slate-400">Last Check-in</th>
+              <th className="pb-3 font-medium text-slate-400">Next Due</th>
+              <th className="pb-3 font-medium text-slate-400">Missed</th>
+              <th className="pb-3 font-medium text-slate-400 text-right">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -154,24 +154,24 @@ export function AdminUserTable() {
                 <td className="py-4">
                   <div>
                     <p className="font-medium">{user.name || "No name"}</p>
-                    <p className="text-sm text-slate-500">{user.email}</p>
+                    <p className="text-sm text-slate-400">{user.email}</p>
                   </div>
                 </td>
                 <td className="py-4">
                   {getStatusBadge(user.status)}
                 </td>
-                <td className="py-4 text-sm text-slate-600">
+                <td className="py-4 text-sm text-slate-400">
                   {user.lastCheckInAt
                     ? formatRelativeTime(new Date(user.lastCheckInAt))
                     : "Never"}
                 </td>
-                <td className="py-4 text-sm text-slate-600">
+                <td className="py-4 text-sm text-slate-400">
                   {user.nextCheckInDue
                     ? formatRelativeTime(new Date(user.nextCheckInDue))
                     : "Not set"}
                 </td>
                 <td className="py-4">
-                  <span className={`font-medium ${user.missedCheckIns > 0 ? "text-red-600" : "text-slate-600"}`}>
+                  <span className={`font-medium ${user.missedCheckIns > 0 ? "text-red-400" : "text-slate-400"}`}>
                     {user.missedCheckIns}
                   </span>
                 </td>

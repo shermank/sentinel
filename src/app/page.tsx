@@ -12,6 +12,9 @@ export default function HomePage() {
             <span className="text-xl font-bold">Eternal Sentinel</span>
           </div>
           <div className="flex items-center space-x-4">
+            <Link href="/about">
+              <Button variant="ghost" className="text-white hover:text-indigo-300">About Us</Button>
+            </Link>
             <Link href="/login">
               <Button variant="ghost" className="text-white hover:text-indigo-300">Login</Button>
             </Link>
