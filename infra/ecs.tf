@@ -5,7 +5,7 @@ resource "aws_ecs_cluster" "main" {
 
   setting {
     name  = "containerInsights"
-    value = "enabled"
+    value = "disabled"
   }
 
   tags = { Name = "${var.project_name}-cluster" }
@@ -64,19 +64,19 @@ resource "aws_iam_role" "ecs_task" {
 
 resource "aws_cloudwatch_log_group" "app" {
   name              = "/ecs/${var.project_name}/app"
-  retention_in_days = 30
+  retention_in_days = 7
   tags              = { Name = "${var.project_name}-app-logs" }
 }
 
 resource "aws_cloudwatch_log_group" "worker" {
   name              = "/ecs/${var.project_name}/worker"
-  retention_in_days = 30
+  retention_in_days = 7
   tags              = { Name = "${var.project_name}-worker-logs" }
 }
 
 resource "aws_cloudwatch_log_group" "migrate" {
   name              = "/ecs/${var.project_name}/migrate"
-  retention_in_days = 14
+  retention_in_days = 3
   tags              = { Name = "${var.project_name}-migrate-logs" }
 }
 
