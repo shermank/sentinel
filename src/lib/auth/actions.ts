@@ -17,6 +17,7 @@ const signUpSchema = z.object({
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
       "Password must contain at least one uppercase letter, one lowercase letter, and one number"
     ),
+  captchaToken: z.string().min(1, "CAPTCHA verification is required"),
 });
 
 const signInSchema = z.object({
@@ -42,6 +43,23 @@ export async function signUpWithCredentials(
   try {
     // Validate input
     const validatedInput = signUpSchema.parse(input);
+
+    // Verify Turnstile CAPTCHA
+    const turnstileRes = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          secret: process.env.TURNSTILE_SECRET_KEY,
+          response: validatedInput.captchaToken,
+        }),
+      }
+    );
+    const turnstileData = await turnstileRes.json();
+    if (!turnstileData.success) {
+      return { success: false, error: "CAPTCHA verification failed. Please try again." };
+    }
 
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({
