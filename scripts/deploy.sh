@@ -63,10 +63,12 @@ if [ "$SKIP_BUILD" = false ]; then
   COMMIT_SHA=$(git rev-parse --short HEAD 2>/dev/null || echo "latest")
 
   APP_URL=$(terraform -chdir="$INFRA_DIR" output -raw app_url 2>/dev/null || echo "")
+  TURNSTILE_SITE_KEY=$(aws secretsmanager get-secret-value --secret-id 'eternal-sentinel/production/app-secrets' --query 'SecretString' --output text | python3 -c "import sys,json; print(json.load(sys.stdin).get('NEXT_PUBLIC_TURNSTILE_SITE_KEY',''))" 2>/dev/null || echo "")
 
   log "Building app image..."
   docker build --platform linux/amd64 \
     --build-arg NEXT_PUBLIC_APP_URL="$APP_URL" \
+    --build-arg NEXT_PUBLIC_TURNSTILE_SITE_KEY="$TURNSTILE_SITE_KEY" \
     -t "$ECR_APP_URL:$COMMIT_SHA" -t "$ECR_APP_URL:latest" -f Dockerfile .
 
   log "Building worker image..."
