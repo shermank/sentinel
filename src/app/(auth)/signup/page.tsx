@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Shield, Loader2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { signUpWithCredentials } from "@/lib/auth/actions";
+import { Turnstile } from "@marsidev/react-turnstile";
 
 export default function SignupPage() {
   const [name, setName] = useState("");
@@ -17,6 +18,7 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const router = useRouter();
   const { toast } = useToast();
 
@@ -32,10 +34,19 @@ export default function SignupPage() {
       return;
     }
 
+    if (!captchaToken) {
+      toast({
+        title: "Error",
+        description: "Please complete the CAPTCHA verification",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const result = await signUpWithCredentials({ name, email, password });
+      const result = await signUpWithCredentials({ name, email, password, captchaToken });
 
       if (result.success) {
         router.push("/verify-email?pending=true");
@@ -116,7 +127,13 @@ export default function SignupPage() {
                 required
               />
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Turnstile
+              siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+              onSuccess={setCaptchaToken}
+              onExpire={() => setCaptchaToken(null)}
+              options={{ theme: "dark" }}
+            />
+            <Button type="submit" className="w-full" disabled={loading || !captchaToken}>
               {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Create Account
             </Button>
