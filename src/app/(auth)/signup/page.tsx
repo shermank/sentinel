@@ -19,6 +19,7 @@ export default function SignupPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
 
@@ -130,10 +131,16 @@ export default function SignupPage() {
             <Turnstile
               siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
               onSuccess={setCaptchaToken}
+              onError={() => setCaptchaError(true)}
               onExpire={() => setCaptchaToken(null)}
               options={{ theme: "dark" }}
             />
-            <Button type="submit" className="w-full" disabled={loading || !captchaToken}>
+            {captchaError && (
+              <p className="text-sm text-red-500">
+                CAPTCHA failed to load. Please refresh the page and try again.
+              </p>
+            )}
+            <Button type="submit" className="w-full" disabled={loading}>
               {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Create Account
             </Button>

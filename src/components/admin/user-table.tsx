@@ -3,7 +3,18 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { CheckCircle, Loader2, RefreshCw, AlertTriangle, Clock } from "lucide-react";
+import { CheckCircle, Loader2, RefreshCw, AlertTriangle, Clock, Trash2 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { formatRelativeTime } from "@/lib/utils";
 
 interface UserData {
@@ -23,6 +34,7 @@ export function AdminUserTable() {
   const [users, setUsers] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(true);
   const [validatingUser, setValidatingUser] = useState<string | null>(null);
+  const [deletingUser, setDeletingUser] = useState<string | null>(null);
   const { toast } = useToast();
 
   const fetchUsers = async () => {
@@ -87,6 +99,40 @@ export function AdminUserTable() {
       });
     } finally {
       setValidatingUser(null);
+    }
+  };
+
+  const handleDeleteUser = async (userId: string, userEmail: string) => {
+    setDeletingUser(userId);
+    try {
+      const response = await fetch("/api/admin/users", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId }),
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        toast({
+          title: "User Deleted",
+          description: `Successfully deleted ${userEmail}`,
+        });
+        fetchUsers();
+      } else {
+        toast({
+          title: "Error",
+          description: data.error || "Failed to delete user",
+          variant: "destructive",
+        });
+      }
+    } catch {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    } finally {
+      setDeletingUser(null);
     }
   };
 
@@ -175,7 +221,7 @@ export function AdminUserTable() {
                     {user.missedCheckIns}
                   </span>
                 </td>
-                <td className="py-4 text-right">
+                <td className="py-4 text-right space-x-2">
                   <Button
                     size="sm"
                     onClick={() => handleValidateCheckIn(user.id, user.email)}
@@ -186,8 +232,41 @@ export function AdminUserTable() {
                     ) : (
                       <CheckCircle className="h-4 w-4 mr-1" />
                     )}
-                    Validate Check-in
+                    Validate
                   </Button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        disabled={deletingUser === user.id}
+                      >
+                        {deletingUser === user.id ? (
+                          <Loader2 className="h-4 w-4 animate-spin mr-1" />
+                        ) : (
+                          <Trash2 className="h-4 w-4 mr-1" />
+                        )}
+                        Delete
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Delete User Account</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This will permanently delete <strong>{user.email}</strong> and all their data including vault items, trustees, check-ins, and subscription. This action cannot be undone.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => handleDeleteUser(user.id, user.email)}
+                          className="bg-red-600 hover:bg-red-700"
+                        >
+                          Delete Account
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </td>
               </tr>
             ))}
