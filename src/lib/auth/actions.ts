@@ -58,6 +58,8 @@ export async function signUpWithCredentials(
     );
     const turnstileData = await turnstileRes.json();
     if (!turnstileData.success) {
+      console.error("Turnstile verification failed:", JSON.stringify(turnstileData));
+      console.error("Secret key present:", !!process.env.TURNSTILE_SECRET_KEY);
       return { success: false, error: "CAPTCHA verification failed. Please try again." };
     }
 
