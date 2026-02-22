@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { CheckCircle, Loader2, RefreshCw, AlertTriangle, Clock, Trash2 } from "lucide-react";
+import { CheckCircle, Loader2, RefreshCw, AlertTriangle, Clock, Trash2, Zap } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -35,6 +35,7 @@ export function AdminUserTable() {
   const [loading, setLoading] = useState(true);
   const [validatingUser, setValidatingUser] = useState<string | null>(null);
   const [deletingUser, setDeletingUser] = useState<string | null>(null);
+  const [triggeringUser, setTriggeringUser] = useState<string | null>(null);
   const { toast } = useToast();
 
   const fetchUsers = async () => {
@@ -136,6 +137,40 @@ export function AdminUserTable() {
     }
   };
 
+  const handleTriggerProtocol = async (userId: string, userEmail: string) => {
+    setTriggeringUser(userId);
+    try {
+      const response = await fetch("/api/admin/trigger", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId }),
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        toast({
+          title: "Death Protocol Triggered",
+          description: `Protocol triggered for ${userEmail}. Trustees will be notified and final letters delivered.`,
+        });
+        fetchUsers();
+      } else {
+        toast({
+          title: "Error",
+          description: data.error || "Failed to trigger protocol",
+          variant: "destructive",
+        });
+      }
+    } catch {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    } finally {
+      setTriggeringUser(null);
+    }
+  };
+
   const getStatusBadge = (status: string) => {
     const statusConfig: Record<string, { color: string; icon: React.ReactNode }> = {
       ACTIVE: { color: "bg-green-900/50 text-green-300", icon: <CheckCircle className="h-3 w-3" /> },
@@ -234,6 +269,46 @@ export function AdminUserTable() {
                     )}
                     Validate
                   </Button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="border-orange-600 text-orange-400 hover:bg-orange-950"
+                        disabled={triggeringUser === user.id || user.status === "NOT_CONFIGURED" || user.status === "TRIGGERED"}
+                      >
+                        {triggeringUser === user.id ? (
+                          <Loader2 className="h-4 w-4 animate-spin mr-1" />
+                        ) : (
+                          <Zap className="h-4 w-4 mr-1" />
+                        )}
+                        Trigger
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Trigger Death Protocol</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This will manually trigger the death protocol for <strong>{user.email}</strong>. The following actions will be executed:
+                          <ul className="list-disc ml-4 mt-2 space-y-1">
+                            <li>All verified trustees will be notified and granted vault access</li>
+                            <li>All final letters marked as &ldquo;Ready&rdquo; will be delivered to their recipients</li>
+                            <li>The user&apos;s status will be set to TRIGGERED</li>
+                          </ul>
+                          <span className="block mt-2 font-semibold">This action cannot be easily undone.</span>
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => handleTriggerProtocol(user.id, user.email)}
+                          className="bg-orange-600 hover:bg-orange-700"
+                        >
+                          Trigger Protocol
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button

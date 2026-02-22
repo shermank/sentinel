@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Shield, Lock, KeyRound, RefreshCw, ShieldCheck } from "lucide-react";
+import { Shield, Lock, KeyRound, RefreshCw, ShieldCheck, Mail } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -103,10 +103,36 @@ export default function AboutPage() {
               <p className="text-slate-400">
                 After all escalation attempts are exhausted without a response, the protocol
                 activates. Your designated trustees are notified and granted access to the
-                vault items you assigned to them &mdash; and only those items.
+                vault items you assigned to them. Any final letters you&apos;ve prepared are
+                delivered to their intended recipients.
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="container mx-auto px-4 py-12">
+        <div className="max-w-3xl mx-auto">
+          <div className="flex items-center space-x-3 mb-6">
+            <Mail className="h-8 w-8 text-indigo-400" />
+            <h2 className="text-3xl font-bold">Final Letters</h2>
+          </div>
+          <p className="text-slate-300 text-lg leading-relaxed mb-4">
+            Some things are too important to leave unsaid. Final Letters lets you write
+            personal messages to the people who matter most &mdash; a spouse, a child, a
+            lifelong friend &mdash; and have them delivered only when the time comes.
+          </p>
+          <p className="text-slate-300 text-lg leading-relaxed mb-4">
+            Compose as many letters as you need, each addressed to a specific recipient.
+            Your letter contents are encrypted with the same zero-knowledge architecture
+            as your vault, so no one can read them until your protocol activates.
+          </p>
+          <p className="text-slate-300 text-lg leading-relaxed">
+            When you&apos;re satisfied with a letter, mark it as &ldquo;Ready.&rdquo; If the
+            dead man&apos;s switch triggers, every ready letter is automatically delivered
+            to its recipient via email. Draft letters are never sent, giving you full
+            control over what gets delivered.
+          </p>
         </div>
       </section>
 

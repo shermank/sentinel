@@ -33,6 +33,7 @@ model User {
   // Eternal Sentinel specific
   vault         Vault?
   trustees      Trustee[]
+  finalLetters  FinalLetter[]
   pollingConfig PollingConfig?
   checkIns      CheckIn[]
   subscription  Subscription?
@@ -199,6 +200,39 @@ model TrusteeAccessLog {
 
   @@index([trusteeId])
   @@map("trustee_access_logs")
+}
+
+// ============================================
+// Final Letters Models
+// ============================================
+
+model FinalLetter {
+  id             String            @id @default(cuid())
+  userId         String
+  user           User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  recipientName  String
+  recipientEmail String
+  subject        String
+
+  // Body is encrypted client-side with user's vault master key
+  encryptedBody  String            @db.Text
+  nonce          String
+
+  status         FinalLetterStatus @default(DRAFT)
+
+  deliveredAt    DateTime?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  @@index([userId])
+  @@map("final_letters")
+}
+
+enum FinalLetterStatus {
+  DRAFT       // Still being composed
+  READY       // Finalized, will be sent when triggered
+  DELIVERED   // Has been sent
 }
 
 // ============================================
