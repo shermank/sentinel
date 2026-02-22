@@ -42,6 +42,7 @@ log "Reading Terraform outputs..."
 cd "$INFRA_DIR"
 
 AWS_REGION=$(terraform output -raw aws_region 2>/dev/null || echo "us-east-1")
+export AWS_DEFAULT_REGION="$AWS_REGION"
 ECR_APP_URL=$(terraform output -raw ecr_app_repository_url)
 ECR_WORKER_URL=$(terraform output -raw ecr_worker_repository_url)
 ECS_CLUSTER=$(terraform output -raw ecs_cluster_name)
