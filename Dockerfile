@@ -21,7 +21,7 @@ ARG NEXT_PUBLIC_TURNSTILE_SITE_KEY
 ENV NEXT_PUBLIC_TURNSTILE_SITE_KEY=$NEXT_PUBLIC_TURNSTILE_SITE_KEY
 
 RUN npx prisma generate
-RUN npm run build
+RUN npx next build --webpack
 
 # Production image, copy all the files and run next
 FROM base AS runner

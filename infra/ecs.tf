@@ -202,7 +202,7 @@ resource "aws_ecs_task_definition" "migrate" {
     image     = "${aws_ecr_repository.worker.repository_url}:latest"
     essential = true
 
-    command = ["npx", "prisma", "db", "push", "--skip-generate"]
+    command = ["npx", "prisma", "db", "push"]
 
     environment = [
       { name = "NODE_ENV", value = "production" },

@@ -5,7 +5,7 @@ WORKDIR /app
 RUN apk add --no-cache libc6-compat openssl
 
 COPY package.json package-lock.json* ./
-RUN npm ci
+RUN npm ci --fetch-retries=5 --fetch-retry-mintimeout=60000
 
 COPY . .
 
