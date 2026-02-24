@@ -30,9 +30,6 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-# Azure deployment credentials
-deploy/azure/azure.env
-
 # Vercel
 .vercel
 
