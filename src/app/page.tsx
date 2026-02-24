@@ -39,6 +39,11 @@ export default function HomePage() {
               Start Free <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
+          <Link href="/use-cases">
+            <Button size="lg" variant="outline" className="border-slate-600 text-white hover:bg-slate-800">
+              What Can I Store?
+            </Button>
+          </Link>
         </div>
       </section>
 
@@ -87,9 +92,18 @@ export default function HomePage() {
       </section>
 
       <footer className="border-t border-slate-800 py-8">
-        <p className="text-center text-sm text-slate-500">
-          &copy; {new Date().getFullYear()} Eternal Sentinel. All rights reserved.
-        </p>
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p className="text-sm text-slate-500">
+              &copy; {new Date().getFullYear()} Eternal Sentinel. All rights reserved.
+            </p>
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <Link href="/use-cases" className="text-sm text-slate-400 hover:text-white">Use Cases</Link>
+              <Link href="/login" className="text-sm text-slate-400 hover:text-white">Login</Link>
+              <Link href="/signup" className="text-sm text-slate-400 hover:text-white">Sign Up</Link>
+            </div>
+          </div>
+        </div>
       </footer>
     </div>
   );

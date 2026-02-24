@@ -2,10 +2,85 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Lock, Users, Clock, CheckCircle, AlertTriangle, ArrowRight } from "lucide-react";
+import {
+  Lock,
+  Users,
+  Clock,
+  CheckCircle,
+  AlertTriangle,
+  ArrowRight,
+  Landmark,
+  Smartphone,
+  Bitcoin,
+  Globe,
+  Home,
+  Briefcase,
+  Heart,
+  Mail,
+  Key,
+} from "lucide-react";
 import Link from "next/link";
 import { formatRelativeTime } from "@/lib/utils";
 import { CheckInButton } from "@/components/checkin-button";
+
+const useCaseCategories = [
+  {
+    title: "Financial",
+    icon: Landmark,
+    color: "text-green-500",
+    bgColor: "bg-green-100",
+    examples: ["Bank accounts", "Credit cards", "Investment logins"],
+  },
+  {
+    title: "Crypto",
+    icon: Bitcoin,
+    color: "text-orange-500",
+    bgColor: "bg-orange-100",
+    examples: ["Wallet seed phrases", "Exchange logins", "Hardware PINs"],
+  },
+  {
+    title: "Devices",
+    icon: Smartphone,
+    color: "text-blue-500",
+    bgColor: "bg-blue-100",
+    examples: ["Phone passcodes", "Computer passwords", "Smart home"],
+  },
+  {
+    title: "Online",
+    icon: Globe,
+    color: "text-purple-500",
+    bgColor: "bg-purple-100",
+    examples: ["Email accounts", "Social media", "Cloud storage"],
+  },
+  {
+    title: "Property",
+    icon: Home,
+    color: "text-amber-500",
+    bgColor: "bg-amber-100",
+    examples: ["Safe combinations", "Vehicle info", "Storage units"],
+  },
+  {
+    title: "Legal",
+    icon: Briefcase,
+    color: "text-red-500",
+    bgColor: "bg-red-100",
+    examples: ["Will location", "Insurance", "Business accounts"],
+  },
+  {
+    title: "Medical",
+    icon: Heart,
+    color: "text-pink-500",
+    bgColor: "bg-pink-100",
+    examples: ["Health portals", "Prescriptions", "Emergency contacts"],
+  },
+  {
+    title: "Messages",
+    icon: Mail,
+    color: "text-indigo-500",
+    bgColor: "bg-indigo-100",
+    examples: ["Letters to loved ones", "Final wishes", "Instructions"],
+  },
+];
 
 async function getDashboardData(userId: string) {
   const [vault, trustees, pollingConfig, subscription] = await Promise.all([
@@ -193,6 +268,53 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center">
+            <Key className="mr-2 h-5 w-5 text-indigo-500" />
+            What to Store in Your Vault
+          </CardTitle>
+          <CardDescription>
+            Ideas for what your trustees might need access to
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {useCaseCategories.map((category) => (
+              <div
+                key={category.title}
+                className="p-4 rounded-lg border border-slate-200 hover:border-indigo-300 hover:shadow-sm transition-all"
+              >
+                <div className="flex items-center space-x-2 mb-2">
+                  <div className={`p-1.5 rounded ${category.bgColor}`}>
+                    <category.icon className={`h-4 w-4 ${category.color}`} />
+                  </div>
+                  <h3 className="font-medium text-sm">{category.title}</h3>
+                </div>
+                <ul className="text-xs text-slate-500 space-y-1">
+                  {category.examples.map((example) => (
+                    <li key={example} className="flex items-center">
+                      <span className="w-1 h-1 bg-slate-300 rounded-full mr-2" />
+                      {example}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 pt-4 border-t flex justify-between items-center">
+            <p className="text-sm text-slate-500">
+              All data is encrypted with AES-256 before leaving your browser
+            </p>
+            <Link href="/use-cases">
+              <Button variant="link" size="sm" className="text-indigo-600">
+                View all use cases <ArrowRight className="ml-1 h-3 w-3" />
+              </Button>
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
