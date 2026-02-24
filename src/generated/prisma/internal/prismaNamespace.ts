@@ -392,6 +392,7 @@ export const ModelName = {
   VaultItem: 'VaultItem',
   Trustee: 'Trustee',
   TrusteeAccessLog: 'TrusteeAccessLog',
+  FinalLetter: 'FinalLetter',
   PollingConfig: 'PollingConfig',
   CheckIn: 'CheckIn',
   Subscription: 'Subscription',
@@ -412,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "session" | "verificationToken" | "vault" | "vaultItem" | "trustee" | "trusteeAccessLog" | "pollingConfig" | "checkIn" | "subscription" | "auditLog" | "systemJob"
+    modelProps: "user" | "account" | "session" | "verificationToken" | "vault" | "vaultItem" | "trustee" | "trusteeAccessLog" | "finalLetter" | "pollingConfig" | "checkIn" | "subscription" | "auditLog" | "systemJob"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1008,6 +1009,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    FinalLetter: {
+      payload: Prisma.$FinalLetterPayload<ExtArgs>
+      fields: Prisma.FinalLetterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FinalLetterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinalLetterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FinalLetterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinalLetterPayload>
+        }
+        findFirst: {
+          args: Prisma.FinalLetterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinalLetterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FinalLetterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinalLetterPayload>
+        }
+        findMany: {
+          args: Prisma.FinalLetterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinalLetterPayload>[]
+        }
+        create: {
+          args: Prisma.FinalLetterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinalLetterPayload>
+        }
+        createMany: {
+          args: Prisma.FinalLetterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FinalLetterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinalLetterPayload>[]
+        }
+        delete: {
+          args: Prisma.FinalLetterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinalLetterPayload>
+        }
+        update: {
+          args: Prisma.FinalLetterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinalLetterPayload>
+        }
+        deleteMany: {
+          args: Prisma.FinalLetterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FinalLetterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FinalLetterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinalLetterPayload>[]
+        }
+        upsert: {
+          args: Prisma.FinalLetterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FinalLetterPayload>
+        }
+        aggregate: {
+          args: Prisma.FinalLetterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFinalLetter>
+        }
+        groupBy: {
+          args: Prisma.FinalLetterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FinalLetterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FinalLetterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FinalLetterCountAggregateOutputType> | number
+        }
+      }
+    }
     PollingConfig: {
       payload: Prisma.$PollingConfigPayload<ExtArgs>
       fields: Prisma.PollingConfigFieldRefs
@@ -1530,6 +1605,23 @@ export const TrusteeAccessLogScalarFieldEnum = {
 export type TrusteeAccessLogScalarFieldEnum = (typeof TrusteeAccessLogScalarFieldEnum)[keyof typeof TrusteeAccessLogScalarFieldEnum]
 
 
+export const FinalLetterScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  recipientName: 'recipientName',
+  recipientEmail: 'recipientEmail',
+  subject: 'subject',
+  encryptedBody: 'encryptedBody',
+  nonce: 'nonce',
+  status: 'status',
+  deliveredAt: 'deliveredAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FinalLetterScalarFieldEnum = (typeof FinalLetterScalarFieldEnum)[keyof typeof FinalLetterScalarFieldEnum]
+
+
 export const PollingConfigScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -1766,6 +1858,20 @@ export type ListEnumTrusteeStatusFieldRefInput<$PrismaModel> = FieldRefInputType
 
 
 /**
+ * Reference to a field of type 'FinalLetterStatus'
+ */
+export type EnumFinalLetterStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FinalLetterStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'FinalLetterStatus[]'
+ */
+export type ListEnumFinalLetterStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FinalLetterStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'PollingInterval'
  */
 export type EnumPollingIntervalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PollingInterval'>
@@ -1972,6 +2078,7 @@ export type GlobalOmitConfig = {
   vaultItem?: Prisma.VaultItemOmit
   trustee?: Prisma.TrusteeOmit
   trusteeAccessLog?: Prisma.TrusteeAccessLogOmit
+  finalLetter?: Prisma.FinalLetterOmit
   pollingConfig?: Prisma.PollingConfigOmit
   checkIn?: Prisma.CheckInOmit
   subscription?: Prisma.SubscriptionOmit

@@ -218,6 +218,7 @@ export type UserWhereInput = {
   sessions?: Prisma.SessionListRelationFilter
   vault?: Prisma.XOR<Prisma.VaultNullableScalarRelationFilter, Prisma.VaultWhereInput> | null
   trustees?: Prisma.TrusteeListRelationFilter
+  finalLetters?: Prisma.FinalLetterListRelationFilter
   pollingConfig?: Prisma.XOR<Prisma.PollingConfigNullableScalarRelationFilter, Prisma.PollingConfigWhereInput> | null
   checkIns?: Prisma.CheckInListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
@@ -237,6 +238,7 @@ export type UserOrderByWithRelationInput = {
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   vault?: Prisma.VaultOrderByWithRelationInput
   trustees?: Prisma.TrusteeOrderByRelationAggregateInput
+  finalLetters?: Prisma.FinalLetterOrderByRelationAggregateInput
   pollingConfig?: Prisma.PollingConfigOrderByWithRelationInput
   checkIns?: Prisma.CheckInOrderByRelationAggregateInput
   subscription?: Prisma.SubscriptionOrderByWithRelationInput
@@ -259,6 +261,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   sessions?: Prisma.SessionListRelationFilter
   vault?: Prisma.XOR<Prisma.VaultNullableScalarRelationFilter, Prisma.VaultWhereInput> | null
   trustees?: Prisma.TrusteeListRelationFilter
+  finalLetters?: Prisma.FinalLetterListRelationFilter
   pollingConfig?: Prisma.XOR<Prisma.PollingConfigNullableScalarRelationFilter, Prisma.PollingConfigWhereInput> | null
   checkIns?: Prisma.CheckInListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
@@ -308,6 +311,7 @@ export type UserCreateInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   vault?: Prisma.VaultCreateNestedOneWithoutUserInput
   trustees?: Prisma.TrusteeCreateNestedManyWithoutUserInput
+  finalLetters?: Prisma.FinalLetterCreateNestedManyWithoutUserInput
   pollingConfig?: Prisma.PollingConfigCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
@@ -327,6 +331,7 @@ export type UserUncheckedCreateInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   vault?: Prisma.VaultUncheckedCreateNestedOneWithoutUserInput
   trustees?: Prisma.TrusteeUncheckedCreateNestedManyWithoutUserInput
+  finalLetters?: Prisma.FinalLetterUncheckedCreateNestedManyWithoutUserInput
   pollingConfig?: Prisma.PollingConfigUncheckedCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
@@ -346,6 +351,7 @@ export type UserUpdateInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   vault?: Prisma.VaultUpdateOneWithoutUserNestedInput
   trustees?: Prisma.TrusteeUpdateManyWithoutUserNestedInput
+  finalLetters?: Prisma.FinalLetterUpdateManyWithoutUserNestedInput
   pollingConfig?: Prisma.PollingConfigUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
@@ -365,6 +371,7 @@ export type UserUncheckedUpdateInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   vault?: Prisma.VaultUncheckedUpdateOneWithoutUserNestedInput
   trustees?: Prisma.TrusteeUncheckedUpdateManyWithoutUserNestedInput
+  finalLetters?: Prisma.FinalLetterUncheckedUpdateManyWithoutUserNestedInput
   pollingConfig?: Prisma.PollingConfigUncheckedUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
@@ -523,6 +530,20 @@ export type UserUpdateOneRequiredWithoutTrusteesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTrusteesInput, Prisma.UserUpdateWithoutTrusteesInput>, Prisma.UserUncheckedUpdateWithoutTrusteesInput>
 }
 
+export type UserCreateNestedOneWithoutFinalLettersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFinalLettersInput, Prisma.UserUncheckedCreateWithoutFinalLettersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFinalLettersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutFinalLettersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFinalLettersInput, Prisma.UserUncheckedCreateWithoutFinalLettersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFinalLettersInput
+  upsert?: Prisma.UserUpsertWithoutFinalLettersInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFinalLettersInput, Prisma.UserUpdateWithoutFinalLettersInput>, Prisma.UserUncheckedUpdateWithoutFinalLettersInput>
+}
+
 export type UserCreateNestedOneWithoutPollingConfigInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutPollingConfigInput, Prisma.UserUncheckedCreateWithoutPollingConfigInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutPollingConfigInput
@@ -578,6 +599,7 @@ export type UserCreateWithoutAccountsInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   vault?: Prisma.VaultCreateNestedOneWithoutUserInput
   trustees?: Prisma.TrusteeCreateNestedManyWithoutUserInput
+  finalLetters?: Prisma.FinalLetterCreateNestedManyWithoutUserInput
   pollingConfig?: Prisma.PollingConfigCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
@@ -596,6 +618,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   vault?: Prisma.VaultUncheckedCreateNestedOneWithoutUserInput
   trustees?: Prisma.TrusteeUncheckedCreateNestedManyWithoutUserInput
+  finalLetters?: Prisma.FinalLetterUncheckedCreateNestedManyWithoutUserInput
   pollingConfig?: Prisma.PollingConfigUncheckedCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
@@ -630,6 +653,7 @@ export type UserUpdateWithoutAccountsInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   vault?: Prisma.VaultUpdateOneWithoutUserNestedInput
   trustees?: Prisma.TrusteeUpdateManyWithoutUserNestedInput
+  finalLetters?: Prisma.FinalLetterUpdateManyWithoutUserNestedInput
   pollingConfig?: Prisma.PollingConfigUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
@@ -648,6 +672,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   vault?: Prisma.VaultUncheckedUpdateOneWithoutUserNestedInput
   trustees?: Prisma.TrusteeUncheckedUpdateManyWithoutUserNestedInput
+  finalLetters?: Prisma.FinalLetterUncheckedUpdateManyWithoutUserNestedInput
   pollingConfig?: Prisma.PollingConfigUncheckedUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
@@ -666,6 +691,7 @@ export type UserCreateWithoutSessionsInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   vault?: Prisma.VaultCreateNestedOneWithoutUserInput
   trustees?: Prisma.TrusteeCreateNestedManyWithoutUserInput
+  finalLetters?: Prisma.FinalLetterCreateNestedManyWithoutUserInput
   pollingConfig?: Prisma.PollingConfigCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
@@ -684,6 +710,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   vault?: Prisma.VaultUncheckedCreateNestedOneWithoutUserInput
   trustees?: Prisma.TrusteeUncheckedCreateNestedManyWithoutUserInput
+  finalLetters?: Prisma.FinalLetterUncheckedCreateNestedManyWithoutUserInput
   pollingConfig?: Prisma.PollingConfigUncheckedCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
@@ -718,6 +745,7 @@ export type UserUpdateWithoutSessionsInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   vault?: Prisma.VaultUpdateOneWithoutUserNestedInput
   trustees?: Prisma.TrusteeUpdateManyWithoutUserNestedInput
+  finalLetters?: Prisma.FinalLetterUpdateManyWithoutUserNestedInput
   pollingConfig?: Prisma.PollingConfigUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
@@ -736,6 +764,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   vault?: Prisma.VaultUncheckedUpdateOneWithoutUserNestedInput
   trustees?: Prisma.TrusteeUncheckedUpdateManyWithoutUserNestedInput
+  finalLetters?: Prisma.FinalLetterUncheckedUpdateManyWithoutUserNestedInput
   pollingConfig?: Prisma.PollingConfigUncheckedUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
@@ -754,6 +783,7 @@ export type UserCreateWithoutVaultInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   trustees?: Prisma.TrusteeCreateNestedManyWithoutUserInput
+  finalLetters?: Prisma.FinalLetterCreateNestedManyWithoutUserInput
   pollingConfig?: Prisma.PollingConfigCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
@@ -772,6 +802,7 @@ export type UserUncheckedCreateWithoutVaultInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   trustees?: Prisma.TrusteeUncheckedCreateNestedManyWithoutUserInput
+  finalLetters?: Prisma.FinalLetterUncheckedCreateNestedManyWithoutUserInput
   pollingConfig?: Prisma.PollingConfigUncheckedCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
@@ -806,6 +837,7 @@ export type UserUpdateWithoutVaultInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   trustees?: Prisma.TrusteeUpdateManyWithoutUserNestedInput
+  finalLetters?: Prisma.FinalLetterUpdateManyWithoutUserNestedInput
   pollingConfig?: Prisma.PollingConfigUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
@@ -824,6 +856,7 @@ export type UserUncheckedUpdateWithoutVaultInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   trustees?: Prisma.TrusteeUncheckedUpdateManyWithoutUserNestedInput
+  finalLetters?: Prisma.FinalLetterUncheckedUpdateManyWithoutUserNestedInput
   pollingConfig?: Prisma.PollingConfigUncheckedUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
@@ -842,6 +875,7 @@ export type UserCreateWithoutTrusteesInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   vault?: Prisma.VaultCreateNestedOneWithoutUserInput
+  finalLetters?: Prisma.FinalLetterCreateNestedManyWithoutUserInput
   pollingConfig?: Prisma.PollingConfigCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
@@ -860,6 +894,7 @@ export type UserUncheckedCreateWithoutTrusteesInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   vault?: Prisma.VaultUncheckedCreateNestedOneWithoutUserInput
+  finalLetters?: Prisma.FinalLetterUncheckedCreateNestedManyWithoutUserInput
   pollingConfig?: Prisma.PollingConfigUncheckedCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
@@ -894,6 +929,7 @@ export type UserUpdateWithoutTrusteesInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   vault?: Prisma.VaultUpdateOneWithoutUserNestedInput
+  finalLetters?: Prisma.FinalLetterUpdateManyWithoutUserNestedInput
   pollingConfig?: Prisma.PollingConfigUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
@@ -912,6 +948,99 @@ export type UserUncheckedUpdateWithoutTrusteesInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   vault?: Prisma.VaultUncheckedUpdateOneWithoutUserNestedInput
+  finalLetters?: Prisma.FinalLetterUncheckedUpdateManyWithoutUserNestedInput
+  pollingConfig?: Prisma.PollingConfigUncheckedUpdateOneWithoutUserNestedInput
+  checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserCreateWithoutFinalLettersInput = {
+  id?: string
+  name?: string | null
+  email: string
+  emailVerified?: Date | string | null
+  image?: string | null
+  password?: string | null
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  vault?: Prisma.VaultCreateNestedOneWithoutUserInput
+  trustees?: Prisma.TrusteeCreateNestedManyWithoutUserInput
+  pollingConfig?: Prisma.PollingConfigCreateNestedOneWithoutUserInput
+  checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutFinalLettersInput = {
+  id?: string
+  name?: string | null
+  email: string
+  emailVerified?: Date | string | null
+  image?: string | null
+  password?: string | null
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  vault?: Prisma.VaultUncheckedCreateNestedOneWithoutUserInput
+  trustees?: Prisma.TrusteeUncheckedCreateNestedManyWithoutUserInput
+  pollingConfig?: Prisma.PollingConfigUncheckedCreateNestedOneWithoutUserInput
+  checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutFinalLettersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFinalLettersInput, Prisma.UserUncheckedCreateWithoutFinalLettersInput>
+}
+
+export type UserUpsertWithoutFinalLettersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFinalLettersInput, Prisma.UserUncheckedUpdateWithoutFinalLettersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFinalLettersInput, Prisma.UserUncheckedCreateWithoutFinalLettersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFinalLettersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFinalLettersInput, Prisma.UserUncheckedUpdateWithoutFinalLettersInput>
+}
+
+export type UserUpdateWithoutFinalLettersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  vault?: Prisma.VaultUpdateOneWithoutUserNestedInput
+  trustees?: Prisma.TrusteeUpdateManyWithoutUserNestedInput
+  pollingConfig?: Prisma.PollingConfigUpdateOneWithoutUserNestedInput
+  checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFinalLettersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  vault?: Prisma.VaultUncheckedUpdateOneWithoutUserNestedInput
+  trustees?: Prisma.TrusteeUncheckedUpdateManyWithoutUserNestedInput
   pollingConfig?: Prisma.PollingConfigUncheckedUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
@@ -931,6 +1060,7 @@ export type UserCreateWithoutPollingConfigInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   vault?: Prisma.VaultCreateNestedOneWithoutUserInput
   trustees?: Prisma.TrusteeCreateNestedManyWithoutUserInput
+  finalLetters?: Prisma.FinalLetterCreateNestedManyWithoutUserInput
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
 }
@@ -949,6 +1079,7 @@ export type UserUncheckedCreateWithoutPollingConfigInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   vault?: Prisma.VaultUncheckedCreateNestedOneWithoutUserInput
   trustees?: Prisma.TrusteeUncheckedCreateNestedManyWithoutUserInput
+  finalLetters?: Prisma.FinalLetterUncheckedCreateNestedManyWithoutUserInput
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
 }
@@ -983,6 +1114,7 @@ export type UserUpdateWithoutPollingConfigInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   vault?: Prisma.VaultUpdateOneWithoutUserNestedInput
   trustees?: Prisma.TrusteeUpdateManyWithoutUserNestedInput
+  finalLetters?: Prisma.FinalLetterUpdateManyWithoutUserNestedInput
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
 }
@@ -1001,6 +1133,7 @@ export type UserUncheckedUpdateWithoutPollingConfigInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   vault?: Prisma.VaultUncheckedUpdateOneWithoutUserNestedInput
   trustees?: Prisma.TrusteeUncheckedUpdateManyWithoutUserNestedInput
+  finalLetters?: Prisma.FinalLetterUncheckedUpdateManyWithoutUserNestedInput
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
 }
@@ -1019,6 +1152,7 @@ export type UserCreateWithoutCheckInsInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   vault?: Prisma.VaultCreateNestedOneWithoutUserInput
   trustees?: Prisma.TrusteeCreateNestedManyWithoutUserInput
+  finalLetters?: Prisma.FinalLetterCreateNestedManyWithoutUserInput
   pollingConfig?: Prisma.PollingConfigCreateNestedOneWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
 }
@@ -1037,6 +1171,7 @@ export type UserUncheckedCreateWithoutCheckInsInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   vault?: Prisma.VaultUncheckedCreateNestedOneWithoutUserInput
   trustees?: Prisma.TrusteeUncheckedCreateNestedManyWithoutUserInput
+  finalLetters?: Prisma.FinalLetterUncheckedCreateNestedManyWithoutUserInput
   pollingConfig?: Prisma.PollingConfigUncheckedCreateNestedOneWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
 }
@@ -1071,6 +1206,7 @@ export type UserUpdateWithoutCheckInsInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   vault?: Prisma.VaultUpdateOneWithoutUserNestedInput
   trustees?: Prisma.TrusteeUpdateManyWithoutUserNestedInput
+  finalLetters?: Prisma.FinalLetterUpdateManyWithoutUserNestedInput
   pollingConfig?: Prisma.PollingConfigUpdateOneWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
 }
@@ -1089,6 +1225,7 @@ export type UserUncheckedUpdateWithoutCheckInsInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   vault?: Prisma.VaultUncheckedUpdateOneWithoutUserNestedInput
   trustees?: Prisma.TrusteeUncheckedUpdateManyWithoutUserNestedInput
+  finalLetters?: Prisma.FinalLetterUncheckedUpdateManyWithoutUserNestedInput
   pollingConfig?: Prisma.PollingConfigUncheckedUpdateOneWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
 }
@@ -1107,6 +1244,7 @@ export type UserCreateWithoutSubscriptionInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   vault?: Prisma.VaultCreateNestedOneWithoutUserInput
   trustees?: Prisma.TrusteeCreateNestedManyWithoutUserInput
+  finalLetters?: Prisma.FinalLetterCreateNestedManyWithoutUserInput
   pollingConfig?: Prisma.PollingConfigCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
 }
@@ -1125,6 +1263,7 @@ export type UserUncheckedCreateWithoutSubscriptionInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   vault?: Prisma.VaultUncheckedCreateNestedOneWithoutUserInput
   trustees?: Prisma.TrusteeUncheckedCreateNestedManyWithoutUserInput
+  finalLetters?: Prisma.FinalLetterUncheckedCreateNestedManyWithoutUserInput
   pollingConfig?: Prisma.PollingConfigUncheckedCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
 }
@@ -1159,6 +1298,7 @@ export type UserUpdateWithoutSubscriptionInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   vault?: Prisma.VaultUpdateOneWithoutUserNestedInput
   trustees?: Prisma.TrusteeUpdateManyWithoutUserNestedInput
+  finalLetters?: Prisma.FinalLetterUpdateManyWithoutUserNestedInput
   pollingConfig?: Prisma.PollingConfigUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
 }
@@ -1177,6 +1317,7 @@ export type UserUncheckedUpdateWithoutSubscriptionInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   vault?: Prisma.VaultUncheckedUpdateOneWithoutUserNestedInput
   trustees?: Prisma.TrusteeUncheckedUpdateManyWithoutUserNestedInput
+  finalLetters?: Prisma.FinalLetterUncheckedUpdateManyWithoutUserNestedInput
   pollingConfig?: Prisma.PollingConfigUncheckedUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1190,6 +1331,7 @@ export type UserCountOutputType = {
   accounts: number
   sessions: number
   trustees: number
+  finalLetters: number
   checkIns: number
 }
 
@@ -1197,6 +1339,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   trustees?: boolean | UserCountOutputTypeCountTrusteesArgs
+  finalLetters?: boolean | UserCountOutputTypeCountFinalLettersArgs
   checkIns?: boolean | UserCountOutputTypeCountCheckInsArgs
 }
 
@@ -1234,6 +1377,13 @@ export type UserCountOutputTypeCountTrusteesArgs<ExtArgs extends runtime.Types.E
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountFinalLettersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FinalLetterWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountCheckInsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CheckInWhereInput
 }
@@ -1253,6 +1403,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   vault?: boolean | Prisma.User$vaultArgs<ExtArgs>
   trustees?: boolean | Prisma.User$trusteesArgs<ExtArgs>
+  finalLetters?: boolean | Prisma.User$finalLettersArgs<ExtArgs>
   pollingConfig?: boolean | Prisma.User$pollingConfigArgs<ExtArgs>
   checkIns?: boolean | Prisma.User$checkInsArgs<ExtArgs>
   subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
@@ -1301,6 +1452,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   vault?: boolean | Prisma.User$vaultArgs<ExtArgs>
   trustees?: boolean | Prisma.User$trusteesArgs<ExtArgs>
+  finalLetters?: boolean | Prisma.User$finalLettersArgs<ExtArgs>
   pollingConfig?: boolean | Prisma.User$pollingConfigArgs<ExtArgs>
   checkIns?: boolean | Prisma.User$checkInsArgs<ExtArgs>
   subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
@@ -1316,6 +1468,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     vault: Prisma.$VaultPayload<ExtArgs> | null
     trustees: Prisma.$TrusteePayload<ExtArgs>[]
+    finalLetters: Prisma.$FinalLetterPayload<ExtArgs>[]
     pollingConfig: Prisma.$PollingConfigPayload<ExtArgs> | null
     checkIns: Prisma.$CheckInPayload<ExtArgs>[]
     subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
@@ -1728,6 +1881,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   vault<T extends Prisma.User$vaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$vaultArgs<ExtArgs>>): Prisma.Prisma__VaultClient<runtime.Types.Result.GetResult<Prisma.$VaultPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   trustees<T extends Prisma.User$trusteesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$trusteesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrusteePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  finalLetters<T extends Prisma.User$finalLettersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$finalLettersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FinalLetterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   pollingConfig<T extends Prisma.User$pollingConfigArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$pollingConfigArgs<ExtArgs>>): Prisma.Prisma__PollingConfigClient<runtime.Types.Result.GetResult<Prisma.$PollingConfigPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   checkIns<T extends Prisma.User$checkInsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$checkInsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscription<T extends Prisma.User$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$subscriptionArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -2245,6 +2399,30 @@ export type User$trusteesArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.TrusteeScalarFieldEnum | Prisma.TrusteeScalarFieldEnum[]
+}
+
+/**
+ * User.finalLetters
+ */
+export type User$finalLettersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FinalLetter
+   */
+  select?: Prisma.FinalLetterSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FinalLetter
+   */
+  omit?: Prisma.FinalLetterOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FinalLetterInclude<ExtArgs> | null
+  where?: Prisma.FinalLetterWhereInput
+  orderBy?: Prisma.FinalLetterOrderByWithRelationInput | Prisma.FinalLetterOrderByWithRelationInput[]
+  cursor?: Prisma.FinalLetterWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FinalLetterScalarFieldEnum | Prisma.FinalLetterScalarFieldEnum[]
 }
 
 /**

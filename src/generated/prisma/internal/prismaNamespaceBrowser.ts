@@ -59,6 +59,7 @@ export const ModelName = {
   VaultItem: 'VaultItem',
   Trustee: 'Trustee',
   TrusteeAccessLog: 'TrusteeAccessLog',
+  FinalLetter: 'FinalLetter',
   PollingConfig: 'PollingConfig',
   CheckIn: 'CheckIn',
   Subscription: 'Subscription',
@@ -193,6 +194,23 @@ export const TrusteeAccessLogScalarFieldEnum = {
 } as const
 
 export type TrusteeAccessLogScalarFieldEnum = (typeof TrusteeAccessLogScalarFieldEnum)[keyof typeof TrusteeAccessLogScalarFieldEnum]
+
+
+export const FinalLetterScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  recipientName: 'recipientName',
+  recipientEmail: 'recipientEmail',
+  subject: 'subject',
+  encryptedBody: 'encryptedBody',
+  nonce: 'nonce',
+  status: 'status',
+  deliveredAt: 'deliveredAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FinalLetterScalarFieldEnum = (typeof FinalLetterScalarFieldEnum)[keyof typeof FinalLetterScalarFieldEnum]
 
 
 export const PollingConfigScalarFieldEnum = {

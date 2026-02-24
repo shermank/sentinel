@@ -58,6 +58,11 @@ export type Trustee = Prisma.TrusteeModel
  */
 export type TrusteeAccessLog = Prisma.TrusteeAccessLogModel
 /**
+ * Model FinalLetter
+ * 
+ */
+export type FinalLetter = Prisma.FinalLetterModel
+/**
  * Model PollingConfig
  * 
  */

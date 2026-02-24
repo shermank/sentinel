@@ -37,6 +37,15 @@ export const TrusteeStatus = {
 export type TrusteeStatus = (typeof TrusteeStatus)[keyof typeof TrusteeStatus]
 
 
+export const FinalLetterStatus = {
+  DRAFT: 'DRAFT',
+  READY: 'READY',
+  DELIVERED: 'DELIVERED'
+} as const
+
+export type FinalLetterStatus = (typeof FinalLetterStatus)[keyof typeof FinalLetterStatus]
+
+
 export const PollingInterval = {
   WEEKLY: 'WEEKLY',
   BIWEEKLY: 'BIWEEKLY',

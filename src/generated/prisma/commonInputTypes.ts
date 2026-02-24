@@ -264,6 +264,23 @@ export type EnumTrusteeStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumTrusteeStatusFilter<$PrismaModel>
 }
 
+export type EnumFinalLetterStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.FinalLetterStatus | Prisma.EnumFinalLetterStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.FinalLetterStatus[] | Prisma.ListEnumFinalLetterStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FinalLetterStatus[] | Prisma.ListEnumFinalLetterStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFinalLetterStatusFilter<$PrismaModel> | $Enums.FinalLetterStatus
+}
+
+export type EnumFinalLetterStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FinalLetterStatus | Prisma.EnumFinalLetterStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.FinalLetterStatus[] | Prisma.ListEnumFinalLetterStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FinalLetterStatus[] | Prisma.ListEnumFinalLetterStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFinalLetterStatusWithAggregatesFilter<$PrismaModel> | $Enums.FinalLetterStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFinalLetterStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFinalLetterStatusFilter<$PrismaModel>
+}
+
 export type EnumPollingIntervalFilter<$PrismaModel = never> = {
   equals?: $Enums.PollingInterval | Prisma.EnumPollingIntervalFieldRefInput<$PrismaModel>
   in?: $Enums.PollingInterval[] | Prisma.ListEnumPollingIntervalFieldRefInput<$PrismaModel>
@@ -640,6 +657,23 @@ export type NestedEnumTrusteeStatusWithAggregatesFilter<$PrismaModel = never> = 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumTrusteeStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumTrusteeStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumFinalLetterStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.FinalLetterStatus | Prisma.EnumFinalLetterStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.FinalLetterStatus[] | Prisma.ListEnumFinalLetterStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FinalLetterStatus[] | Prisma.ListEnumFinalLetterStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFinalLetterStatusFilter<$PrismaModel> | $Enums.FinalLetterStatus
+}
+
+export type NestedEnumFinalLetterStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FinalLetterStatus | Prisma.EnumFinalLetterStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.FinalLetterStatus[] | Prisma.ListEnumFinalLetterStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FinalLetterStatus[] | Prisma.ListEnumFinalLetterStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFinalLetterStatusWithAggregatesFilter<$PrismaModel> | $Enums.FinalLetterStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFinalLetterStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFinalLetterStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumPollingIntervalFilter<$PrismaModel = never> = {
