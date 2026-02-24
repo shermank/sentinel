@@ -4,7 +4,7 @@ import { Shield, Lock, Users, Clock, CheckCircle, ArrowRight } from "lucide-reac
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 text-white">
+    <div className="min-h-screen bg-linear-to-b from-slate-900 to-slate-800 text-white">
       <header className="container mx-auto px-4 py-6">
         <nav className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
@@ -26,7 +26,7 @@ export default function HomePage() {
       </header>
 
       <section className="container mx-auto px-4 py-20 text-center">
-        <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-white to-indigo-300 bg-clip-text text-transparent">
+        <h1 className="text-5xl font-bold mb-6 bg-linear-to-r from-white to-indigo-300 bg-clip-text text-transparent">
           Your Digital Legacy, Secured
         </h1>
         <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">

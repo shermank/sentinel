@@ -11,7 +11,7 @@ type VerificationStatus = "loading" | "success" | "error";
 export default function TrusteeVerifyPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-linear-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
         <div className="w-full max-w-md bg-slate-800 rounded-lg shadow-lg p-8">
           <div className="text-center">
             <Shield className="h-12 w-12 text-indigo-400 mx-auto mb-4" />
@@ -69,7 +69,7 @@ function TrusteeVerifyContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-slate-800 rounded-lg shadow-lg overflow-hidden">
         <div className="bg-indigo-600 text-white p-6 text-center">
           <Shield className="h-12 w-12 mx-auto mb-2" />
