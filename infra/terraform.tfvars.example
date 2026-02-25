@@ -1,0 +1,44 @@
+# Copy this file to terraform.tfvars and fill in your values
+# DO NOT commit terraform.tfvars to version control
+
+# AWS Configuration
+aws_region = "us-east-1"
+environment = "production"
+
+# Domain (optional - leave empty to use ALB DNS)
+domain_name     = ""
+certificate_arn = ""
+
+# Sizing (these are minimal defaults, scale up as needed)
+db_instance_class    = "db.t3.micro"
+redis_node_type      = "cache.t3.micro"
+app_cpu              = 512
+app_memory           = 1024
+app_desired_count    = 2
+worker_cpu           = 256
+worker_memory        = 512
+worker_desired_count = 1
+
+# Application Secrets
+auth_secret    = "GENERATE_WITH: openssl rand -base64 32"
+encryption_key = "GENERATE_WITH: openssl rand -hex 32"
+
+# Google OAuth (optional)
+auth_google_id     = ""
+auth_google_secret = ""
+
+# Email
+resend_api_key = ""
+email_from     = "noreply@yourdomain.com"
+
+# Twilio SMS (optional)
+twilio_account_sid  = ""
+twilio_auth_token   = ""
+twilio_phone_number = ""
+
+# Stripe (optional)
+stripe_secret_key       = ""
+stripe_publishable_key  = ""
+stripe_webhook_secret   = ""
+stripe_price_id_monthly = ""
+stripe_price_id_yearly  = ""

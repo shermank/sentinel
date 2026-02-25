@@ -52,6 +52,7 @@ export const authConfig: NextAuthConfig = {
           email: user.email,
           name: user.name,
           image: user.image,
+          role: user.role,
         };
       },
     }),
@@ -67,6 +68,7 @@ export const authConfig: NextAuthConfig = {
     async jwt({ token, user, trigger, session }) {
       if (user) {
         token.id = user.id;
+        token.role = (user as { role?: string }).role;
       }
 
       // Handle session updates
@@ -80,6 +82,7 @@ export const authConfig: NextAuthConfig = {
     async session({ session, token }) {
       if (token && session.user) {
         session.user.id = token.id as string;
+        session.user.role = token.role as string;
       }
       return session;
     },
@@ -94,9 +97,14 @@ export const authConfig: NextAuthConfig = {
         where: { id: user.id },
       });
 
-      // For now, allow all credential sign-ins
-      // In production, you might want to check emailVerified
-      return !!existingUser;
+      if (!existingUser) return false;
+
+      // Require email verification for credentials sign-in
+      if (!existingUser.emailVerified) {
+        return false;
+      }
+
+      return true;
     },
   },
   session: {
