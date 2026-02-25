@@ -71,8 +71,8 @@ export const authConfig: NextAuthConfig = {
         token.role = (user as { role?: string }).role;
       }
 
-      // Load role from DB if missing (existing sessions, OAuth sign-ins)
-      if (token.id && !token.role) {
+      // Always refresh role from DB to pick up role changes (e.g. admin promotion)
+      if (token.id) {
         const dbUser = await prisma.user.findUnique({
           where: { id: token.id as string },
           select: { role: true },
