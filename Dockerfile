@@ -20,8 +20,8 @@ ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
 ARG NEXT_PUBLIC_TURNSTILE_SITE_KEY
 ENV NEXT_PUBLIC_TURNSTILE_SITE_KEY=$NEXT_PUBLIC_TURNSTILE_SITE_KEY
 
-RUN npx prisma generate
-RUN npx next build --webpack
+RUN ./node_modules/.bin/prisma generate
+RUN ./node_modules/.bin/next build
 
 # Production image, copy all the files and run next
 FROM base AS runner
