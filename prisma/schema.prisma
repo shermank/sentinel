@@ -2,12 +2,12 @@
 // Digital Dead Man's Switch / Digital Legacy Service
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 // ============================================
@@ -21,7 +21,7 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String?   // For email/password auth (hashed)
-  role          String    @default("USER")
+  role          UserRole  @default(USER)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
