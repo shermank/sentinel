@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Shield, Loader2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { signUpWithCredentials } from "@/lib/auth/actions";
+import { Turnstile } from "@marsidev/react-turnstile";
 
 export default function SignupPage() {
   const [name, setName] = useState("");
@@ -17,6 +18,8 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
 
@@ -32,17 +35,22 @@ export default function SignupPage() {
       return;
     }
 
+    if (!captchaToken) {
+      toast({
+        title: "Error",
+        description: "Please complete the CAPTCHA verification",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const result = await signUpWithCredentials({ name, email, password });
+      const result = await signUpWithCredentials({ name, email, password, captchaToken });
 
       if (result.success) {
-        toast({
-          title: "Account created",
-          description: "Please sign in with your credentials",
-        });
-        router.push("/login");
+        router.push("/verify-email?pending=true");
       } else {
         toast({
           title: "Error",
@@ -62,7 +70,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <Link href="/" className="flex items-center justify-center space-x-2 mb-4">
@@ -120,6 +128,18 @@ export default function SignupPage() {
                 required
               />
             </div>
+            <Turnstile
+              siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+              onSuccess={setCaptchaToken}
+              onError={() => setCaptchaError(true)}
+              onExpire={() => setCaptchaToken(null)}
+              options={{ theme: "dark" }}
+            />
+            {captchaError && (
+              <p className="text-sm text-red-500">
+                CAPTCHA failed to load. Please refresh the page and try again.
+              </p>
+            )}
             <Button type="submit" className="w-full" disabled={loading}>
               {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Create Account

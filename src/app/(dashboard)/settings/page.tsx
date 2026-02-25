@@ -125,7 +125,7 @@ export default function SettingsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">Settings</h1>
-        <p className="text-slate-600">Manage your polling and subscription settings</p>
+        <p className="text-slate-400">Manage your polling and subscription settings</p>
       </div>
 
       <Tabs defaultValue="polling">
@@ -170,7 +170,7 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <Label>Email Notifications</Label>
-                  <p className="text-sm text-slate-500">Receive check-in reminders via email</p>
+                  <p className="text-sm text-slate-400">Receive check-in reminders via email</p>
                 </div>
                 <Switch
                   checked={pollingConfig?.emailEnabled ?? true}
@@ -182,7 +182,7 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <Label>SMS Notifications {!isPremium && "(Premium)"}</Label>
-                  <p className="text-sm text-slate-500">Receive check-in reminders via SMS</p>
+                  <p className="text-sm text-slate-400">Receive check-in reminders via SMS</p>
                 </div>
                 <Switch
                   checked={pollingConfig?.smsEnabled ?? false}
@@ -201,11 +201,11 @@ export default function SettingsPage() {
             <CardContent className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label className="text-slate-500">Current Status</Label>
+                  <Label className="text-slate-400">Current Status</Label>
                   <p className="font-medium">{pollingConfig?.status || "Not configured"}</p>
                 </div>
                 <div>
-                  <Label className="text-slate-500">Next Check-in Due</Label>
+                  <Label className="text-slate-400">Next Check-in Due</Label>
                   <p className="font-medium">
                     {pollingConfig?.nextCheckInDue
                       ? new Date(pollingConfig.nextCheckInDue).toLocaleDateString()
@@ -213,7 +213,7 @@ export default function SettingsPage() {
                   </p>
                 </div>
                 <div>
-                  <Label className="text-slate-500">Last Check-in</Label>
+                  <Label className="text-slate-400">Last Check-in</Label>
                   <p className="font-medium">
                     {pollingConfig?.lastCheckInAt
                       ? new Date(pollingConfig.lastCheckInAt).toLocaleDateString()
@@ -238,7 +238,7 @@ export default function SettingsPage() {
                     {subscription?.plan || "FREE"}
                     {isPremium && <CheckCircle className="ml-2 h-5 w-5 text-green-500" />}
                   </p>
-                  <p className="text-slate-500">
+                  <p className="text-slate-400">
                     {isPremium
                       ? `Renews ${subscription?.currentPeriodEnd ? new Date(subscription.currentPeriodEnd).toLocaleDateString() : "soon"}`
                       : "Limited features"}
@@ -263,16 +263,16 @@ export default function SettingsPage() {
               <div className="grid md:grid-cols-2 gap-6">
                 <div className={`p-4 rounded-lg border ${!isPremium ? "border-indigo-500" : ""}`}>
                   <h3 className="font-semibold mb-2">Free</h3>
-                  <ul className="space-y-2 text-sm text-slate-600">
+                  <ul className="space-y-2 text-sm text-slate-400">
                     <li>1 Trustee</li>
                     <li>Monthly check-ins only</li>
                     <li>Email notifications</li>
                     <li>Unlimited vault items</li>
                   </ul>
                 </div>
-                <div className={`p-4 rounded-lg border ${isPremium ? "border-indigo-500 bg-indigo-50" : ""}`}>
+                <div className={`p-4 rounded-lg border ${isPremium ? "border-indigo-500 bg-indigo-950" : ""}`}>
                   <h3 className="font-semibold mb-2">Premium - $9/mo</h3>
-                  <ul className="space-y-2 text-sm text-slate-600">
+                  <ul className="space-y-2 text-sm text-slate-400">
                     <li>Unlimited trustees</li>
                     <li>Weekly/Bi-weekly check-ins</li>
                     <li>Email + SMS notifications</li>

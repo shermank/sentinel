@@ -112,17 +112,17 @@ export default async function DashboardPage() {
 
   const needsSetup = !vault;
   const statusColor = pollingConfig?.status === "ACTIVE"
-    ? "text-green-600"
+    ? "text-green-400"
     : pollingConfig?.status === "TRIGGERED"
-    ? "text-red-600"
-    : "text-yellow-600";
+    ? "text-red-400"
+    : "text-yellow-400";
 
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Welcome back, {session.user.name?.split(" ")[0]}</h1>
-          <p className="text-slate-600">Here&apos;s your digital legacy overview</p>
+          <p className="text-slate-400">Here&apos;s your digital legacy overview</p>
         </div>
         {pollingConfig?.status === "ACTIVE" && (
           <CheckInButton />
@@ -130,15 +130,15 @@ export default async function DashboardPage() {
       </div>
 
       {needsSetup && (
-        <Card className="border-indigo-200 bg-indigo-50">
+        <Card className="border-indigo-800 bg-indigo-950">
           <CardContent className="flex items-center justify-between p-6">
             <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center">
-                <Lock className="h-6 w-6 text-indigo-600" />
+              <div className="w-12 h-12 bg-indigo-900 rounded-full flex items-center justify-center">
+                <Lock className="h-6 w-6 text-indigo-400" />
               </div>
               <div>
                 <h3 className="font-semibold">Set Up Your Vault</h3>
-                <p className="text-sm text-slate-600">
+                <p className="text-sm text-slate-400">
                   Create your encrypted vault to store passwords and documents
                 </p>
               </div>
@@ -156,22 +156,22 @@ export default async function DashboardPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Vault Items</CardTitle>
-            <Lock className="h-4 w-4 text-slate-500" />
+            <Lock className="h-4 w-4 text-slate-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{vault?._count.items || 0}</div>
-            <p className="text-xs text-slate-500">Encrypted items stored</p>
+            <p className="text-xs text-slate-400">Encrypted items stored</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Trustees</CardTitle>
-            <Users className="h-4 w-4 text-slate-500" />
+            <Users className="h-4 w-4 text-slate-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{trusteeCount}</div>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-400">
               {subscription?.plan === "FREE" ? "1 max (Free)" : "Unlimited (Premium)"}
             </p>
           </CardContent>
@@ -180,7 +180,7 @@ export default async function DashboardPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Next Check-in</CardTitle>
-            <Clock className="h-4 w-4 text-slate-500" />
+            <Clock className="h-4 w-4 text-slate-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
@@ -188,7 +188,7 @@ export default async function DashboardPage() {
                 ? formatRelativeTime(pollingConfig.nextCheckInDue)
                 : "Not set"}
             </div>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-400">
               {pollingConfig?.interval?.toLowerCase() || "monthly"} polling
             </p>
           </CardContent>
@@ -207,7 +207,7 @@ export default async function DashboardPage() {
             <div className={`text-2xl font-bold ${statusColor}`}>
               {pollingConfig?.status || "SETUP"}
             </div>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-400">
               {pollingConfig?.currentMissedCheckIns || 0} missed check-ins
             </p>
           </CardContent>
@@ -253,7 +253,7 @@ export default async function DashboardPage() {
                 <p className="text-2xl font-bold">
                   {subscription?.plan || "FREE"}
                 </p>
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-slate-400">
                   {subscription?.plan === "PREMIUM"
                     ? "All features unlocked"
                     : "Limited features"}

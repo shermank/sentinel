@@ -36,6 +36,10 @@ deploy/azure/azure.env
 # Vercel
 .vercel
 
+# Serwist (generated service worker)
+public/sw.js
+public/sw.js.map
+
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
@@ -50,3 +54,14 @@ prisma/migrations/**/migration_lock.toml
 # Logs
 logs
 *.log
+
+# Redis
+dump.rdb
+
+# Terraform
+infra/.terraform/
+infra/*.tfstate
+infra/*.tfstate.backup
+infra/*.tfvars
+infra/.terraform.lock.hcl
+infra/*.tfplan

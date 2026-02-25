@@ -9,6 +9,7 @@
  * - SMS sending
  */
 
+import "dotenv/config";
 import { Worker } from "bullmq";
 import {
   connection,
@@ -25,6 +26,7 @@ import {
   checkInReminderEmail,
   escalationWarningEmail,
   trusteeNotificationEmail,
+  finalLetterDeliveryEmail,
 } from "../src/lib/email";
 import {
   sendSms,
@@ -291,6 +293,35 @@ const deathProtocolWorker = new Worker<DeathProtocolJobData>(
       });
     }
 
+    // Deliver final letters
+    const readyLetters = await prisma.finalLetter.findMany({
+      where: { userId: user.id, status: "READY" },
+    });
+
+    for (const letter of readyLetters) {
+      try {
+        const emailData = finalLetterDeliveryEmail(
+          letter.recipientName,
+          user.name || "A loved one",
+          letter.subject
+        );
+        emailData.to = letter.recipientEmail;
+        await sendEmail(emailData);
+
+        await prisma.finalLetter.update({
+          where: { id: letter.id },
+          data: {
+            status: "DELIVERED",
+            deliveredAt: new Date(),
+          },
+        });
+
+        console.log(`Final letter delivered to ${letter.recipientEmail}`);
+      } catch (err) {
+        console.error(`Failed to deliver letter ${letter.id}:`, err);
+      }
+    }
+
     // Log the trigger
     await prisma.auditLog.create({
       data: {
@@ -299,13 +330,14 @@ const deathProtocolWorker = new Worker<DeathProtocolJobData>(
         resource: "user",
         details: {
           trusteesNotified: user.trustees.length,
+          lettersDelivered: readyLetters.length,
           triggeredAt: job.data.triggeredAt,
         },
       },
     });
 
     console.log(
-      `Death protocol completed for user ${user.id}. ${user.trustees.length} trustees notified.`
+      `Death protocol completed for user ${user.id}. ${user.trustees.length} trustees notified, ${readyLetters.length} letters delivered.`
     );
   },
   { connection, concurrency: 1 } // Only process one at a time for safety

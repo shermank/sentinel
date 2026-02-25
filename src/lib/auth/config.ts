@@ -87,7 +87,7 @@ export const authConfig: NextAuthConfig = {
       return session;
     },
     async signIn({ user, account }) {
-      // Allow OAuth sign-ins
+      // Allow OAuth sign-ins (email is verified by OAuth provider)
       if (account?.provider !== "credentials") {
         return true;
       }
@@ -97,11 +97,13 @@ export const authConfig: NextAuthConfig = {
         where: { id: user.id },
       });
 
-      if (!existingUser) return false;
-
-      // Require email verification for credentials sign-in
-      if (!existingUser.emailVerified) {
+      if (!existingUser) {
         return false;
+      }
+
+      // Block sign-in if email is not verified
+      if (!existingUser.emailVerified) {
+        return "/verify-email?pending=true";
       }
 
       return true;

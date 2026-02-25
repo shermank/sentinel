@@ -165,7 +165,7 @@ export default function VaultPage() {
               {unlocking && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Create Vault
             </Button>
-            <p className="text-xs text-slate-500 text-center">
+            <p className="text-xs text-slate-400 text-center">
               Warning: If you forget this password, your vault cannot be recovered.
             </p>
           </CardContent>
@@ -290,7 +290,7 @@ function VaultContent({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Vault</h1>
-          <p className="text-slate-600">Your encrypted items ({vault.items.length})</p>
+          <p className="text-slate-400">Your encrypted items ({vault.items.length})</p>
         </div>
         <Dialog>
           <DialogTrigger asChild>
@@ -338,7 +338,7 @@ function VaultContent({
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-12">
               <Lock className="h-12 w-12 text-slate-300 mb-4" />
-              <p className="text-slate-500">Your vault is empty</p>
+              <p className="text-slate-400">Your vault is empty</p>
               <p className="text-sm text-slate-400">Add passwords, messages, or secrets</p>
             </CardContent>
           </Card>
@@ -347,16 +347,16 @@ function VaultContent({
             <Card key={item.id}>
               <CardContent className="flex items-center justify-between p-4">
                 <div className="flex items-center space-x-4">
-                  <div className="p-2 bg-slate-100 rounded-lg">{getIcon(item.type)}</div>
+                  <div className="p-2 bg-slate-800 rounded-lg">{getIcon(item.type)}</div>
                   <div>
                     <p className="font-medium">{item.type}</p>
-                    <p className="text-sm text-slate-500">Added {new Date(item.createdAt).toLocaleDateString()}</p>
+                    <p className="text-sm text-slate-400">Added {new Date(item.createdAt).toLocaleDateString()}</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
                   {decryptedItems[item.id] ? (
                     <div className="flex items-center space-x-2">
-                      <code className="bg-slate-100 px-2 py-1 rounded text-sm max-w-[200px] truncate">
+                      <code className="bg-slate-800 px-2 py-1 rounded text-sm max-w-[200px] truncate">
                         {decryptedItems[item.id]}
                       </code>
                       <Button variant="ghost" size="icon" onClick={() => setDecryptedItems((p) => { const n = {...p}; delete n[item.id]; return n; })}>

@@ -161,7 +161,7 @@ export async function PUT(
         action: "POLLING_CONFIG_UPDATED",
         resource: "polling_config",
         resourceId: pollingConfig.id,
-        details: validatedData,
+        details: { ...validatedData },
       },
     });
 
@@ -176,7 +176,7 @@ export async function PUT(
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { success: false, error: error.errors[0].message },
+        { success: false, error: error.issues[0].message },
         { status: 400 }
       );
     }

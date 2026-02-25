@@ -4,6 +4,8 @@ import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/db";
 import { z } from "zod";
 import { signIn } from ".";
+import { generateUrlSafeToken } from "@/lib/crypto/server";
+import { sendEmail, verificationEmail } from "@/lib/email";
 
 const signUpSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -15,6 +17,7 @@ const signUpSchema = z.object({
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
       "Password must contain at least one uppercase letter, one lowercase letter, and one number"
     ),
+  captchaToken: z.string().min(1, "CAPTCHA verification is required"),
 });
 
 const signInSchema = z.object({
@@ -28,6 +31,7 @@ export type SignInInput = z.infer<typeof signInSchema>;
 export interface AuthResult {
   success: boolean;
   error?: string;
+  message?: string;
 }
 
 /**
@@ -39,6 +43,25 @@ export async function signUpWithCredentials(
   try {
     // Validate input
     const validatedInput = signUpSchema.parse(input);
+
+    // Verify Turnstile CAPTCHA
+    const turnstileRes = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          secret: process.env.TURNSTILE_SECRET_KEY,
+          response: validatedInput.captchaToken,
+        }),
+      }
+    );
+    const turnstileData = await turnstileRes.json();
+    if (!turnstileData.success) {
+      console.error("Turnstile verification failed:", JSON.stringify(turnstileData));
+      console.error("Secret key present:", !!process.env.TURNSTILE_SECRET_KEY);
+      return { success: false, error: "CAPTCHA verification failed. Please try again." };
+    }
 
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({
@@ -81,10 +104,35 @@ export async function signUpWithCredentials(
       },
     });
 
-    return { success: true };
+    // Generate email verification token
+    const verificationToken = generateUrlSafeToken();
+    const expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+
+    await prisma.verificationToken.create({
+      data: {
+        identifier: validatedInput.email,
+        token: verificationToken,
+        expires,
+      },
+    });
+
+    // Send verification email
+    const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+    const verificationUrl = `${APP_URL}/verify-email?token=${verificationToken}`;
+    const emailContent = verificationEmail(validatedInput.name, verificationUrl);
+
+    await sendEmail({
+      ...emailContent,
+      to: validatedInput.email,
+    });
+
+    return {
+      success: true,
+      message: "Please check your email to verify your account before signing in.",
+    };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return { success: false, error: error.errors[0].message };
+      return { success: false, error: error.issues[0].message };
     }
     console.error("Sign up error:", error);
     return { success: false, error: "An unexpected error occurred" };
@@ -114,7 +162,7 @@ export async function signInWithCredentials(
     return { success: true };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return { success: false, error: error.errors[0].message };
+      return { success: false, error: error.issues[0].message };
     }
     // NextAuth throws an error for invalid credentials
     return { success: false, error: "Invalid email or password" };

@@ -92,13 +92,13 @@ export default function TrusteesPage() {
 
   const getStatusBadge = (status: string) => {
     const colors: Record<string, string> = {
-      PENDING: "bg-yellow-100 text-yellow-800",
-      VERIFIED: "bg-blue-100 text-blue-800",
-      ACTIVE: "bg-green-100 text-green-800",
-      REVOKED: "bg-red-100 text-red-800",
+      PENDING: "bg-yellow-900/50 text-yellow-300",
+      VERIFIED: "bg-blue-900/50 text-blue-300",
+      ACTIVE: "bg-green-900/50 text-green-300",
+      REVOKED: "bg-red-900/50 text-red-300",
     };
     return (
-      <span className={`px-2 py-1 rounded-full text-xs font-medium ${colors[status] || "bg-gray-100"}`}>
+      <span className={`px-2 py-1 rounded-full text-xs font-medium ${colors[status] || "bg-gray-800"}`}>
         {status}
       </span>
     );
@@ -117,7 +117,7 @@ export default function TrusteesPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Trustees</h1>
-          <p className="text-slate-600">People who can access your vault if needed</p>
+          <p className="text-slate-400">People who can access your vault if needed</p>
         </div>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
@@ -169,7 +169,7 @@ export default function TrusteesPage() {
           {trustees.length === 0 ? (
             <div className="text-center py-12">
               <Users className="h-12 w-12 text-slate-300 mx-auto mb-4" />
-              <p className="text-slate-500">No trustees added yet</p>
+              <p className="text-slate-400">No trustees added yet</p>
               <p className="text-sm text-slate-400">Add someone you trust to receive your digital legacy</p>
             </div>
           ) : (
@@ -180,8 +180,8 @@ export default function TrusteesPage() {
                   className="flex items-center justify-between p-4 border rounded-lg"
                 >
                   <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center">
-                      <span className="text-indigo-600 font-semibold">
+                    <div className="w-10 h-10 bg-indigo-900 rounded-full flex items-center justify-center">
+                      <span className="text-indigo-300 font-semibold">
                         {trustee.name.charAt(0).toUpperCase()}
                       </span>
                     </div>
@@ -190,7 +190,7 @@ export default function TrusteesPage() {
                         <p className="font-medium">{trustee.name}</p>
                         {getStatusBadge(trustee.status)}
                       </div>
-                      <div className="flex items-center space-x-4 text-sm text-slate-500">
+                      <div className="flex items-center space-x-4 text-sm text-slate-400">
                         <span className="flex items-center">
                           <Mail className="h-3 w-3 mr-1" /> {trustee.email}
                         </span>

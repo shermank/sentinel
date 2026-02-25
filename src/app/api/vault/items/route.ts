@@ -3,14 +3,14 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { z } from "zod";
 import type { ApiResponse, VaultItemInput } from "@/types";
-import type { VaultItem } from "@prisma/client";
+import type { VaultItem, Prisma } from "@/generated/prisma/client";
 
 const createItemSchema = z.object({
   type: z.enum(["PASSWORD", "DOCUMENT", "MESSAGE", "SECRET"]),
   name: z.string().min(1, "Name is required"),
   encryptedData: z.string().min(1, "Encrypted data is required"),
   nonce: z.string().min(1, "Nonce is required"),
-  metadata: z.record(z.unknown()).optional(),
+  metadata: z.record(z.string(), z.unknown()).optional(),
 });
 
 /**
@@ -90,7 +90,7 @@ export async function POST(
         name: validatedData.name,
         encryptedData: validatedData.encryptedData,
         nonce: validatedData.nonce,
-        metadata: validatedData.metadata || {},
+        metadata: (validatedData.metadata || {}) as Prisma.InputJsonValue,
       },
     });
 
@@ -109,7 +109,7 @@ export async function POST(
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { success: false, error: error.errors[0].message },
+        { success: false, error: error.issues[0].message },
         { status: 400 }
       );
     }

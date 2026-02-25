@@ -130,7 +130,7 @@ function TrusteeAccessContent() {
       <Card className="w-full max-w-md">
         <CardContent className="py-12 text-center">
           <Loader2 className="h-12 w-12 animate-spin text-indigo-600 mx-auto" />
-          <p className="mt-4 text-slate-500">Verifying access...</p>
+          <p className="mt-4 text-slate-400">Verifying access...</p>
         </CardContent>
       </Card>
     );
@@ -141,8 +141,8 @@ function TrusteeAccessContent() {
       <Card className="w-full max-w-md">
         <CardContent className="py-12 text-center">
           <AlertTriangle className="h-12 w-12 text-red-500 mx-auto" />
-          <h3 className="mt-4 font-semibold text-red-600">Access Denied</h3>
-          <p className="text-slate-500">{error}</p>
+          <h3 className="mt-4 font-semibold text-red-400">Access Denied</h3>
+          <p className="text-slate-400">{error}</p>
         </CardContent>
       </Card>
     );
@@ -159,8 +159,8 @@ function TrusteeAccessContent() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-            <p className="text-sm text-yellow-800">
+          <div className="bg-yellow-900/30 border border-yellow-700 rounded-lg p-4">
+            <p className="text-sm text-yellow-200">
               <strong>Important:</strong> This vault contains sensitive information that was entrusted to you.
               Please handle it with care and respect.
             </p>
@@ -193,7 +193,7 @@ function TrusteeAccessContent() {
               placeholder="Enter the vault password"
               onKeyDown={(e) => e.key === "Enter" && handleUnlock()}
             />
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-400">
               This is the password {accessData.userName} used to secure their vault.
               They may have shared it with you separately.
             </p>
@@ -225,7 +225,7 @@ function TrusteeAccessContent() {
             <Card>
               <CardContent className="py-12 text-center">
                 <Lock className="h-12 w-12 text-slate-300 mx-auto" />
-                <p className="mt-4 text-slate-500">The vault is empty</p>
+                <p className="mt-4 text-slate-400">The vault is empty</p>
               </CardContent>
             </Card>
           ) : (
@@ -234,10 +234,10 @@ function TrusteeAccessContent() {
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <div className="p-2 bg-slate-100 rounded-lg">{getIcon(item.type)}</div>
+                      <div className="p-2 bg-slate-800 rounded-lg">{getIcon(item.type)}</div>
                       <div>
                         <p className="font-medium">{item.type}</p>
-                        <p className="text-xs text-slate-500">
+                        <p className="text-xs text-slate-400">
                           Added {new Date(item.createdAt).toLocaleDateString()}
                         </p>
                       </div>
@@ -245,7 +245,7 @@ function TrusteeAccessContent() {
                     <div className="flex items-center space-x-2">
                       {decryptedItems[item.id] ? (
                         <div className="flex items-center space-x-2">
-                          <div className="bg-slate-100 px-3 py-2 rounded max-w-xs">
+                          <div className="bg-slate-800 px-3 py-2 rounded max-w-xs">
                             <pre className="text-sm whitespace-pre-wrap break-all">
                               {decryptedItems[item.id]}
                             </pre>
@@ -279,7 +279,7 @@ function TrusteeAccessContent() {
 
 export default function TrusteeAccessPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
       <Suspense fallback={
         <Card className="w-full max-w-md">
           <CardContent className="py-12 text-center">

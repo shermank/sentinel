@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { z } from "zod";
 import { generateUrlSafeToken } from "@/lib/crypto/server";
+import { sendEmail, trusteeInvitationEmail } from "@/lib/email";
 import type { ApiResponse, CreateTrusteeInput, TrusteeWithLogs } from "@/types";
 
 const createTrusteeSchema = z.object({
@@ -27,7 +28,10 @@ export async function GET(): Promise<NextResponse<ApiResponse<TrusteeWithLogs[]>
     }
 
     const trustees = await prisma.trustee.findMany({
-      where: { userId: session.user.id },
+      where: {
+        userId: session.user.id,
+        status: { not: "REVOKED" },
+      },
       include: {
         accessLogs: {
           orderBy: { createdAt: "desc" },
@@ -135,14 +139,28 @@ export async function POST(
       },
     });
 
-    // TODO: Send invitation email to trustee
-    // await sendTrusteeInvitation(trustee.email, trustee.name, verificationToken);
+    // Send invitation email to trustee
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: { name: true },
+    });
+    const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+    const verificationUrl = `${APP_URL}/trustee/verify?token=${verificationToken}`;
+    const emailContent = trusteeInvitationEmail(
+      trustee.name,
+      user?.name || "A user",
+      verificationUrl
+    );
+    await sendEmail({
+      ...emailContent,
+      to: trustee.email,
+    }).catch((err) => console.error("Failed to send trustee invitation:", err));
 
     return NextResponse.json({ success: true, data: trustee }, { status: 201 });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { success: false, error: error.errors[0].message },
+        { success: false, error: error.issues[0].message },
         { status: 400 }
       );
     }

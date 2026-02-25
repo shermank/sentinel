@@ -83,6 +83,7 @@ export function AdminUserTable() {
           title: "Check-in Validated",
           description: `Successfully validated check-in for ${userEmail}`,
         });
+        // Refresh the user list
         fetchUsers();
       } else {
         toast({
