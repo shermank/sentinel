@@ -3,10 +3,13 @@
  * Run with: npx ts-node scripts/create-admin.ts
  */
 
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../src/generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 import bcrypt from "bcryptjs";
 
-const prisma = new PrismaClient();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
+const prisma = new PrismaClient({ adapter } as any);
 
 async function main() {
   const adminEmail = process.env.ADMIN_EMAIL || "admin@eternal-sentinel.com";
