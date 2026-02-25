@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { CheckCircle, Loader2, RefreshCw, AlertTriangle, Clock, Trash2, Zap } from "lucide-react";
+import { CheckCircle, Loader2, RefreshCw, AlertTriangle, Clock, Trash2, Zap, ShieldCheck, ShieldOff } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,6 +21,7 @@ interface UserData {
   id: string;
   name: string | null;
   email: string;
+  role: string;
   createdAt: string;
   status: string;
   lastCheckInAt: string | null;
@@ -36,6 +37,7 @@ export function AdminUserTable() {
   const [validatingUser, setValidatingUser] = useState<string | null>(null);
   const [deletingUser, setDeletingUser] = useState<string | null>(null);
   const [triggeringUser, setTriggeringUser] = useState<string | null>(null);
+  const [togglingRole, setTogglingRole] = useState<string | null>(null);
   const { toast } = useToast();
 
   const fetchUsers = async () => {
@@ -171,6 +173,41 @@ export function AdminUserTable() {
     }
   };
 
+  const handleToggleRole = async (userId: string, userEmail: string, currentRole: string) => {
+    setTogglingRole(userId);
+    const newRole = currentRole === "ADMIN" ? "USER" : "ADMIN";
+    try {
+      const response = await fetch("/api/admin/role", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, role: newRole }),
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        toast({
+          title: "Role Updated",
+          description: `${userEmail} is now ${newRole}`,
+        });
+        fetchUsers();
+      } else {
+        toast({
+          title: "Error",
+          description: data.error || "Failed to update role",
+          variant: "destructive",
+        });
+      }
+    } catch {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    } finally {
+      setTogglingRole(null);
+    }
+  };
+
   const getStatusBadge = (status: string) => {
     const statusConfig: Record<string, { color: string; icon: React.ReactNode }> = {
       ACTIVE: { color: "bg-green-900/50 text-green-300", icon: <CheckCircle className="h-3 w-3" /> },
@@ -222,6 +259,7 @@ export function AdminUserTable() {
           <thead>
             <tr className="border-b text-left">
               <th className="pb-3 font-medium text-slate-400">User</th>
+              <th className="pb-3 font-medium text-slate-400">Role</th>
               <th className="pb-3 font-medium text-slate-400">Status</th>
               <th className="pb-3 font-medium text-slate-400">Last Check-in</th>
               <th className="pb-3 font-medium text-slate-400">Next Due</th>
@@ -237,6 +275,24 @@ export function AdminUserTable() {
                     <p className="font-medium">{user.name || "No name"}</p>
                     <p className="text-sm text-slate-400">{user.email}</p>
                   </div>
+                </td>
+                <td className="py-4">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => handleToggleRole(user.id, user.email, user.role)}
+                    disabled={togglingRole === user.id}
+                    className={user.role === "ADMIN" ? "text-indigo-400 hover:text-indigo-300" : "text-slate-400 hover:text-slate-300"}
+                  >
+                    {togglingRole === user.id ? (
+                      <Loader2 className="h-4 w-4 animate-spin mr-1" />
+                    ) : user.role === "ADMIN" ? (
+                      <ShieldCheck className="h-4 w-4 mr-1" />
+                    ) : (
+                      <ShieldOff className="h-4 w-4 mr-1" />
+                    )}
+                    {user.role}
+                  </Button>
                 </td>
                 <td className="py-4">
                   {getStatusBadge(user.status)}
