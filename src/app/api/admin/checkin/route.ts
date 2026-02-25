@@ -37,13 +37,11 @@ export async function GET(): Promise<NextResponse> {
 
     // Get all users with their polling config
     const users = await prisma.user.findMany({
-      where: {
-        role: "USER", // Only show regular users
-      },
       select: {
         id: true,
         name: true,
         email: true,
+        role: true,
         createdAt: true,
         pollingConfig: {
           select: {
@@ -71,6 +69,7 @@ export async function GET(): Promise<NextResponse> {
         id: user.id,
         name: user.name,
         email: user.email,
+        role: user.role,
         createdAt: user.createdAt,
         status: user.pollingConfig?.status || "NOT_CONFIGURED",
         lastCheckInAt: user.pollingConfig?.lastCheckInAt,
