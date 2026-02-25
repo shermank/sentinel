@@ -65,3 +65,4 @@ infra/*.tfstate.backup
 infra/*.tfvars
 infra/.terraform.lock.hcl
 infra/*.tfplan
+.claude/
