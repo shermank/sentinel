@@ -13,6 +13,10 @@ export default async function DashboardLayout({
     redirect("/login");
   }
 
+  if (!session.user.emailVerified) {
+    redirect("/verify-email?pending=true");
+  }
+
   return (
     <div className="min-h-screen bg-slate-900">
       <DashboardNav user={session.user} />
