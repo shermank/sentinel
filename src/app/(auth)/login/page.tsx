@@ -3,90 +3,60 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Loader2, AlertCircle, MailWarning } from "lucide-react";
-import { getAccountLoginStatus } from "@/lib/auth/actions";
+import { signIn } from "next-auth/react";
+import { signInWithCredentials } from "@/lib/auth/actions";
+import type { SignInReason } from "@/lib/auth/actions";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<{ type: "unverified" | "not_found" | "wrong_password" | "unknown"; message: string } | null>(null);
+  const [errorReason, setErrorReason] = useState<SignInReason | null>(null);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
+    setErrorReason(null);
 
-    try {
-      const result = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
+    const result = await signInWithCredentials({ email, password });
 
-      if (result?.ok) {
-        router.push("/dashboard");
-        return;
-      }
-
-      // Sign-in failed — check why
-      let status: "not_found" | "unverified" | "ok" = "ok";
-      try {
-        status = await getAccountLoginStatus(email);
-      } catch {
-        // If the status check fails, fall back to generic message
-        setError({ type: "unknown", message: "Sign in failed. Please try again." });
-        return;
-      }
-
-      if (status === "unverified") {
-        setError({
-          type: "unverified",
-          message: "Your account has not been verified. Please check your inbox for a verification email.",
-        });
-      } else if (status === "not_found") {
-        setError({
-          type: "not_found",
-          message: "No account found with that email address.",
-        });
-      } else {
-        setError({
-          type: "wrong_password",
-          message: "Incorrect password. Please try again.",
-        });
-      }
-    } catch {
-      // signIn() itself threw — still try to determine the reason
-      let status: "not_found" | "unverified" | "ok" = "ok";
-      try {
-        status = await getAccountLoginStatus(email);
-      } catch {
-        setError({ type: "unknown", message: "Sign in failed. Please try again." });
-        return;
-      }
-      if (status === "unverified") {
-        setError({
-          type: "unverified",
-          message: "Your account has not been verified. Please check your inbox for a verification email.",
-        });
-      } else if (status === "not_found") {
-        setError({ type: "not_found", message: "No account found with that email address." });
-      } else {
-        setError({ type: "wrong_password", message: "Incorrect password. Please try again." });
-      }
-    } finally {
+    if (result.success) {
+      router.push("/dashboard");
+    } else {
+      setErrorReason(result.reason ?? "unknown");
       setLoading(false);
     }
   };
 
   const handleGoogleSignIn = () => {
     signIn("google", { callbackUrl: "/dashboard" });
+  };
+
+  const errorContent: Record<SignInReason, { title: string; message: string; link?: { href: string; label: string } }> = {
+    unverified: {
+      title: "Email not verified",
+      message: "Your account has not been verified. Please check your inbox for a verification email.",
+      link: { href: "/verify-email?pending=true", label: "Go to verification page →" },
+    },
+    not_found: {
+      title: "No account found",
+      message: "There's no account with that email address.",
+      link: { href: "/signup", label: "Create an account →" },
+    },
+    wrong_password: {
+      title: "Incorrect password",
+      message: "The password you entered is incorrect. Please try again.",
+    },
+    unknown: {
+      title: "Sign in failed",
+      message: "Something went wrong. Please try again.",
+    },
   };
 
   return (
@@ -129,35 +99,29 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          {error && (
-            <div className={`mt-4 flex items-start gap-3 rounded-md border px-4 py-3 text-sm ${
-              error.type === "unverified"
-                ? "border-yellow-600 bg-yellow-950/50 text-yellow-300"
-                : "border-red-700 bg-red-950/50 text-red-300"
-            }`}>
-              {error.type === "unverified"
-                ? <MailWarning className="h-4 w-4 mt-0.5 shrink-0" />
-                : <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />}
-              <div>
-                <p className="font-medium">
-                  {error.type === "unverified" ? "Email not verified" :
-                   error.type === "not_found" ? "No account found" :
-                   error.type === "wrong_password" ? "Incorrect password" : "Sign in failed"}
-                </p>
-                <p className="mt-0.5 opacity-90">{error.message}</p>
-                {error.type === "unverified" && (
-                  <Link href="/verify-email?pending=true" className="mt-1 block underline hover:opacity-80">
-                    Go to verification page →
-                  </Link>
-                )}
-                {error.type === "not_found" && (
-                  <Link href="/signup" className="mt-1 block underline hover:opacity-80">
-                    Create an account →
-                  </Link>
-                )}
+          {errorReason && (() => {
+            const c = errorContent[errorReason];
+            return (
+              <div className={`mt-4 flex items-start gap-3 rounded-md border px-4 py-3 text-sm ${
+                errorReason === "unverified"
+                  ? "border-yellow-600 bg-yellow-950/50 text-yellow-300"
+                  : "border-red-700 bg-red-950/50 text-red-300"
+              }`}>
+                {errorReason === "unverified"
+                  ? <MailWarning className="h-4 w-4 mt-0.5 shrink-0" />
+                  : <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />}
+                <div>
+                  <p className="font-medium">{c.title}</p>
+                  <p className="mt-0.5 opacity-90">{c.message}</p>
+                  {c.link && (
+                    <Link href={c.link.href} className="mt-1 block underline hover:opacity-80">
+                      {c.link.label}
+                    </Link>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
 
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">

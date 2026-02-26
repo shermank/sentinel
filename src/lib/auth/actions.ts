@@ -139,33 +139,46 @@ export async function signUpWithCredentials(
   }
 }
 
+export type SignInReason = "unverified" | "not_found" | "wrong_password" | "unknown";
+
+export interface SignInResult {
+  success: boolean;
+  reason?: SignInReason;
+}
+
 /**
- * Sign in with email and password
+ * Sign in with email and password.
+ * Runs entirely server-side — never triggers a browser redirect.
+ * Returns a specific reason on failure so the login page can show a helpful message.
  */
 export async function signInWithCredentials(
   input: SignInInput
-): Promise<AuthResult> {
+): Promise<SignInResult> {
+  let email = "";
   try {
-    // Validate input
     const validatedInput = signInSchema.parse(input);
+    email = validatedInput.email;
 
-    const result = await signIn("credentials", {
+    await signIn("credentials", {
       email: validatedInput.email,
       password: validatedInput.password,
       redirect: false,
     });
 
-    if (result?.error) {
-      return { success: false, error: "Invalid email or password" };
-    }
-
     return { success: true };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return { success: false, error: error.issues[0].message };
+      return { success: false, reason: "unknown" };
     }
-    // NextAuth throws an error for invalid credentials
-    return { success: false, error: "Invalid email or password" };
+    // Auth failed — check why
+    try {
+      const status = await getAccountLoginStatus(email);
+      if (status === "unverified") return { success: false, reason: "unverified" };
+      if (status === "not_found") return { success: false, reason: "not_found" };
+      return { success: false, reason: "wrong_password" };
+    } catch {
+      return { success: false, reason: "unknown" };
+    }
   }
 }
 
