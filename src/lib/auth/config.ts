@@ -47,6 +47,12 @@ export const authConfig: NextAuthConfig = {
           return null;
         }
 
+        // Block sign-in here so result.ok is false and the login page
+        // can show a proper "not verified" toast via getAccountLoginStatus()
+        if (!user.emailVerified) {
+          return null;
+        }
+
         return {
           id: user.id,
           email: user.email,
@@ -99,26 +105,12 @@ export const authConfig: NextAuthConfig = {
       }
       return session;
     },
-    async signIn({ user, account }) {
-      // Allow OAuth sign-ins (email is verified by OAuth provider)
+    async signIn({ account }) {
+      // OAuth sign-ins are always allowed (email verified by provider)
       if (account?.provider !== "credentials") {
         return true;
       }
-
-      // For credentials, check if email is verified
-      const existingUser = await prisma.user.findUnique({
-        where: { id: user.id },
-      });
-
-      if (!existingUser) {
-        return false;
-      }
-
-      // Block sign-in if email is not verified
-      if (!existingUser.emailVerified) {
-        return "/verify-email?pending=true";
-      }
-
+      // Credentials: authorize() already blocks unverified users
       return true;
     },
   },
