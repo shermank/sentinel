@@ -4,7 +4,7 @@ import { prisma } from "@/lib/db";
 
 export async function POST(req: Request) {
   try {
-    const session = await requireAdmin();
+    const adminUser = await requireAdmin();
     const { userId, role } = await req.json();
 
     if (!userId || !["USER", "ADMIN"].includes(role)) {
@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     }
 
     // Prevent demoting yourself
-    if (userId === session.user.id && role === "USER") {
+    if (userId === adminUser.id && role === "USER") {
       return NextResponse.json({ success: false, error: "Cannot demote yourself" }, { status: 400 });
     }
 
