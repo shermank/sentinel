@@ -148,37 +148,42 @@ export interface SignInResult {
 
 /**
  * Sign in with email and password.
- * Runs entirely server-side — never triggers a browser redirect.
- * Returns a specific reason on failure so the login page can show a helpful message.
+ * Validates credentials manually first (so we can return a specific reason),
+ * then calls NextAuth signIn only when we know credentials are correct
+ * (guaranteeing it succeeds and sets the auth cookie without any error redirect).
  */
 export async function signInWithCredentials(
   input: SignInInput
 ): Promise<SignInResult> {
-  let email = "";
   try {
     const validatedInput = signInSchema.parse(input);
-    email = validatedInput.email;
+    const { email, password } = validatedInput;
 
-    await signIn("credentials", {
-      email: validatedInput.email,
-      password: validatedInput.password,
-      redirect: false,
+    // Manually validate so we can return a specific failure reason.
+    // NOTE: NextAuth v5 signIn() with redirect:false returns a URL string on
+    // failure instead of throwing, so we cannot rely on try/catch around it.
+    const user = await prisma.user.findUnique({
+      where: { email },
+      select: { password: true, emailVerified: true },
     });
+
+    if (!user || !user.password) return { success: false, reason: "not_found" };
+    if (!user.emailVerified) return { success: false, reason: "unverified" };
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) return { success: false, reason: "wrong_password" };
+
+    // Credentials are valid — call NextAuth to create the session & set the cookie.
+    // Because we pre-validated, authorize() will succeed and no error redirect occurs.
+    await signIn("credentials", { email, password, redirect: false });
 
     return { success: true };
   } catch (error) {
     if (error instanceof z.ZodError) {
       return { success: false, reason: "unknown" };
     }
-    // Auth failed — check why
-    try {
-      const status = await getAccountLoginStatus(email);
-      if (status === "unverified") return { success: false, reason: "unverified" };
-      if (status === "not_found") return { success: false, reason: "not_found" };
-      return { success: false, reason: "wrong_password" };
-    } catch {
-      return { success: false, reason: "unknown" };
-    }
+    console.error("signInWithCredentials unexpected error:", error);
+    return { success: false, reason: "unknown" };
   }
 }
 
