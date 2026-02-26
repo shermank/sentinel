@@ -99,6 +99,7 @@ Deploy script (`scripts/deploy.sh`): builds Docker images → pushes to ECR → 
 - **Validation**: Zod schemas for all API inputs
 - **Encryption boundary**: Client encrypts vault data before API calls; server handles tokens/auth only
 - **Components**: shadcn/ui (Radix primitives) in `src/components/ui/`; uses `cn()` utility with tailwind-merge
+- **User-facing errors**: Use inline `error` state rendered as a visible `<div>` — do NOT use `useToast` for auth/form errors (toasts disappear on navigation and are unreliable on auth pages)
 - **Path aliases**: `@/*` → `./src/*`
 - **Dark theme**: `className="dark"` on root `<html>` element; shadcn CSS variables defined in `globals.css` under `.dark` selector
 - **Prisma singleton**: `src/lib/db/index.ts` — reuses client across hot reloads in dev
