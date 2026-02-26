@@ -170,6 +170,17 @@ export async function signInWithCredentials(
 }
 
 /**
+ * Check if an account exists for the given email (for login UX only)
+ */
+export async function checkEmailExists(email: string): Promise<boolean> {
+  const user = await prisma.user.findUnique({
+    where: { email },
+    select: { id: true },
+  });
+  return !!user;
+}
+
+/**
  * Request password reset
  */
 export async function requestPasswordReset(email: string): Promise<AuthResult> {

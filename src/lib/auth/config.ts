@@ -71,13 +71,16 @@ export const authConfig: NextAuthConfig = {
         token.role = (user as { role?: string }).role;
       }
 
-      // Always refresh role from DB to pick up role changes (e.g. admin promotion)
+      // Always refresh role and emailVerified from DB
       if (token.id) {
         const dbUser = await prisma.user.findUnique({
           where: { id: token.id as string },
-          select: { role: true },
+          select: { role: true, emailVerified: true },
         });
-        if (dbUser) token.role = dbUser.role;
+        if (dbUser) {
+          token.role = dbUser.role;
+          token.emailVerified = dbUser.emailVerified;
+        }
       }
 
       // Handle session updates
@@ -92,6 +95,7 @@ export const authConfig: NextAuthConfig = {
       if (token && session.user) {
         session.user.id = token.id as string;
         session.user.role = token.role as string;
+        session.user.emailVerified = token.emailVerified as Date | null;
       }
       return session;
     },
