@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Loader2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-import { checkEmailExists } from "@/lib/auth/actions";
+import { getAccountLoginStatus } from "@/lib/auth/actions";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -30,38 +30,28 @@ export default function LoginPage() {
         redirect: false,
       });
 
-      if (result?.error) {
-        // Check if this is an email-not-verified rejection
-        if (result.error === "AccessDenied") {
+      if (!result?.ok) {
+        // Any sign-in failure: determine the specific reason for a helpful message
+        const status = await getAccountLoginStatus(email);
+        if (status === "unverified") {
           toast({
             title: "Email not verified",
-            description: "Please check your inbox and verify your email before signing in.",
+            description: "Your account has not been verified. Please check your inbox for a verification email.",
           });
           router.push("/verify-email?pending=true");
+        } else if (status === "not_found") {
+          toast({
+            title: "No account found",
+            description: "There's no account with that email. Want to sign up?",
+            variant: "destructive",
+          });
         } else {
-          // Distinguish "no account" from "wrong password" for better UX
-          const exists = await checkEmailExists(email);
-          if (!exists) {
-            toast({
-              title: "No account found",
-              description: "There's no account with that email. Want to sign up?",
-              variant: "destructive",
-            });
-          } else {
-            toast({
-              title: "Incorrect password",
-              description: "The password you entered is incorrect. Please try again.",
-              variant: "destructive",
-            });
-          }
+          toast({
+            title: "Incorrect password",
+            description: "The password you entered is incorrect. Please try again.",
+            variant: "destructive",
+          });
         }
-      } else if (result?.url && result.url.includes("verify-email")) {
-        // signIn callback returned a verify-email redirect
-        toast({
-          title: "Email not verified",
-          description: "Please check your inbox and verify your email before signing in.",
-        });
-        router.push("/verify-email?pending=true");
       } else {
         router.push("/dashboard");
       }

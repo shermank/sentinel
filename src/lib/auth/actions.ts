@@ -170,14 +170,21 @@ export async function signInWithCredentials(
 }
 
 /**
- * Check if an account exists for the given email (for login UX only)
+ * Returns the login status of an account for UX feedback (not a security gate).
+ * "not_found"   — no account with this email
+ * "unverified"  — account exists but email not yet verified
+ * "ok"          — account exists and is verified
  */
-export async function checkEmailExists(email: string): Promise<boolean> {
+export async function getAccountLoginStatus(
+  email: string
+): Promise<"not_found" | "unverified" | "ok"> {
   const user = await prisma.user.findUnique({
     where: { email },
-    select: { id: true },
+    select: { emailVerified: true },
   });
-  return !!user;
+  if (!user) return "not_found";
+  if (!user.emailVerified) return "unverified";
+  return "ok";
 }
 
 /**
