@@ -8,23 +8,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Shield, Loader2 } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
+import { Shield, Loader2, AlertCircle, MailWarning } from "lucide-react";
 import { getAccountLoginStatus } from "@/lib/auth/actions";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [unverifiedEmail, setUnverifiedEmail] = useState(false);
+  const [error, setError] = useState<{ type: "unverified" | "not_found" | "wrong_password" | "unknown"; message: string } | null>(null);
   const router = useRouter();
-  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
 
-    setUnverifiedEmail(false);
     try {
       const result = await signIn("credentials", {
         email,
@@ -32,34 +30,56 @@ export default function LoginPage() {
         redirect: false,
       });
 
-      if (!result?.ok) {
-        // Any sign-in failure: determine the specific reason for a helpful message
-        const status = await getAccountLoginStatus(email);
-        if (status === "unverified") {
-          // Stay on this page — navigating away drops the toast before it renders
-          setUnverifiedEmail(true);
-        } else if (status === "not_found") {
-          toast({
-            title: "No account found",
-            description: "There's no account with that email. Want to sign up?",
-            variant: "destructive",
-          });
-        } else {
-          toast({
-            title: "Incorrect password",
-            description: "The password you entered is incorrect. Please try again.",
-            variant: "destructive",
-          });
-        }
-      } else {
+      if (result?.ok) {
         router.push("/dashboard");
+        return;
+      }
+
+      // Sign-in failed — check why
+      let status: "not_found" | "unverified" | "ok" = "ok";
+      try {
+        status = await getAccountLoginStatus(email);
+      } catch {
+        // If the status check fails, fall back to generic message
+        setError({ type: "unknown", message: "Sign in failed. Please try again." });
+        return;
+      }
+
+      if (status === "unverified") {
+        setError({
+          type: "unverified",
+          message: "Your account has not been verified. Please check your inbox for a verification email.",
+        });
+      } else if (status === "not_found") {
+        setError({
+          type: "not_found",
+          message: "No account found with that email address.",
+        });
+      } else {
+        setError({
+          type: "wrong_password",
+          message: "Incorrect password. Please try again.",
+        });
       }
     } catch {
-      toast({
-        title: "Error",
-        description: "An unexpected error occurred",
-        variant: "destructive",
-      });
+      // signIn() itself threw — still try to determine the reason
+      let status: "not_found" | "unverified" | "ok" = "ok";
+      try {
+        status = await getAccountLoginStatus(email);
+      } catch {
+        setError({ type: "unknown", message: "Sign in failed. Please try again." });
+        return;
+      }
+      if (status === "unverified") {
+        setError({
+          type: "unverified",
+          message: "Your account has not been verified. Please check your inbox for a verification email.",
+        });
+      } else if (status === "not_found") {
+        setError({ type: "not_found", message: "No account found with that email address." });
+      } else {
+        setError({ type: "wrong_password", message: "Incorrect password. Please try again." });
+      }
     } finally {
       setLoading(false);
     }
@@ -109,16 +129,33 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          {unverifiedEmail && (
-            <div className="mt-4 rounded-md border border-yellow-600 bg-yellow-950/50 px-4 py-3 text-sm text-yellow-300">
-              <p className="font-medium">Email not verified</p>
-              <p className="mt-1 text-yellow-400">
-                Your account has not been verified. Please check your inbox for a verification email, or{" "}
-                <Link href="/verify-email?pending=true" className="underline hover:text-yellow-200">
-                  visit the verification page
-                </Link>
-                .
-              </p>
+          {error && (
+            <div className={`mt-4 flex items-start gap-3 rounded-md border px-4 py-3 text-sm ${
+              error.type === "unverified"
+                ? "border-yellow-600 bg-yellow-950/50 text-yellow-300"
+                : "border-red-700 bg-red-950/50 text-red-300"
+            }`}>
+              {error.type === "unverified"
+                ? <MailWarning className="h-4 w-4 mt-0.5 shrink-0" />
+                : <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />}
+              <div>
+                <p className="font-medium">
+                  {error.type === "unverified" ? "Email not verified" :
+                   error.type === "not_found" ? "No account found" :
+                   error.type === "wrong_password" ? "Incorrect password" : "Sign in failed"}
+                </p>
+                <p className="mt-0.5 opacity-90">{error.message}</p>
+                {error.type === "unverified" && (
+                  <Link href="/verify-email?pending=true" className="mt-1 block underline hover:opacity-80">
+                    Go to verification page →
+                  </Link>
+                )}
+                {error.type === "not_found" && (
+                  <Link href="/signup" className="mt-1 block underline hover:opacity-80">
+                    Create an account →
+                  </Link>
+                )}
+              </div>
             </div>
           )}
 
