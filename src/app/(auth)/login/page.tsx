@@ -16,6 +16,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [unverifiedEmail, setUnverifiedEmail] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
 
@@ -23,6 +24,7 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
 
+    setUnverifiedEmail(false);
     try {
       const result = await signIn("credentials", {
         email,
@@ -34,11 +36,8 @@ export default function LoginPage() {
         // Any sign-in failure: determine the specific reason for a helpful message
         const status = await getAccountLoginStatus(email);
         if (status === "unverified") {
-          toast({
-            title: "Email not verified",
-            description: "Your account has not been verified. Please check your inbox for a verification email.",
-          });
-          router.push("/verify-email?pending=true");
+          // Stay on this page — navigating away drops the toast before it renders
+          setUnverifiedEmail(true);
         } else if (status === "not_found") {
           toast({
             title: "No account found",
@@ -109,6 +108,19 @@ export default function LoginPage() {
               Sign In
             </Button>
           </form>
+
+          {unverifiedEmail && (
+            <div className="mt-4 rounded-md border border-yellow-600 bg-yellow-950/50 px-4 py-3 text-sm text-yellow-300">
+              <p className="font-medium">Email not verified</p>
+              <p className="mt-1 text-yellow-400">
+                Your account has not been verified. Please check your inbox for a verification email, or{" "}
+                <Link href="/verify-email?pending=true" className="underline hover:text-yellow-200">
+                  visit the verification page
+                </Link>
+                .
+              </p>
+            </div>
+          )}
 
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
