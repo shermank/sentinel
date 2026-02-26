@@ -277,22 +277,14 @@ export function AdminUserTable() {
                   </div>
                 </td>
                 <td className="py-4">
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => handleToggleRole(user.id, user.email, user.role)}
-                    disabled={togglingRole === user.id}
-                    className={user.role === "ADMIN" ? "text-indigo-400 hover:text-indigo-300" : "text-slate-400 hover:text-slate-300"}
-                  >
-                    {togglingRole === user.id ? (
-                      <Loader2 className="h-4 w-4 animate-spin mr-1" />
-                    ) : user.role === "ADMIN" ? (
-                      <ShieldCheck className="h-4 w-4 mr-1" />
+                  <span className={`inline-flex items-center gap-1 text-sm font-medium ${user.role === "ADMIN" ? "text-indigo-400" : "text-slate-400"}`}>
+                    {user.role === "ADMIN" ? (
+                      <ShieldCheck className="h-3.5 w-3.5" />
                     ) : (
-                      <ShieldOff className="h-4 w-4 mr-1" />
+                      <ShieldOff className="h-3.5 w-3.5" />
                     )}
                     {user.role}
-                  </Button>
+                  </span>
                 </td>
                 <td className="py-4">
                   {getStatusBadge(user.status)}
@@ -313,6 +305,46 @@ export function AdminUserTable() {
                   </span>
                 </td>
                 <td className="py-4 text-right space-x-2">
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className={user.role === "ADMIN" ? "border-slate-600 text-slate-300 hover:bg-slate-800" : "border-indigo-600 text-indigo-400 hover:bg-indigo-950"}
+                        disabled={togglingRole === user.id}
+                      >
+                        {togglingRole === user.id ? (
+                          <Loader2 className="h-4 w-4 animate-spin mr-1" />
+                        ) : user.role === "ADMIN" ? (
+                          <ShieldOff className="h-4 w-4 mr-1" />
+                        ) : (
+                          <ShieldCheck className="h-4 w-4 mr-1" />
+                        )}
+                        {user.role === "ADMIN" ? "Revoke Admin" : "Make Admin"}
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          {user.role === "ADMIN" ? "Revoke Admin Access" : "Grant Admin Access"}
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          {user.role === "ADMIN"
+                            ? `This will remove admin privileges from ${user.email}. They will no longer be able to access the admin panel.`
+                            : `This will grant ${user.email} full admin privileges, including access to all users' data and the ability to trigger protocols.`}
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => handleToggleRole(user.id, user.email, user.role)}
+                          className={user.role === "ADMIN" ? "" : "bg-indigo-600 hover:bg-indigo-700"}
+                        >
+                          {user.role === "ADMIN" ? "Revoke Admin" : "Grant Admin"}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                   <Button
                     size="sm"
                     onClick={() => handleValidateCheckIn(user.id, user.email)}
