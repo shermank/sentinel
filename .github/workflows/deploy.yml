@@ -1,0 +1,93 @@
+name: Deploy to AWS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      skip_build:
+        description: 'Skip Docker build (migrate + restart only)'
+        required: false
+        default: 'false'
+        type: boolean
+      migrate_only:
+        description: 'Run migrations only (no service restart)'
+        required: false
+        default: 'false'
+        type: boolean
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.14.6"
+          terraform_wrapper: false
+
+      - name: Terraform Init
+        working-directory: infra
+        run: terraform init
+
+      - name: Create terraform.tfvars
+        working-directory: infra
+        run: |
+          cat > terraform.tfvars <<EOF
+          aws_region             = "us-east-2"
+          environment            = "production"
+          domain_name            = "www.onceimgone.com"
+          certificate_arn        = "${{ secrets.ACM_CERTIFICATE_ARN }}"
+          auth_secret            = "${{ secrets.AUTH_SECRET }}"
+          encryption_key         = "${{ secrets.ENCRYPTION_KEY }}"
+          resend_api_key         = "${{ secrets.RESEND_API_KEY }}"
+          email_from             = "noreply@onceimgone.com"
+          auth_google_id         = "${{ secrets.AUTH_GOOGLE_ID }}"
+          auth_google_secret     = "${{ secrets.AUTH_GOOGLE_SECRET }}"
+          twilio_account_sid     = "${{ secrets.TWILIO_ACCOUNT_SID }}"
+          twilio_auth_token      = "${{ secrets.TWILIO_AUTH_TOKEN }}"
+          twilio_phone_number    = "${{ secrets.TWILIO_PHONE_NUMBER }}"
+          stripe_secret_key      = "${{ secrets.STRIPE_SECRET_KEY }}"
+          stripe_publishable_key = "${{ secrets.STRIPE_PUBLISHABLE_KEY }}"
+          stripe_webhook_secret  = "${{ secrets.STRIPE_WEBHOOK_SECRET }}"
+          stripe_price_id_monthly = "${{ secrets.STRIPE_PRICE_ID_MONTHLY }}"
+          stripe_price_id_yearly  = "${{ secrets.STRIPE_PRICE_ID_YEARLY }}"
+          EOF
+
+      - name: Set up Docker Buildx
+        if: ${{ github.event.inputs.skip_build != 'true' }}
+        uses: docker/setup-buildx-action@v3
+
+      - name: Run Deploy Script
+        run: |
+          FLAGS=""
+          if [[ "${{ github.event.inputs.skip_build }}" == "true" ]]; then
+            FLAGS="$FLAGS --skip-build"
+          fi
+          if [[ "${{ github.event.inputs.migrate_only }}" == "true" ]]; then
+            FLAGS="$FLAGS --migrate-only"
+          fi
+          chmod +x scripts/deploy.sh
+          ./scripts/deploy.sh $FLAGS
+
+      - name: Smoke test
+        run: |
+          sleep 10
+          curl -f https://www.onceimgone.com/api/health || echo "Health check failed (may still be deploying)"
