@@ -4,6 +4,8 @@ import { prisma } from "@/lib/db";
 import { createBillingPortalSession } from "@/lib/stripe";
 import type { ApiResponse } from "@/types";
 
+export const dynamic = "force-dynamic";
+
 /**
  * POST /api/stripe/portal
  * Create a Stripe billing portal session
