@@ -12,14 +12,13 @@ terraform {
     }
   }
 
-  # Uncomment and configure for remote state storage:
-  # backend "s3" {
-  #   bucket         = "eternal-sentinel-terraform-state"
-  #   key            = "production/terraform.tfstate"
-  #   region         = "us-east-1"
-  #   dynamodb_table = "terraform-locks"
-  #   encrypt        = true
-  # }
+  backend "s3" {
+    bucket       = "eternal-sentinel-terraform-state"
+    key          = "production/terraform.tfstate"
+    region       = "us-east-2"
+    use_lockfile = true
+    encrypt      = true
+  }
 }
 
 provider "aws" {
