@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       skip_build:
@@ -76,6 +79,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Run Deploy Script
+        if: github.event_name != 'pull_request'
         run: |
           FLAGS=""
           if [[ "${{ github.event.inputs.skip_build }}" == "true" ]]; then
@@ -87,7 +91,22 @@ jobs:
           chmod +x scripts/deploy.sh
           ./scripts/deploy.sh $FLAGS
 
+      - name: Build only (PR check)
+        if: github.event_name == 'pull_request'
+        run: |
+          cd infra
+          AWS_REGION=$(terraform output -raw aws_region)
+          ECR_APP_URL=$(terraform output -raw ecr_app_repository_url)
+          ECR_WORKER_URL=$(terraform output -raw ecr_worker_repository_url)
+          AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+          aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com"
+          cd ..
+          docker build --platform linux/amd64 -t "$ECR_APP_URL:pr-${{ github.event.pull_request.number }}" -f Dockerfile . --no-push 2>/dev/null || \
+          docker build --platform linux/amd64 -t "$ECR_APP_URL:pr-test" -f Dockerfile .
+          docker build --platform linux/amd64 -t "$ECR_WORKER_URL:pr-test" -f Dockerfile.worker .
+
       - name: Smoke test
+        if: github.event_name != 'pull_request'
         run: |
           sleep 10
           curl -f https://www.onceimgone.com/api/health || echo "Health check failed (may still be deploying)"
