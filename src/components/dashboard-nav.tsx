@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Shield, LayoutDashboard, Lock, Users, Settings, LogOut, Bell, ShieldCheck, Info, Mail } from "lucide-react";
+import { Shield, LayoutDashboard, Lock, Users, Settings, LogOut, Bell, ShieldCheck, Info, Mail, Clock } from "lucide-react";
 
 interface DashboardNavProps {
   user: {
@@ -20,6 +20,7 @@ const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/vault", label: "Vault", icon: Lock },
   { href: "/letters", label: "Final Letters", icon: Mail },
+  { href: "/scheduled-messages", label: "Scheduled Messages", icon: Clock },
   { href: "/trustees", label: "Trustees", icon: Users },
   { href: "/settings", label: "Settings", icon: Settings },
   { href: "/about", label: "About Us", icon: Info },

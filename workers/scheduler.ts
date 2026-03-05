@@ -12,6 +12,7 @@ import {
   scheduleCheckInReminder,
   scheduleEscalation,
   triggerDeathProtocol,
+  dispatchScheduledMessage,
 } from "../src/lib/queue";
 import { generateUrlSafeToken } from "../src/lib/crypto/server";
 
@@ -171,6 +172,19 @@ async function processScheduledTasks() {
         console.log(`Grace period expired for user ${config.userId}, triggering death protocol`);
         await triggerDeathProtocol(config.userId);
       }
+    }
+
+    // 4. Dispatch due scheduled messages
+    const dueMessages = await prisma.scheduledMessage.findMany({
+      where: {
+        status: "SCHEDULED",
+        scheduledFor: { lte: new Date() },
+      },
+    });
+
+    for (const msg of dueMessages) {
+      console.log(`Dispatching scheduled message ${msg.id} for user ${msg.userId}`);
+      await dispatchScheduledMessage(msg.id);
     }
 
     console.log(`[${new Date().toISOString()}] Scheduled task check complete`);

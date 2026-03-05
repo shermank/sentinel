@@ -13,6 +13,7 @@ export const QUEUE_NAMES = {
   DEATH_PROTOCOL: "death-protocol",
   EMAIL: "email",
   SMS: "sms",
+  SCHEDULED_MESSAGE: "scheduled-message",
 } as const;
 
 // Create queues
@@ -23,6 +24,7 @@ export const escalationQueue = new Queue(QUEUE_NAMES.ESCALATION, { connection: c
 export const deathProtocolQueue = new Queue(QUEUE_NAMES.DEATH_PROTOCOL, { connection: conn });
 export const emailQueue = new Queue(QUEUE_NAMES.EMAIL, { connection: conn });
 export const smsQueue = new Queue(QUEUE_NAMES.SMS, { connection: conn });
+export const scheduledMessageQueue = new Queue(QUEUE_NAMES.SCHEDULED_MESSAGE, { connection: conn });
 
 // Job types
 export interface CheckInJobData {
@@ -51,6 +53,10 @@ export interface EmailJobData {
 export interface SmsJobData {
   to: string;
   message: string;
+}
+
+export interface ScheduledMessageJobData {
+  messageId: string;
 }
 
 // Helper to add jobs
@@ -127,6 +133,22 @@ export async function sendSms(data: SmsJobData): Promise<Job<SmsJobData>> {
       delay: 30000,
     },
   });
+}
+
+export async function dispatchScheduledMessage(
+  messageId: string
+): Promise<Job<ScheduledMessageJobData>> {
+  return scheduledMessageQueue.add(
+    "deliver",
+    { messageId },
+    {
+      attempts: 3,
+      backoff: {
+        type: "exponential",
+        delay: 60000,
+      },
+    }
+  );
 }
 
 // Export connection for workers (cast to avoid ioredis version mismatch)

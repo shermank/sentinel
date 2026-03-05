@@ -366,6 +366,52 @@ The Eternal Sentinel Team
   };
 }
 
+export function sendScheduledMessageEmail(
+  recipientName: string,
+  senderName: string,
+  subject: string,
+  body: string,
+  label?: string | null
+): SendEmailParams {
+  return {
+    to: "",
+    subject: label ? `[${label}] ${subject}` : subject,
+    html: `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { background: #1a1a2e; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+            .content { background: #f8f9fa; padding: 30px; border-radius: 0 0 8px 8px; }
+            .message-box { background: #ffffff; border: 1px solid #e5e7eb; padding: 24px; border-radius: 6px; margin: 20px 0; white-space: pre-wrap; font-size: 15px; line-height: 1.7; }
+            .footer { text-align: center; margin-top: 20px; color: #666; font-size: 12px; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <h1>Eternal Sentinel</h1>
+              <p>A Scheduled Message</p>
+            </div>
+            <div class="content">
+              <h2>Dear ${recipientName},</h2>
+              <p><strong>${senderName}</strong> has sent you a scheduled message${label ? ` (${label})` : ""}:</p>
+              <div class="message-box">${body.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>
+              <p>With care,<br>The Eternal Sentinel Team</p>
+            </div>
+            <div class="footer">
+              <p>This message was scheduled in advance via Eternal Sentinel.</p>
+            </div>
+          </div>
+        </body>
+      </html>
+    `,
+    text: `Dear ${recipientName},\n\n${senderName} has sent you a scheduled message${label ? ` (${label})` : ""}:\n\n${body}\n\nWith care,\nThe Eternal Sentinel Team`,
+  };
+}
+
 export function verificationEmail(
   userName: string,
   verificationUrl: string

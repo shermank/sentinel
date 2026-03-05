@@ -19,6 +19,7 @@ import {
   type DeathProtocolJobData,
   type EmailJobData,
   type SmsJobData,
+  type ScheduledMessageJobData,
 } from "../src/lib/queue";
 import { prisma } from "../src/lib/db";
 import {
@@ -27,6 +28,7 @@ import {
   escalationWarningEmail,
   trusteeNotificationEmail,
   finalLetterDeliveryEmail,
+  sendScheduledMessageEmail,
 } from "../src/lib/email";
 import {
   sendSms,
@@ -354,6 +356,48 @@ const emailWorker = new Worker<EmailJobData>(
   { connection, concurrency: CONCURRENCY }
 );
 
+// Scheduled message worker
+const scheduledMessageWorker = new Worker<ScheduledMessageJobData>(
+  QUEUE_NAMES.SCHEDULED_MESSAGE,
+  async (job) => {
+    console.log(`Processing scheduled message ${job.data.messageId}`);
+
+    const message = await prisma.scheduledMessage.findUnique({
+      where: { id: job.data.messageId },
+      include: { user: true },
+    });
+
+    if (!message) {
+      console.log(`Scheduled message ${job.data.messageId} not found, skipping`);
+      return;
+    }
+
+    if (message.status !== "SCHEDULED") {
+      console.log(`Scheduled message ${job.data.messageId} is not SCHEDULED (status: ${message.status}), skipping`);
+      return;
+    }
+
+    const emailData = sendScheduledMessageEmail(
+      message.recipientName,
+      message.user.name || "A friend",
+      message.subject,
+      message.body,
+      message.label
+    );
+    emailData.to = message.recipientEmail;
+
+    await sendEmail(emailData);
+
+    await prisma.scheduledMessage.update({
+      where: { id: message.id },
+      data: { status: "DELIVERED", deliveredAt: new Date() },
+    });
+
+    console.log(`Scheduled message ${message.id} delivered to ${message.recipientEmail}`);
+  },
+  { connection, concurrency: CONCURRENCY }
+);
+
 // SMS worker
 const smsWorker = new Worker<SmsJobData>(
   QUEUE_NAMES.SMS,
@@ -371,6 +415,7 @@ const workers = [
   deathProtocolWorker,
   emailWorker,
   smsWorker,
+  scheduledMessageWorker,
 ];
 
 workers.forEach((worker) => {
