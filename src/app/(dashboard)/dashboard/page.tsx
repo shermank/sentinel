@@ -111,10 +111,10 @@ async function getDashboardData(userId: string) {
   return { vault, trusteeCount: trustees, pollingConfig, subscription, recentActivity };
 }
 
-function getCheckInProgress(pollingConfig: { nextCheckInDue: Date | null; interval: string | null; lastCheckIn: Date | null } | null): number {
-  if (!pollingConfig?.nextCheckInDue || !pollingConfig?.lastCheckIn) return 100;
+function getCheckInProgress(pollingConfig: { nextCheckInDue: Date | null; interval: string | null; lastCheckInAt: Date | null } | null): number {
+  if (!pollingConfig?.nextCheckInDue || !pollingConfig?.lastCheckInAt) return 100;
   const now = Date.now();
-  const start = new Date(pollingConfig.lastCheckIn).getTime();
+  const start = new Date(pollingConfig.lastCheckInAt).getTime();
   const end = new Date(pollingConfig.nextCheckInDue).getTime();
   const total = end - start;
   const elapsed = now - start;
@@ -170,7 +170,7 @@ export default async function DashboardPage() {
     { label: "Create your vault", done: !!vault, href: "/vault" },
     { label: "Add a trustee", done: trusteeCount > 0, href: "/trustees" },
     { label: "Configure check-in schedule", done: !!pollingConfig, href: "/settings" },
-    { label: "Complete your first check-in", done: pollingConfig?.status === "ACTIVE" && !!pollingConfig?.lastCheckIn, href: "/dashboard" },
+    { label: "Complete your first check-in", done: pollingConfig?.status === "ACTIVE" && !!pollingConfig?.lastCheckInAt, href: "/dashboard" },
   ];
   const completedSteps = onboardingSteps.filter((s) => s.done).length;
   const showOnboarding = completedSteps < 4;
@@ -446,8 +446,8 @@ export default async function DashboardPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-slate-800">{formatActivityAction(entry.action)}</p>
-                      {entry.resourceType && (
-                        <p className="text-xs text-slate-400">{entry.resourceType}</p>
+                      {entry.resource && (
+                        <p className="text-xs text-slate-400">{entry.resource}</p>
                       )}
                     </div>
                     <span className="text-xs text-slate-400 flex-shrink-0">
