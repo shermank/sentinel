@@ -30,12 +30,13 @@ model User {
   sessions      Session[]
 
   // Eternal Sentinel specific
-  vault         Vault?
-  trustees      Trustee[]
-  finalLetters  FinalLetter[]
-  pollingConfig PollingConfig?
-  checkIns      CheckIn[]
-  subscription  Subscription?
+  vault              Vault?
+  trustees           Trustee[]
+  finalLetters       FinalLetter[]
+  pollingConfig      PollingConfig?
+  checkIns           CheckIn[]
+  subscription       Subscription?
+  scheduledMessages  ScheduledMessage[]
 
   @@map("users")
 }
@@ -368,6 +369,40 @@ enum SubscriptionStatus {
   PAST_DUE
   CANCELLED
   INCOMPLETE
+}
+
+// ============================================
+// Scheduled Messages Models
+// ============================================
+
+model ScheduledMessage {
+  id             String                 @id @default(cuid())
+  userId         String
+  user           User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  recipientName  String
+  recipientEmail String
+  subject        String
+  body           String                 @db.Text
+  label          String?
+
+  scheduledFor   DateTime
+  status         ScheduledMessageStatus @default(DRAFT)
+  deliveredAt    DateTime?
+
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+
+  @@index([userId])
+  @@index([status, scheduledFor])
+  @@map("scheduled_messages")
+}
+
+enum ScheduledMessageStatus {
+  DRAFT
+  SCHEDULED
+  DELIVERED
+  CANCELLED
 }
 
 // ============================================
