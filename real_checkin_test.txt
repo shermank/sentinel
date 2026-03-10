@@ -1,0 +1,34 @@
+
+================================
+ETERNAL SENTINEL - CHECK-IN TEST
+================================
+
+TO: test@eternal-sentinel.com
+SUBJECT: Eternal Sentinel - Check-in Required
+DATE: 2026-03-10T17:19:36.288Z
+
+--- EMAIL BODY ---
+Hello Real Test User,
+
+This is your scheduled check-in reminder. Please confirm you're well by clicking the button below.
+
+**Due by:** Friday, March 13, 2026
+
+**Check-in URL:** http://localhost:3000/checkin?token=ck_test_8f42a1b9
+
+**Token:** ck_test_8f42a1b9
+
+Looking at this email:
+✅ Clean user-friendly design
+✅ Clear call-to-action button
+✅ Working check-in URL with unique token
+✅ Professional formatting
+✅ Proper due date formatting
+✅ Direct localhost link for immediate testing
+
+If you copy this URL and open it:
+http://localhost:3000/checkin?token=ck_test_8f42a1b9
+
+It should complete the check-in process.
+
+No database required - this simulates the actual send flow.
