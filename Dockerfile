@@ -21,8 +21,6 @@ ARG NEXT_PUBLIC_TURNSTILE_SITE_KEY
 ENV NEXT_PUBLIC_TURNSTILE_SITE_KEY=$NEXT_PUBLIC_TURNSTILE_SITE_KEY
 
 RUN ./node_modules/.bin/prisma generate
-# NEXT_FONT_GOOGLE_MOCKED_RESPONSES prevents font fetch failures in sandboxed build envs
-ENV NEXT_FONT_GOOGLE_MOCKED_RESPONSES=true
 RUN ./node_modules/.bin/next build
 
 # Production image, copy all the files and run next
