@@ -92,6 +92,7 @@ export const UserScalarFieldEnum = {
   image: 'image',
   password: 'password',
   role: 'role',
+  isPremiumOverride: 'isPremiumOverride',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

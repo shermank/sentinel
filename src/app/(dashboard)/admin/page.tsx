@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Users, AlertTriangle, CheckCircle } from "lucide-react";
 import { AdminUserTable } from "@/components/admin/user-table";
+import { AdminPremiumOverride } from "@/components/admin/premium-override";
 
 async function getAdminStats() {
   const [totalUsers, activeUsers, atRiskUsers, triggeredUsers] = await Promise.all([
@@ -106,6 +107,18 @@ export default async function AdminPage() {
         </CardHeader>
         <CardContent>
           <AdminUserTable />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Premium Access Override</CardTitle>
+          <CardDescription>
+            Grant or revoke premium features for users without a paid subscription (for testing)
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <AdminPremiumOverride />
         </CardContent>
       </Card>
     </div>

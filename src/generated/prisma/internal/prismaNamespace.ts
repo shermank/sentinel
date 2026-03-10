@@ -1575,6 +1575,7 @@ export const UserScalarFieldEnum = {
   image: 'image',
   password: 'password',
   role: 'role',
+  isPremiumOverride: 'isPremiumOverride',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1895,6 +1896,13 @@ export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -1975,13 +1983,6 @@ export type EnumPollingIntervalFieldRefInput<$PrismaModel> = FieldRefInputType<$
  * Reference to a field of type 'PollingInterval[]'
  */
 export type ListEnumPollingIntervalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PollingInterval[]'>
-    
-
-
-/**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 

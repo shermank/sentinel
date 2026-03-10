@@ -12,17 +12,17 @@ type VerificationStatus = "loading" | "pending" | "success" | "error";
 export default function VerifyEmailPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-indigo-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50/30 to-amber-100 flex items-center justify-center p-4">
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
-              <Shield className="h-8 w-8 text-teal-600" />
+              <Shield className="h-8 w-8 text-amber-600" />
               <span className="text-xl font-bold text-slate-900">Eternal Sentinel</span>
             </div>
             <CardTitle>Loading...</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col items-center py-8">
-            <Loader2 className="h-12 w-12 animate-spin text-teal-600" />
+            <Loader2 className="h-12 w-12 animate-spin text-amber-600" />
           </CardContent>
         </Card>
       </div>
@@ -89,14 +89,14 @@ function VerifyEmailContent() {
           <>
             <CardHeader className="text-center">
               <Link href="/" className="flex items-center justify-center space-x-2 mb-4">
-                <Shield className="h-8 w-8 text-indigo-600" />
+                <Shield className="h-8 w-8 text-amber-600" />
                 <span className="text-xl font-bold">Eternal Sentinel</span>
               </Link>
               <CardTitle>Verifying Your Email</CardTitle>
               <CardDescription>Please wait while we verify your email address</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col items-center py-8">
-              <Loader2 className="h-12 w-12 animate-spin text-indigo-600" />
+              <Loader2 className="h-12 w-12 animate-spin text-amber-600" />
             </CardContent>
           </>
         );
@@ -106,14 +106,14 @@ function VerifyEmailContent() {
           <>
             <CardHeader className="text-center">
               <Link href="/" className="flex items-center justify-center space-x-2 mb-4">
-                <Shield className="h-8 w-8 text-indigo-600" />
+                <Shield className="h-8 w-8 text-amber-600" />
                 <span className="text-xl font-bold">Eternal Sentinel</span>
               </Link>
               <CardTitle>Check Your Email</CardTitle>
               <CardDescription>We&apos;ve sent you a verification link</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col items-center py-8 space-y-4">
-              <Mail className="h-16 w-16 text-indigo-600" />
+              <Mail className="h-16 w-16 text-amber-600" />
               <div className="text-center space-y-2">
                 <p className="text-muted-foreground">
                   Please check your email inbox and click the verification link to complete your registration.
@@ -126,7 +126,7 @@ function VerifyEmailContent() {
             <CardFooter className="flex flex-col space-y-4">
               <p className="text-sm text-muted-foreground text-center">
                 Didn&apos;t receive the email? Check your spam folder or{" "}
-                <Link href="/signup" className="text-indigo-600 hover:underline">
+                <Link href="/signup" className="text-amber-600 hover:underline">
                   try signing up again
                 </Link>
               </p>
@@ -144,7 +144,7 @@ function VerifyEmailContent() {
           <>
             <CardHeader className="text-center">
               <Link href="/" className="flex items-center justify-center space-x-2 mb-4">
-                <Shield className="h-8 w-8 text-indigo-600" />
+                <Shield className="h-8 w-8 text-amber-600" />
                 <span className="text-xl font-bold">Eternal Sentinel</span>
               </Link>
               <CardTitle>Email Verified!</CardTitle>
@@ -169,7 +169,7 @@ function VerifyEmailContent() {
           <>
             <CardHeader className="text-center">
               <Link href="/" className="flex items-center justify-center space-x-2 mb-4">
-                <Shield className="h-8 w-8 text-indigo-600" />
+                <Shield className="h-8 w-8 text-amber-600" />
                 <span className="text-xl font-bold">Eternal Sentinel</span>
               </Link>
               <CardTitle>Verification Failed</CardTitle>
@@ -184,7 +184,7 @@ function VerifyEmailContent() {
             <CardFooter className="flex flex-col space-y-4">
               <p className="text-sm text-muted-foreground text-center">
                 If your link has expired, you can{" "}
-                <Link href="/signup" className="text-indigo-600 hover:underline">
+                <Link href="/signup" className="text-amber-600 hover:underline">
                   sign up again
                 </Link>{" "}
                 to receive a new verification email.
@@ -201,7 +201,7 @@ function VerifyEmailContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-indigo-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50/30 to-amber-100 flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         {renderContent()}
       </Card>

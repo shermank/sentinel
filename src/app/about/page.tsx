@@ -4,22 +4,22 @@ import { Shield, Lock, KeyRound, RefreshCw, ShieldCheck, Mail } from "lucide-rea
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-indigo-50 text-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50/30 to-amber-100 text-slate-900">
       <header className="container mx-auto px-4 py-6">
         <nav className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <Shield className="h-8 w-8 text-teal-600" />
+            <Shield className="h-8 w-8 text-amber-600" />
             <span className="text-xl font-bold text-slate-900">Eternal Sentinel</span>
           </div>
           <div className="flex items-center space-x-4">
             <Link href="/about">
-              <Button variant="ghost" className="text-slate-600 hover:text-teal-700">About Us</Button>
+              <Button variant="ghost" className="text-slate-600 hover:text-amber-700">About Us</Button>
             </Link>
             <Link href="/login">
-              <Button variant="ghost" className="text-slate-600 hover:text-teal-700">Login</Button>
+              <Button variant="ghost" className="text-slate-600 hover:text-amber-700">Login</Button>
             </Link>
             <Link href="/signup">
-              <Button className="bg-gradient-to-r from-teal-600 to-indigo-600 hover:from-teal-700 hover:to-indigo-700 text-white">Get Started</Button>
+              <Button className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white">Get Started</Button>
             </Link>
           </div>
         </nav>
@@ -56,7 +56,7 @@ export default function AboutPage() {
       <section className="container mx-auto px-4 py-12">
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center space-x-3 mb-6">
-            <Lock className="h-8 w-8 text-indigo-400" />
+            <Lock className="h-8 w-8 text-amber-500" />
             <h2 className="text-3xl font-bold">Zero-Knowledge Architecture</h2>
           </div>
           <p className="text-slate-300 text-lg leading-relaxed mb-4">
@@ -79,19 +79,19 @@ export default function AboutPage() {
       <section className="container mx-auto px-4 py-12">
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center space-x-3 mb-6">
-            <RefreshCw className="h-8 w-8 text-indigo-400" />
+            <RefreshCw className="h-8 w-8 text-amber-500" />
             <h2 className="text-3xl font-bold">How It Works</h2>
           </div>
           <div className="space-y-6">
             <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-              <h3 className="text-xl font-semibold mb-2 text-teal-700">1. Check-In</h3>
+              <h3 className="text-xl font-semibold mb-2 text-amber-700">1. Check-In</h3>
               <p className="text-slate-400">
                 You receive periodic check-in reminders via email or SMS on a schedule you
                 choose. A single click confirms you&apos;re OK and resets the countdown timer.
               </p>
             </div>
             <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-              <h3 className="text-xl font-semibold mb-2 text-indigo-300">2. Escalation</h3>
+              <h3 className="text-xl font-semibold mb-2 text-amber-600">2. Escalation</h3>
               <p className="text-slate-400">
                 If you miss a check-in, Eternal Sentinel escalates &mdash; sending additional
                 reminders through multiple channels. This grace period protects against
@@ -99,7 +99,7 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-              <h3 className="text-xl font-semibold mb-2 text-indigo-300">3. Dead Man&apos;s Switch</h3>
+              <h3 className="text-xl font-semibold mb-2 text-amber-600">3. Dead Man&apos;s Switch</h3>
               <p className="text-slate-400">
                 After all escalation attempts are exhausted without a response, the protocol
                 activates. Your designated trustees are notified and granted access to the
@@ -114,7 +114,7 @@ export default function AboutPage() {
       <section className="container mx-auto px-4 py-12">
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center space-x-3 mb-6">
-            <Mail className="h-8 w-8 text-indigo-400" />
+            <Mail className="h-8 w-8 text-amber-500" />
             <h2 className="text-3xl font-bold">Final Letters</h2>
           </div>
           <p className="text-slate-300 text-lg leading-relaxed mb-4">
@@ -139,7 +139,7 @@ export default function AboutPage() {
       <section className="container mx-auto px-4 py-12 pb-20">
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center space-x-3 mb-6">
-            <ShieldCheck className="h-8 w-8 text-indigo-400" />
+            <ShieldCheck className="h-8 w-8 text-amber-500" />
             <h2 className="text-3xl font-bold">Security Details</h2>
           </div>
           <div className="bg-white/95 rounded-2xl p-8 border border-slate-200 space-y-6 shadow-sm">

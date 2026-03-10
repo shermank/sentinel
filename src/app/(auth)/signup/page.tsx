@@ -70,11 +70,11 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-indigo-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50/30 to-amber-100 flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <Link href="/" className="flex items-center justify-center space-x-2 mb-4">
-            <Shield className="h-8 w-8 text-teal-600" />
+            <Shield className="h-8 w-8 text-amber-600" />
             <span className="text-xl font-bold text-slate-900">Eternal Sentinel</span>
           </Link>
           <CardTitle>Create Account</CardTitle>
@@ -149,7 +149,7 @@ export default function SignupPage() {
         <CardFooter className="justify-center">
           <p className="text-sm text-muted-foreground">
             Already have an account?{" "}
-            <Link href="/login" className="text-indigo-600 hover:underline">
+            <Link href="/login" className="text-amber-600 hover:underline">
               Sign in
             </Link>
           </p>

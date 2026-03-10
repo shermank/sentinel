@@ -21,7 +21,8 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String?   // For email/password auth (hashed)
-  role          UserRole  @default(USER)
+  role                UserRole  @default(USER)
+  isPremiumOverride   Boolean   @default(false)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 

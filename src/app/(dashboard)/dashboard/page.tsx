@@ -52,8 +52,8 @@ const useCaseCategories = [
   {
     title: "Online",
     icon: Globe,
-    color: "text-purple-500",
-    bgColor: "bg-purple-100",
+    color: "text-amber-500",
+    bgColor: "bg-amber-100",
     examples: ["Email accounts", "Social media", "Cloud storage"],
   },
   {
@@ -80,8 +80,8 @@ const useCaseCategories = [
   {
     title: "Messages",
     icon: Mail,
-    color: "text-indigo-500",
-    bgColor: "bg-indigo-100",
+    color: "text-orange-500",
+    bgColor: "bg-orange-100",
     examples: ["Letters to loved ones", "Final wishes", "Instructions"],
   },
 ];
@@ -179,8 +179,8 @@ export default async function DashboardPage() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900">Welcome back, {session.user.name?.split(" ")[0]}</h1>
-          <p className="text-slate-600">Here&apos;s your digital legacy overview</p>
+          <h1 className="text-3xl font-bold">Welcome back, {session.user.name?.split(" ")[0]}</h1>
+          <p className="text-muted-foreground">Here&apos;s your digital legacy overview</p>
         </div>
         {pollingConfig?.status === "ACTIVE" && (
           <CheckInButton />
@@ -188,11 +188,11 @@ export default async function DashboardPage() {
       </div>
 
       {needsSetup && (
-        <Card className="border-slate-200 bg-white shadow-sm">
+        <Card className="border-amber-200 bg-amber-50/50 shadow-sm">
           <CardContent className="flex items-center justify-between p-6">
             <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center">
-                <Lock className="h-6 w-6 text-teal-600" />
+              <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                <Lock className="h-6 w-6 text-amber-600" />
               </div>
               <div>
                 <h3 className="font-semibold">Set Up Your Vault</h3>
@@ -342,13 +342,13 @@ export default async function DashboardPage() {
 
       {/* Onboarding checklist */}
       {showOnboarding && (
-        <Card className="border-teal-200 bg-teal-50/50">
+        <Card className="border-amber-200 bg-amber-50/50">
           <CardHeader>
-            <CardTitle className="flex items-center text-teal-800">
-              <CheckCircle className="mr-2 h-5 w-5 text-teal-600" />
+            <CardTitle className="flex items-center text-amber-800">
+              <CheckCircle className="mr-2 h-5 w-5 text-amber-600" />
               Getting started — {completedSteps} of 4 complete
             </CardTitle>
-            <CardDescription className="text-teal-700">
+            <CardDescription className="text-amber-700">
               Complete these steps to fully protect your digital legacy.
             </CardDescription>
           </CardHeader>
@@ -357,22 +357,22 @@ export default async function DashboardPage() {
               {onboardingSteps.map((step) => (
                 <Link key={step.label} href={step.href} className="flex items-center space-x-3 group">
                   <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 transition-colors ${
-                    step.done ? "bg-teal-500" : "border-2 border-slate-300 group-hover:border-teal-400"
+                    step.done ? "bg-amber-500" : "border-2 border-slate-300 group-hover:border-amber-400"
                   }`}>
                     {step.done && <CheckCircle className="h-4 w-4 text-white" />}
                   </div>
                   <span className={`text-sm font-medium transition-colors ${
-                    step.done ? "text-slate-400 line-through" : "text-slate-700 group-hover:text-teal-700"
+                    step.done ? "text-muted-foreground line-through" : "group-hover:text-amber-700"
                   }`}>
                     {step.label}
                   </span>
-                  {!step.done && <ArrowRight className="h-4 w-4 text-slate-300 group-hover:text-teal-500 ml-auto transition-colors" />}
+                  {!step.done && <ArrowRight className="h-4 w-4 text-slate-300 group-hover:text-amber-500 ml-auto transition-colors" />}
                 </Link>
               ))}
             </div>
-            <div className="mt-4 h-1.5 w-full bg-teal-100 rounded-full overflow-hidden">
+            <div className="mt-4 h-1.5 w-full bg-amber-100 rounded-full overflow-hidden">
               <div
-                className="h-full bg-teal-500 rounded-full transition-all"
+                className="h-full bg-amber-500 rounded-full transition-all"
                 style={{ width: `${(completedSteps / 4) * 100}%` }}
               />
             </div>
@@ -383,7 +383,7 @@ export default async function DashboardPage() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
-            <Key className="mr-2 h-5 w-5 text-indigo-500" />
+            <Key className="mr-2 h-5 w-5 text-amber-500" />
             What to Store in Your Vault
           </CardTitle>
           <CardDescription>
@@ -395,7 +395,7 @@ export default async function DashboardPage() {
             {useCaseCategories.map((category) => (
               <div
                 key={category.title}
-                className="p-4 rounded-lg border border-slate-200 hover:border-indigo-300 hover:shadow-sm transition-all"
+                className="p-4 rounded-lg border border-slate-200 hover:border-amber-300 hover:shadow-sm transition-all"
               >
                 <div className="flex items-center space-x-2 mb-2">
                   <div className={`p-1.5 rounded ${category.bgColor}`}>
@@ -419,7 +419,7 @@ export default async function DashboardPage() {
               All data is encrypted with AES-256 before leaving your browser
             </p>
             <Link href="/use-cases">
-              <Button variant="link" size="sm" className="text-indigo-600">
+              <Button variant="link" size="sm" className="text-amber-600">
                 View all use cases <ArrowRight className="ml-1 h-3 w-3" />
               </Button>
             </Link>

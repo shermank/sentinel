@@ -83,13 +83,16 @@ export async function PUT(
     const body = await request.json();
     const validatedData = updatePollingSchema.parse(body) as UpdatePollingConfigInput;
 
-    // Check subscription for feature availability
-    const subscription = await prisma.subscription.findUnique({
-      where: { userId: session.user.id },
-    });
+    // Check subscription and premium override for feature availability
+    const [subscription, userRecord] = await Promise.all([
+      prisma.subscription.findUnique({ where: { userId: session.user.id } }),
+      prisma.user.findUnique({ where: { id: session.user.id }, select: { isPremiumOverride: true } }),
+    ]);
+
+    const hasPremiumAccess = subscription?.plan === "PREMIUM" || userRecord?.isPremiumOverride === true;
 
     // Free tier restrictions
-    if (subscription?.plan === "FREE") {
+    if (!hasPremiumAccess) {
       // Only monthly polling allowed
       if (validatedData.interval && validatedData.interval !== "MONTHLY") {
         return NextResponse.json(

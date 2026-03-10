@@ -83,7 +83,7 @@ export function checkInReminderEmail(
           <style>
             body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
             .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: #1a1a2e; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+            .header { background: #2d1b0e; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
             .content { background: #f8f9fa; padding: 30px; border-radius: 0 0 8px 8px; }
             .button { display: inline-block; background: #4f46e5; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: bold; }
             .footer { text-align: center; margin-top: 20px; color: #666; font-size: 12px; }
@@ -202,7 +202,7 @@ export function trusteeNotificationEmail(
           <style>
             body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
             .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: #1a1a2e; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+            .header { background: #2d1b0e; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
             .content { background: #f8f9fa; padding: 30px; border-radius: 0 0 8px 8px; }
             .button { display: inline-block; background: #4f46e5; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: bold; }
             .message { background: #e5e7eb; padding: 20px; border-radius: 6px; margin: 20px 0; font-style: italic; }
@@ -263,7 +263,7 @@ export function trusteeInvitationEmail(
           <style>
             body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
             .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: #1a1a2e; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+            .header { background: #2d1b0e; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
             .content { background: #f8f9fa; padding: 30px; border-radius: 0 0 8px 8px; }
             .button { display: inline-block; background: #4f46e5; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: bold; }
           </style>
@@ -320,7 +320,7 @@ export function finalLetterDeliveryEmail(
           <style>
             body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
             .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: #1a1a2e; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+            .header { background: #2d1b0e; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
             .content { background: #f8f9fa; padding: 30px; border-radius: 0 0 8px 8px; }
             .message-box { background: #e5e7eb; padding: 20px; border-radius: 6px; margin: 20px 0; border-left: 4px solid #4f46e5; }
             .footer { text-align: center; margin-top: 20px; color: #666; font-size: 12px; }
@@ -383,7 +383,7 @@ export function sendScheduledMessageEmail(
           <style>
             body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
             .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: #1a1a2e; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+            .header { background: #2d1b0e; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
             .content { background: #f8f9fa; padding: 30px; border-radius: 0 0 8px 8px; }
             .message-box { background: #ffffff; border: 1px solid #e5e7eb; padding: 24px; border-radius: 6px; margin: 20px 0; white-space: pre-wrap; font-size: 15px; line-height: 1.7; }
             .footer { text-align: center; margin-top: 20px; color: #666; font-size: 12px; }
@@ -426,7 +426,7 @@ export function verificationEmail(
           <style>
             body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
             .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: #1a1a2e; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+            .header { background: #2d1b0e; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
             .content { background: #f8f9fa; padding: 30px; border-radius: 0 0 8px 8px; }
             .button { display: inline-block; background: #4f46e5; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: bold; }
             .footer { text-align: center; margin-top: 20px; color: #666; font-size: 12px; }
