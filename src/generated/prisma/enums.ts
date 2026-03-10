@@ -95,6 +95,16 @@ export const SubscriptionStatus = {
 export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus]
 
 
+export const ScheduledMessageStatus = {
+  DRAFT: 'DRAFT',
+  SCHEDULED: 'SCHEDULED',
+  DELIVERED: 'DELIVERED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type ScheduledMessageStatus = (typeof ScheduledMessageStatus)[keyof typeof ScheduledMessageStatus]
+
+
 export const JobStatus = {
   PENDING: 'PENDING',
   PROCESSING: 'PROCESSING',

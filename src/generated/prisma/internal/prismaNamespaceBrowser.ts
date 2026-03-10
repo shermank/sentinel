@@ -63,6 +63,7 @@ export const ModelName = {
   PollingConfig: 'PollingConfig',
   CheckIn: 'CheckIn',
   Subscription: 'Subscription',
+  ScheduledMessage: 'ScheduledMessage',
   AuditLog: 'AuditLog',
   SystemJob: 'SystemJob'
 } as const
@@ -268,6 +269,24 @@ export const SubscriptionScalarFieldEnum = {
 } as const
 
 export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
+
+
+export const ScheduledMessageScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  recipientName: 'recipientName',
+  recipientEmail: 'recipientEmail',
+  subject: 'subject',
+  body: 'body',
+  label: 'label',
+  scheduledFor: 'scheduledFor',
+  status: 'status',
+  deliveredAt: 'deliveredAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ScheduledMessageScalarFieldEnum = (typeof ScheduledMessageScalarFieldEnum)[keyof typeof ScheduledMessageScalarFieldEnum]
 
 
 export const AuditLogScalarFieldEnum = {

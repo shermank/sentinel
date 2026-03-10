@@ -60,12 +60,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-indigo-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <Link href="/" className="flex items-center justify-center space-x-2 mb-4">
-            <Shield className="h-8 w-8 text-indigo-600" />
-            <span className="text-xl font-bold">Eternal Sentinel</span>
+            <Shield className="h-8 w-8 text-teal-600" />
+            <span className="text-xl font-bold text-slate-900">Eternal Sentinel</span>
           </Link>
           <CardTitle>Welcome Back</CardTitle>
           <CardDescription>Sign in to access your vault</CardDescription>
@@ -104,8 +104,8 @@ export default function LoginPage() {
             return (
               <div className={`mt-4 flex items-start gap-3 rounded-md border px-4 py-3 text-sm ${
                 errorReason === "unverified"
-                  ? "border-yellow-600 bg-yellow-950/50 text-yellow-300"
-                  : "border-red-700 bg-red-950/50 text-red-300"
+                  ? "border-amber-500 bg-amber-50/50 text-amber-800"
+                  : "border-red-400 bg-red-50/50 text-red-700"
               }`}>
                 {errorReason === "unverified"
                   ? <MailWarning className="h-4 w-4 mt-0.5 shrink-0" />

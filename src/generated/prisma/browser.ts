@@ -78,6 +78,11 @@ export type CheckIn = Prisma.CheckInModel
  */
 export type Subscription = Prisma.SubscriptionModel
 /**
+ * Model ScheduledMessage
+ * 
+ */
+export type ScheduledMessage = Prisma.ScheduledMessageModel
+/**
  * Model AuditLog
  * 
  */

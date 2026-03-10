@@ -396,6 +396,7 @@ export const ModelName = {
   PollingConfig: 'PollingConfig',
   CheckIn: 'CheckIn',
   Subscription: 'Subscription',
+  ScheduledMessage: 'ScheduledMessage',
   AuditLog: 'AuditLog',
   SystemJob: 'SystemJob'
 } as const
@@ -413,7 +414,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "session" | "verificationToken" | "vault" | "vaultItem" | "trustee" | "trusteeAccessLog" | "finalLetter" | "pollingConfig" | "checkIn" | "subscription" | "auditLog" | "systemJob"
+    modelProps: "user" | "account" | "session" | "verificationToken" | "vault" | "vaultItem" | "trustee" | "trusteeAccessLog" | "finalLetter" | "pollingConfig" | "checkIn" | "subscription" | "scheduledMessage" | "auditLog" | "systemJob"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1305,6 +1306,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ScheduledMessage: {
+      payload: Prisma.$ScheduledMessagePayload<ExtArgs>
+      fields: Prisma.ScheduledMessageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ScheduledMessageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledMessagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ScheduledMessageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledMessagePayload>
+        }
+        findFirst: {
+          args: Prisma.ScheduledMessageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledMessagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ScheduledMessageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledMessagePayload>
+        }
+        findMany: {
+          args: Prisma.ScheduledMessageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledMessagePayload>[]
+        }
+        create: {
+          args: Prisma.ScheduledMessageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledMessagePayload>
+        }
+        createMany: {
+          args: Prisma.ScheduledMessageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ScheduledMessageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledMessagePayload>[]
+        }
+        delete: {
+          args: Prisma.ScheduledMessageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledMessagePayload>
+        }
+        update: {
+          args: Prisma.ScheduledMessageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledMessagePayload>
+        }
+        deleteMany: {
+          args: Prisma.ScheduledMessageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ScheduledMessageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ScheduledMessageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledMessagePayload>[]
+        }
+        upsert: {
+          args: Prisma.ScheduledMessageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScheduledMessagePayload>
+        }
+        aggregate: {
+          args: Prisma.ScheduledMessageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateScheduledMessage>
+        }
+        groupBy: {
+          args: Prisma.ScheduledMessageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ScheduledMessageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ScheduledMessageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ScheduledMessageCountAggregateOutputType> | number
+        }
+      }
+    }
     AuditLog: {
       payload: Prisma.$AuditLogPayload<ExtArgs>
       fields: Prisma.AuditLogFieldRefs
@@ -1679,6 +1754,24 @@ export const SubscriptionScalarFieldEnum = {
 export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
 
 
+export const ScheduledMessageScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  recipientName: 'recipientName',
+  recipientEmail: 'recipientEmail',
+  subject: 'subject',
+  body: 'body',
+  label: 'label',
+  scheduledFor: 'scheduledFor',
+  status: 'status',
+  deliveredAt: 'deliveredAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ScheduledMessageScalarFieldEnum = (typeof ScheduledMessageScalarFieldEnum)[keyof typeof ScheduledMessageScalarFieldEnum]
+
+
 export const AuditLogScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -1949,6 +2042,20 @@ export type ListEnumSubscriptionStatusFieldRefInput<$PrismaModel> = FieldRefInpu
 
 
 /**
+ * Reference to a field of type 'ScheduledMessageStatus'
+ */
+export type EnumScheduledMessageStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ScheduledMessageStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ScheduledMessageStatus[]'
+ */
+export type ListEnumScheduledMessageStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ScheduledMessageStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'JobStatus'
  */
 export type EnumJobStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JobStatus'>
@@ -2082,6 +2189,7 @@ export type GlobalOmitConfig = {
   pollingConfig?: Prisma.PollingConfigOmit
   checkIn?: Prisma.CheckInOmit
   subscription?: Prisma.SubscriptionOmit
+  scheduledMessage?: Prisma.ScheduledMessageOmit
   auditLog?: Prisma.AuditLogOmit
   systemJob?: Prisma.SystemJobOmit
 }

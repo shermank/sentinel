@@ -4,32 +4,32 @@ import { Shield, Lock, KeyRound, RefreshCw, ShieldCheck, Mail } from "lucide-rea
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-indigo-50 text-slate-900">
       <header className="container mx-auto px-4 py-6">
         <nav className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <Shield className="h-8 w-8 text-indigo-400" />
-            <span className="text-xl font-bold">Eternal Sentinel</span>
+            <Shield className="h-8 w-8 text-teal-600" />
+            <span className="text-xl font-bold text-slate-900">Eternal Sentinel</span>
           </div>
           <div className="flex items-center space-x-4">
             <Link href="/about">
-              <Button variant="ghost" className="text-white hover:text-indigo-300">About Us</Button>
+              <Button variant="ghost" className="text-slate-600 hover:text-teal-700">About Us</Button>
             </Link>
             <Link href="/login">
-              <Button variant="ghost" className="text-white hover:text-indigo-300">Login</Button>
+              <Button variant="ghost" className="text-slate-600 hover:text-teal-700">Login</Button>
             </Link>
             <Link href="/signup">
-              <Button className="bg-indigo-600 hover:bg-indigo-700">Get Started</Button>
+              <Button className="bg-gradient-to-r from-teal-600 to-indigo-600 hover:from-teal-700 hover:to-indigo-700 text-white">Get Started</Button>
             </Link>
           </div>
         </nav>
       </header>
 
       <section className="container mx-auto px-4 py-16 text-center">
-        <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-white to-indigo-300 bg-clip-text text-transparent">
+        <h1 className="text-5xl font-bold mb-6 text-slate-900">
           About Eternal Sentinel
         </h1>
-        <p className="text-xl text-slate-300 max-w-2xl mx-auto">
+        <p className="text-xl text-slate-600 max-w-2xl mx-auto">
           Protecting your digital legacy with uncompromising security.
         </p>
       </section>
@@ -84,7 +84,7 @@ export default function AboutPage() {
           </div>
           <div className="space-y-6">
             <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-              <h3 className="text-xl font-semibold mb-2 text-indigo-300">1. Check-In</h3>
+              <h3 className="text-xl font-semibold mb-2 text-teal-700">1. Check-In</h3>
               <p className="text-slate-400">
                 You receive periodic check-in reminders via email or SMS on a schedule you
                 choose. A single click confirms you&apos;re OK and resets the countdown timer.
@@ -142,7 +142,7 @@ export default function AboutPage() {
             <ShieldCheck className="h-8 w-8 text-indigo-400" />
             <h2 className="text-3xl font-bold">Security Details</h2>
           </div>
-          <div className="bg-slate-800/50 rounded-2xl p-8 border border-slate-700 space-y-6">
+          <div className="bg-white/95 rounded-2xl p-8 border border-slate-200 space-y-6 shadow-sm">
             <div>
               <div className="flex items-center space-x-2 mb-2">
                 <KeyRound className="h-5 w-5 text-green-400" />
@@ -192,8 +192,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <footer className="border-t border-slate-800 py-8">
-        <p className="text-center text-sm text-slate-500">
+      <footer className="border-t border-slate-200 py-8">
+        <p className="text-center text-sm text-slate-600">
           &copy; {new Date().getFullYear()} Eternal Sentinel. All rights reserved.
         </p>
       </footer>

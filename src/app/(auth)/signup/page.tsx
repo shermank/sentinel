@@ -70,12 +70,12 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-indigo-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <Link href="/" className="flex items-center justify-center space-x-2 mb-4">
-            <Shield className="h-8 w-8 text-indigo-600" />
-            <span className="text-xl font-bold">Eternal Sentinel</span>
+            <Shield className="h-8 w-8 text-teal-600" />
+            <span className="text-xl font-bold text-slate-900">Eternal Sentinel</span>
           </Link>
           <CardTitle>Create Account</CardTitle>
           <CardDescription>Start securing your digital legacy</CardDescription>

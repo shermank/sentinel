@@ -222,6 +222,7 @@ export type UserWhereInput = {
   pollingConfig?: Prisma.XOR<Prisma.PollingConfigNullableScalarRelationFilter, Prisma.PollingConfigWhereInput> | null
   checkIns?: Prisma.CheckInListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
+  scheduledMessages?: Prisma.ScheduledMessageListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -242,6 +243,7 @@ export type UserOrderByWithRelationInput = {
   pollingConfig?: Prisma.PollingConfigOrderByWithRelationInput
   checkIns?: Prisma.CheckInOrderByRelationAggregateInput
   subscription?: Prisma.SubscriptionOrderByWithRelationInput
+  scheduledMessages?: Prisma.ScheduledMessageOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -265,6 +267,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   pollingConfig?: Prisma.XOR<Prisma.PollingConfigNullableScalarRelationFilter, Prisma.PollingConfigWhereInput> | null
   checkIns?: Prisma.CheckInListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
+  scheduledMessages?: Prisma.ScheduledMessageListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -315,6 +318,7 @@ export type UserCreateInput = {
   pollingConfig?: Prisma.PollingConfigCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  scheduledMessages?: Prisma.ScheduledMessageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -335,6 +339,7 @@ export type UserUncheckedCreateInput = {
   pollingConfig?: Prisma.PollingConfigUncheckedCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  scheduledMessages?: Prisma.ScheduledMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -355,6 +360,7 @@ export type UserUpdateInput = {
   pollingConfig?: Prisma.PollingConfigUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  scheduledMessages?: Prisma.ScheduledMessageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -375,6 +381,7 @@ export type UserUncheckedUpdateInput = {
   pollingConfig?: Prisma.PollingConfigUncheckedUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  scheduledMessages?: Prisma.ScheduledMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -586,6 +593,20 @@ export type UserUpdateOneRequiredWithoutSubscriptionNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSubscriptionInput, Prisma.UserUpdateWithoutSubscriptionInput>, Prisma.UserUncheckedUpdateWithoutSubscriptionInput>
 }
 
+export type UserCreateNestedOneWithoutScheduledMessagesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutScheduledMessagesInput, Prisma.UserUncheckedCreateWithoutScheduledMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutScheduledMessagesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutScheduledMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutScheduledMessagesInput, Prisma.UserUncheckedCreateWithoutScheduledMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutScheduledMessagesInput
+  upsert?: Prisma.UserUpsertWithoutScheduledMessagesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutScheduledMessagesInput, Prisma.UserUpdateWithoutScheduledMessagesInput>, Prisma.UserUncheckedUpdateWithoutScheduledMessagesInput>
+}
+
 export type UserCreateWithoutAccountsInput = {
   id?: string
   name?: string | null
@@ -603,6 +624,7 @@ export type UserCreateWithoutAccountsInput = {
   pollingConfig?: Prisma.PollingConfigCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  scheduledMessages?: Prisma.ScheduledMessageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -622,6 +644,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   pollingConfig?: Prisma.PollingConfigUncheckedCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  scheduledMessages?: Prisma.ScheduledMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -657,6 +680,7 @@ export type UserUpdateWithoutAccountsInput = {
   pollingConfig?: Prisma.PollingConfigUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  scheduledMessages?: Prisma.ScheduledMessageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -676,6 +700,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   pollingConfig?: Prisma.PollingConfigUncheckedUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  scheduledMessages?: Prisma.ScheduledMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
@@ -695,6 +720,7 @@ export type UserCreateWithoutSessionsInput = {
   pollingConfig?: Prisma.PollingConfigCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  scheduledMessages?: Prisma.ScheduledMessageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -714,6 +740,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   pollingConfig?: Prisma.PollingConfigUncheckedCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  scheduledMessages?: Prisma.ScheduledMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -749,6 +776,7 @@ export type UserUpdateWithoutSessionsInput = {
   pollingConfig?: Prisma.PollingConfigUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  scheduledMessages?: Prisma.ScheduledMessageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -768,6 +796,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   pollingConfig?: Prisma.PollingConfigUncheckedUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  scheduledMessages?: Prisma.ScheduledMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutVaultInput = {
@@ -787,6 +816,7 @@ export type UserCreateWithoutVaultInput = {
   pollingConfig?: Prisma.PollingConfigCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  scheduledMessages?: Prisma.ScheduledMessageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutVaultInput = {
@@ -806,6 +836,7 @@ export type UserUncheckedCreateWithoutVaultInput = {
   pollingConfig?: Prisma.PollingConfigUncheckedCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  scheduledMessages?: Prisma.ScheduledMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutVaultInput = {
@@ -841,6 +872,7 @@ export type UserUpdateWithoutVaultInput = {
   pollingConfig?: Prisma.PollingConfigUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  scheduledMessages?: Prisma.ScheduledMessageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutVaultInput = {
@@ -860,6 +892,7 @@ export type UserUncheckedUpdateWithoutVaultInput = {
   pollingConfig?: Prisma.PollingConfigUncheckedUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  scheduledMessages?: Prisma.ScheduledMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTrusteesInput = {
@@ -879,6 +912,7 @@ export type UserCreateWithoutTrusteesInput = {
   pollingConfig?: Prisma.PollingConfigCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  scheduledMessages?: Prisma.ScheduledMessageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTrusteesInput = {
@@ -898,6 +932,7 @@ export type UserUncheckedCreateWithoutTrusteesInput = {
   pollingConfig?: Prisma.PollingConfigUncheckedCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  scheduledMessages?: Prisma.ScheduledMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTrusteesInput = {
@@ -933,6 +968,7 @@ export type UserUpdateWithoutTrusteesInput = {
   pollingConfig?: Prisma.PollingConfigUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  scheduledMessages?: Prisma.ScheduledMessageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTrusteesInput = {
@@ -952,6 +988,7 @@ export type UserUncheckedUpdateWithoutTrusteesInput = {
   pollingConfig?: Prisma.PollingConfigUncheckedUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  scheduledMessages?: Prisma.ScheduledMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutFinalLettersInput = {
@@ -971,6 +1008,7 @@ export type UserCreateWithoutFinalLettersInput = {
   pollingConfig?: Prisma.PollingConfigCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  scheduledMessages?: Prisma.ScheduledMessageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutFinalLettersInput = {
@@ -990,6 +1028,7 @@ export type UserUncheckedCreateWithoutFinalLettersInput = {
   pollingConfig?: Prisma.PollingConfigUncheckedCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  scheduledMessages?: Prisma.ScheduledMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutFinalLettersInput = {
@@ -1025,6 +1064,7 @@ export type UserUpdateWithoutFinalLettersInput = {
   pollingConfig?: Prisma.PollingConfigUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  scheduledMessages?: Prisma.ScheduledMessageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFinalLettersInput = {
@@ -1044,6 +1084,7 @@ export type UserUncheckedUpdateWithoutFinalLettersInput = {
   pollingConfig?: Prisma.PollingConfigUncheckedUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  scheduledMessages?: Prisma.ScheduledMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPollingConfigInput = {
@@ -1063,6 +1104,7 @@ export type UserCreateWithoutPollingConfigInput = {
   finalLetters?: Prisma.FinalLetterCreateNestedManyWithoutUserInput
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  scheduledMessages?: Prisma.ScheduledMessageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPollingConfigInput = {
@@ -1082,6 +1124,7 @@ export type UserUncheckedCreateWithoutPollingConfigInput = {
   finalLetters?: Prisma.FinalLetterUncheckedCreateNestedManyWithoutUserInput
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  scheduledMessages?: Prisma.ScheduledMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPollingConfigInput = {
@@ -1117,6 +1160,7 @@ export type UserUpdateWithoutPollingConfigInput = {
   finalLetters?: Prisma.FinalLetterUpdateManyWithoutUserNestedInput
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  scheduledMessages?: Prisma.ScheduledMessageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPollingConfigInput = {
@@ -1136,6 +1180,7 @@ export type UserUncheckedUpdateWithoutPollingConfigInput = {
   finalLetters?: Prisma.FinalLetterUncheckedUpdateManyWithoutUserNestedInput
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  scheduledMessages?: Prisma.ScheduledMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCheckInsInput = {
@@ -1155,6 +1200,7 @@ export type UserCreateWithoutCheckInsInput = {
   finalLetters?: Prisma.FinalLetterCreateNestedManyWithoutUserInput
   pollingConfig?: Prisma.PollingConfigCreateNestedOneWithoutUserInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+  scheduledMessages?: Prisma.ScheduledMessageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCheckInsInput = {
@@ -1174,6 +1220,7 @@ export type UserUncheckedCreateWithoutCheckInsInput = {
   finalLetters?: Prisma.FinalLetterUncheckedCreateNestedManyWithoutUserInput
   pollingConfig?: Prisma.PollingConfigUncheckedCreateNestedOneWithoutUserInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+  scheduledMessages?: Prisma.ScheduledMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCheckInsInput = {
@@ -1209,6 +1256,7 @@ export type UserUpdateWithoutCheckInsInput = {
   finalLetters?: Prisma.FinalLetterUpdateManyWithoutUserNestedInput
   pollingConfig?: Prisma.PollingConfigUpdateOneWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+  scheduledMessages?: Prisma.ScheduledMessageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCheckInsInput = {
@@ -1228,6 +1276,7 @@ export type UserUncheckedUpdateWithoutCheckInsInput = {
   finalLetters?: Prisma.FinalLetterUncheckedUpdateManyWithoutUserNestedInput
   pollingConfig?: Prisma.PollingConfigUncheckedUpdateOneWithoutUserNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
+  scheduledMessages?: Prisma.ScheduledMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSubscriptionInput = {
@@ -1247,6 +1296,7 @@ export type UserCreateWithoutSubscriptionInput = {
   finalLetters?: Prisma.FinalLetterCreateNestedManyWithoutUserInput
   pollingConfig?: Prisma.PollingConfigCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
+  scheduledMessages?: Prisma.ScheduledMessageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSubscriptionInput = {
@@ -1266,6 +1316,7 @@ export type UserUncheckedCreateWithoutSubscriptionInput = {
   finalLetters?: Prisma.FinalLetterUncheckedCreateNestedManyWithoutUserInput
   pollingConfig?: Prisma.PollingConfigUncheckedCreateNestedOneWithoutUserInput
   checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
+  scheduledMessages?: Prisma.ScheduledMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSubscriptionInput = {
@@ -1301,6 +1352,7 @@ export type UserUpdateWithoutSubscriptionInput = {
   finalLetters?: Prisma.FinalLetterUpdateManyWithoutUserNestedInput
   pollingConfig?: Prisma.PollingConfigUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
+  scheduledMessages?: Prisma.ScheduledMessageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubscriptionInput = {
@@ -1320,6 +1372,103 @@ export type UserUncheckedUpdateWithoutSubscriptionInput = {
   finalLetters?: Prisma.FinalLetterUncheckedUpdateManyWithoutUserNestedInput
   pollingConfig?: Prisma.PollingConfigUncheckedUpdateOneWithoutUserNestedInput
   checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
+  scheduledMessages?: Prisma.ScheduledMessageUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutScheduledMessagesInput = {
+  id?: string
+  name?: string | null
+  email: string
+  emailVerified?: Date | string | null
+  image?: string | null
+  password?: string | null
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  vault?: Prisma.VaultCreateNestedOneWithoutUserInput
+  trustees?: Prisma.TrusteeCreateNestedManyWithoutUserInput
+  finalLetters?: Prisma.FinalLetterCreateNestedManyWithoutUserInput
+  pollingConfig?: Prisma.PollingConfigCreateNestedOneWithoutUserInput
+  checkIns?: Prisma.CheckInCreateNestedManyWithoutUserInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutScheduledMessagesInput = {
+  id?: string
+  name?: string | null
+  email: string
+  emailVerified?: Date | string | null
+  image?: string | null
+  password?: string | null
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  vault?: Prisma.VaultUncheckedCreateNestedOneWithoutUserInput
+  trustees?: Prisma.TrusteeUncheckedCreateNestedManyWithoutUserInput
+  finalLetters?: Prisma.FinalLetterUncheckedCreateNestedManyWithoutUserInput
+  pollingConfig?: Prisma.PollingConfigUncheckedCreateNestedOneWithoutUserInput
+  checkIns?: Prisma.CheckInUncheckedCreateNestedManyWithoutUserInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutScheduledMessagesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutScheduledMessagesInput, Prisma.UserUncheckedCreateWithoutScheduledMessagesInput>
+}
+
+export type UserUpsertWithoutScheduledMessagesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutScheduledMessagesInput, Prisma.UserUncheckedUpdateWithoutScheduledMessagesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutScheduledMessagesInput, Prisma.UserUncheckedCreateWithoutScheduledMessagesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutScheduledMessagesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutScheduledMessagesInput, Prisma.UserUncheckedUpdateWithoutScheduledMessagesInput>
+}
+
+export type UserUpdateWithoutScheduledMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  vault?: Prisma.VaultUpdateOneWithoutUserNestedInput
+  trustees?: Prisma.TrusteeUpdateManyWithoutUserNestedInput
+  finalLetters?: Prisma.FinalLetterUpdateManyWithoutUserNestedInput
+  pollingConfig?: Prisma.PollingConfigUpdateOneWithoutUserNestedInput
+  checkIns?: Prisma.CheckInUpdateManyWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutScheduledMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  vault?: Prisma.VaultUncheckedUpdateOneWithoutUserNestedInput
+  trustees?: Prisma.TrusteeUncheckedUpdateManyWithoutUserNestedInput
+  finalLetters?: Prisma.FinalLetterUncheckedUpdateManyWithoutUserNestedInput
+  pollingConfig?: Prisma.PollingConfigUncheckedUpdateOneWithoutUserNestedInput
+  checkIns?: Prisma.CheckInUncheckedUpdateManyWithoutUserNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutUserNestedInput
 }
 
 
@@ -1333,6 +1482,7 @@ export type UserCountOutputType = {
   trustees: number
   finalLetters: number
   checkIns: number
+  scheduledMessages: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1341,6 +1491,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   trustees?: boolean | UserCountOutputTypeCountTrusteesArgs
   finalLetters?: boolean | UserCountOutputTypeCountFinalLettersArgs
   checkIns?: boolean | UserCountOutputTypeCountCheckInsArgs
+  scheduledMessages?: boolean | UserCountOutputTypeCountScheduledMessagesArgs
 }
 
 /**
@@ -1388,6 +1539,13 @@ export type UserCountOutputTypeCountCheckInsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.CheckInWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountScheduledMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ScheduledMessageWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1407,6 +1565,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   pollingConfig?: boolean | Prisma.User$pollingConfigArgs<ExtArgs>
   checkIns?: boolean | Prisma.User$checkInsArgs<ExtArgs>
   subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
+  scheduledMessages?: boolean | Prisma.User$scheduledMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1456,6 +1615,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   pollingConfig?: boolean | Prisma.User$pollingConfigArgs<ExtArgs>
   checkIns?: boolean | Prisma.User$checkInsArgs<ExtArgs>
   subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
+  scheduledMessages?: boolean | Prisma.User$scheduledMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1472,6 +1632,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     pollingConfig: Prisma.$PollingConfigPayload<ExtArgs> | null
     checkIns: Prisma.$CheckInPayload<ExtArgs>[]
     subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
+    scheduledMessages: Prisma.$ScheduledMessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1885,6 +2046,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   pollingConfig<T extends Prisma.User$pollingConfigArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$pollingConfigArgs<ExtArgs>>): Prisma.Prisma__PollingConfigClient<runtime.Types.Result.GetResult<Prisma.$PollingConfigPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   checkIns<T extends Prisma.User$checkInsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$checkInsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscription<T extends Prisma.User$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$subscriptionArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  scheduledMessages<T extends Prisma.User$scheduledMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$scheduledMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScheduledMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2485,6 +2647,30 @@ export type User$subscriptionArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   include?: Prisma.SubscriptionInclude<ExtArgs> | null
   where?: Prisma.SubscriptionWhereInput
+}
+
+/**
+ * User.scheduledMessages
+ */
+export type User$scheduledMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ScheduledMessage
+   */
+  select?: Prisma.ScheduledMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ScheduledMessage
+   */
+  omit?: Prisma.ScheduledMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ScheduledMessageInclude<ExtArgs> | null
+  where?: Prisma.ScheduledMessageWhereInput
+  orderBy?: Prisma.ScheduledMessageOrderByWithRelationInput | Prisma.ScheduledMessageOrderByWithRelationInput[]
+  cursor?: Prisma.ScheduledMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ScheduledMessageScalarFieldEnum | Prisma.ScheduledMessageScalarFieldEnum[]
 }
 
 /**

@@ -12,17 +12,17 @@ type VerificationStatus = "loading" | "pending" | "success" | "error";
 export default function VerifyEmailPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-linear-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-indigo-50 flex items-center justify-center p-4">
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
-              <Shield className="h-8 w-8 text-indigo-600" />
-              <span className="text-xl font-bold">Eternal Sentinel</span>
+              <Shield className="h-8 w-8 text-teal-600" />
+              <span className="text-xl font-bold text-slate-900">Eternal Sentinel</span>
             </div>
             <CardTitle>Loading...</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col items-center py-8">
-            <Loader2 className="h-12 w-12 animate-spin text-indigo-600" />
+            <Loader2 className="h-12 w-12 animate-spin text-teal-600" />
           </CardContent>
         </Card>
       </div>
@@ -201,7 +201,7 @@ function VerifyEmailContent() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-indigo-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         {renderContent()}
       </Card>

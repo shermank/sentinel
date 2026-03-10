@@ -179,8 +179,8 @@ export default async function DashboardPage() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Welcome back, {session.user.name?.split(" ")[0]}</h1>
-          <p className="text-slate-400">Here&apos;s your digital legacy overview</p>
+          <h1 className="text-3xl font-bold text-slate-900">Welcome back, {session.user.name?.split(" ")[0]}</h1>
+          <p className="text-slate-600">Here&apos;s your digital legacy overview</p>
         </div>
         {pollingConfig?.status === "ACTIVE" && (
           <CheckInButton />
@@ -188,11 +188,11 @@ export default async function DashboardPage() {
       </div>
 
       {needsSetup && (
-        <Card className="border-indigo-800 bg-indigo-950">
+        <Card className="border-slate-200 bg-white shadow-sm">
           <CardContent className="flex items-center justify-between p-6">
             <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-indigo-900 rounded-full flex items-center justify-center">
-                <Lock className="h-6 w-6 text-indigo-400" />
+              <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center">
+                <Lock className="h-6 w-6 text-teal-600" />
               </div>
               <div>
                 <h3 className="font-semibold">Set Up Your Vault</h3>
